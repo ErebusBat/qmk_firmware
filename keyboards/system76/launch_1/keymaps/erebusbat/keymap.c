@@ -36,10 +36,10 @@ ________________________________________________________________________________
     /* Layer 1, function layer
 __________________________________________________________________________________________________________________________________  ________
 |        |        |        |        |        |        |        |        |        |        |        |        |        |            || PLAY/  |
-| RESET  |        |        |  F13   |  F14   |  F15   |  F16   |  F17   |  F18   |  F19   |  F20   |  F21   |  F22   |            || PAUSE  |
+| RESET  |        |        |  F13   |  F14   |  F15   |  F16   |  F17   |  F18   |  F19   |  F20   |  F21   |  F22   | Media <=   || PAUSE  |
 |________|________|________|________|________|________|________|________|________|________|________|________|________|____________||________|
 |        |        |        |        |        |        |        |        |        |        |  LED   |  LED   |  LED   |            || VOLUME |
-|        |        |        |        |        |        |        |        |        |        | TOGGLE |  DOWN  |  UP    |            ||   UP   |
+|        |        |        |        |        |        |        |        |        |        | TOGGLE |  DOWN  |  UP    | Media =>   ||   UP   |
 |________|________|________|________|________|________|________|________|________|________|________|________|________|____________||________|
 |            |        |        |        |        |        |        |        |        |        |        |        |        |        || VOLUME |
 |PRINT SCREEN|        |        |        |        |        |  HOME  |  PGDN  |  PGUP  |  END   |        |        |        |        ||  DOWN  |
@@ -59,12 +59,12 @@ ________________________________________________________________________________
 */
 
   [1] = LAYOUT(
-    RESET,   KC_TRNS, KC_TRNS,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_F21,  KC_F22, KC_TRNS,       KC_MPLY,
-    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RGB_TOG, RGB_VAD, RGB_VAI, KC_TRNS,       KC_VOLU,
-        KC_PSCR, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_VOLD,
-          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_TRNS, KC_TRNS, LALT(KC_ENT),     KC_MUTE,
-              KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RCS(KC_V), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS,    KC_PGUP,
-          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     KC_TRNS,          KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS,            KC_HOME, KC_PGDN, KC_END
+    RESET,   KC_TRNS, KC_TRNS,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_F21,  KC_F22, KC_MEDIA_PREV_TRACK, KC_MPLY,
+    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RGB_TOG, RGB_VAD, RGB_VAI, KC_MEDIA_NEXT_TRACK, KC_VOLU,
+        KC_PSCR, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_TRNS, KC_TRNS, KC_TRNS,         KC_TRNS, KC_VOLD,
+          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_TRNS, KC_TRNS,         LALT(KC_ENT),   KC_MUTE,
+              KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RCS(KC_V), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS,        KC_PGUP,
+          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     KC_TRNS,          KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS,                KC_HOME, KC_PGDN, KC_END
   ),
 
   [2] = LAYOUT(
