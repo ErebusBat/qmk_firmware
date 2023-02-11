@@ -51,7 +51,7 @@ ________________________________________________________________________________
 |PRINT SCREEN|        |        |        |        |        |  HOME  |  PGDN  |  PGUP  |  END   |        |        |        |        ||  DOWN  |
 |____________|________|________|________|________|________|________|________|________|________|________|________|________|________||________|
   |            |        |        |        |        |        |        |        |        |        |        |        |            |   |        |
-  |            |        |        |        |        |        |  LEFT  |  DOWN  |   UP   | RIGHT  |        |        | ALT+ENTER  |   |  MUTE  |
+  |            |        |        |        |        |        |  LEFT  |  DOWN  |   UP   | RIGHT  |        |        | S+A+ENTER  |   |  MUTE  |
   |____________|________|________|________|________|________|________|________|________|________|________|________|____________|___|________|
   |                |        |        |        |        |        |        |        |        |        |        |            |        |
   |                |        |        |        |CtrlShfV|        |        |        |        |        |        |            |  PGUP  |
@@ -68,7 +68,7 @@ ________________________________________________________________________________
     RESET,   KC_TRNS, KC_TRNS,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_F21,  KC_F22, KC_MEDIA_PREV_TRACK, KC_MPLY,
     KC_PSCR, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RGB_TOG, RGB_VAD, RGB_VAI, KC_MEDIA_NEXT_TRACK, KC_VOLU,
         MAC_SS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_TRNS, KC_TRNS, KC_TRNS,         KC_TRNS, KC_VOLD,
-          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_TRNS, KC_TRNS,         LALT(KC_ENT),   KC_MUTE,
+          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_TRNS, KC_TRNS,         LSA(KC_ENT),   KC_MUTE,
               KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RCS(KC_V), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS,        KC_PGUP,
           KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,     KC_TRNS,          KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS,                KC_HOME, KC_PGDN, KC_END
   ),
