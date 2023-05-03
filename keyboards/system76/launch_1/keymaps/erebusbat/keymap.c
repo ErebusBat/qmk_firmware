@@ -77,8 +77,8 @@ ________________________________________________________________________________
     /* Layer 2, Window Management (OSX - Rectangle Pro)
 ____________________________________________________________________________________________________________________________________________
 |        |        |        |        |        |        |        |        |        |        |        |        |        |            ||        |
-|Layer0  |        |        |        |        |        |        |        |        |        |        |        | LCGA   |            ||        |
-|________|________|________|________|________|________|________|________|________|________|________|________|_(F12)__|____________||________|
+|Layer0  | LCGA   |        |        |        |        |        |        |        |        |        |  LCGA  | LCGA   |  LCGA      ||        |
+|________|_(F1)___|________|________|________|________|________|________|________|________|________|__(F11)_|_(F12)__|___(=)______||________|
 |        |        |        |        |        |        |        |        |        |        |        |        |        |            ||        |
 |        |        |        |        |        |        |        |        |        |        |        |        |        |            ||        |
 |________|________|________|________|________|________|________|________|________|________|________|________|________|____________||________|
@@ -98,8 +98,8 @@ ________________________________________________________________________________
 */
 
   [2] = LAYOUT(
-                TO(0),        KC_TRNS,            KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS, LCTL(LGUI(LALT(KC_F12))), KC_TRNS,     KC_TRNS,
-              KC_TRNS,        KC_TRNS,            KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,             KC_TRNS,              KC_TRNS, KC_TRNS,     KC_TRNS,
+                TO(0), LCTL(LGUI(LALT(KC_F1))),            KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LCTL(LGUI(LALT(KC_F11))), LCTL(LGUI(LALT(KC_F12))), LCTL(LGUI(LALT(KC_EQL))),     KC_TRNS,
+              KC_TRNS,                 KC_TRNS,            KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                  KC_TRNS,              KC_TRNS, KC_TRNS,     KC_TRNS,
      LSFT(LGUI(KC_5)), LCTL(LALT(KC_D)), LCTL(LALT(KC_F)), LCTL(LALT(KC_G)), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LCTL(LALT(KC_LEFT)), LCTL(LALT(KC_RIGHT)), KC_TRNS, KC_TRNS,
                 KC_TRNS,       LCTL(LALT(KC_E)),                KC_TRNS,       LCTL(LALT(KC_T)), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS, KC_TRNS,    KC_TRNS,     KC_TRNS,
                 KC_TRNS, LCTL(LGUI(LALT(KC_D))), LCTL(LGUI(LALT(KC_H))), LCTL(LGUI(LALT(KC_F))), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_TRNS,   KC_TRNS,  LCTL(LALT(KC_ENT)),
