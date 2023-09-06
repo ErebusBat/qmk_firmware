@@ -80,10 +80,10 @@ ________________________________________________________________________________
 |Layer0  | LCGA   |  LCGA  |  LCGA  |        |        |        |        |        |        |        |  LCGA  | LCGA   |  LCGA      ||        |
 |________|_(F1)___|__(F2)__|__(F3)__|________|________|________|________|________|________|________|__(F11)_|_(F12)__|___(=)______||________|
 |        |        |        |        |        |        |        |        |        |        |        |        |        |            ||        |
-|        |        |        |        |        |        |        |        |        |        |        |        | LCGA   |            ||        |
+|        |        |        |        |        |        |        |HYPER(7)|HYPER(8)|HYPER(9)|        |        | LCGA   |            ||        |
 |________|________|________|________|________|________|________|________|________|________|________|________|__(=)___|____________||________|
 |            |        |        |        |        |        |        |        |        |        |        |        |        |        ||        |
-|OSX ScrnSht | LCA(D) | LCA(F) | LCA(G) |        |        |        |        |        |        |        | LCA(◀) | LCA(▶) |        ||        |
+|OSX ScrnSht | LCA(D) | LCA(F) | LCA(G) |        |        |        |HYPER(U)|HYPER(I)|HYPER(O)|        | LCA(◀) | LCA(▶) |        ||        |
 |____________|________|________|________|________|________|________|________|________|________|________|________|________|________||________|
   |            |        |        |        |        |        |        |        |        |        |        |        |            |   |        |
   |            | LCA(E) | LCGA(H)| LCA(T) |        |        |        |        |        |        |        |        |            |   |        |
@@ -98,9 +98,9 @@ ________________________________________________________________________________
 */
 
   [2] = LAYOUT(
-                TO(0), LCTL(LGUI(LALT(KC_F1))), LCTL(LGUI(LALT(KC_F2))), LCTL(LGUI(LALT(KC_F3))), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   LCTL(LGUI(LALT(KC_F11))), LCTL(LGUI(LALT(KC_F12))), LCTL(LGUI(LALT(KC_EQL))),     KC_TRNS,
-              KC_TRNS,                 KC_TRNS,                 KC_TRNS,                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                    KC_TRNS, LCTL(LGUI(LALT(KC_EQL))),                  KC_TRNS,     KC_TRNS,
-     LSFT(LGUI(KC_5)), LCTL(LALT(KC_D)), LCTL(LALT(KC_F)), LCTL(LALT(KC_G)), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LCTL(LALT(KC_LEFT)),       LCTL(LALT(KC_RIGHT)), KC_TRNS, KC_TRNS,
+                TO(0), LCTL(LGUI(LALT(KC_F1))), LCTL(LGUI(LALT(KC_F2))), LCTL(LGUI(LALT(KC_F3))), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS,   LCTL(LGUI(LALT(KC_F11))), LCTL(LGUI(LALT(KC_F12))), LCTL(LGUI(LALT(KC_EQL))),     KC_TRNS,
+              KC_TRNS,                 KC_TRNS,                 KC_TRNS,                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, HYPR(KC_7), HYPR(KC_8), HYPR(KC_9), KC_TRNS,                    KC_TRNS, LCTL(LGUI(LALT(KC_EQL))),                  KC_TRNS,     KC_TRNS,
+     LSFT(LGUI(KC_5)),            LCTL(LALT(KC_D)),        LCTL(LALT(KC_F)),        LCTL(LALT(KC_G)), KC_TRNS, KC_TRNS, KC_TRNS, HYPR(KC_U), HYPR(KC_I), HYPR(KC_O), KC_TRNS, LCTL(LALT(KC_LEFT)),       LCTL(LALT(KC_RIGHT)), KC_TRNS, KC_TRNS,
                 KC_TRNS,       LCTL(LALT(KC_E)),                KC_TRNS,       LCTL(LALT(KC_T)), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS,                   KC_TRNS, KC_TRNS,    KC_TRNS,     KC_TRNS,
                 KC_TRNS, LCTL(LGUI(LALT(KC_D))), LCTL(LGUI(LALT(KC_H))), LCTL(LGUI(LALT(KC_F))), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, LCTL(LGUI(LALT(KC_SLSH))),   KC_TRNS,  LCTL(LALT(KC_ENT)),
                 KC_TRNS,                KC_TRNS,                KC_TRNS,                KC_TRNS, KC_TRNS, KC_TRNS,               KC_TRNS, KC_TRNS, KC_TRNS,                       KC_TRNS,  LCTL(LGUI(LALT(KC_LEFT))), KC_TRNS
