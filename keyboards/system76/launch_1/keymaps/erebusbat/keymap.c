@@ -126,14 +126,14 @@ ________________________________________________________________________________
 //  `~               1          2          3          4           5          6           7           8           9        0        -_       =+       Bksp                          PgUp
     KC_TRNS,         LCA(KC_J), LCA(KC_K), LCA(KC_E), LCAG(KC_H), LCA(KC_T), HYPR(KC_U), HYPR(KC_I), HYPR(KC_O), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,                      KC_TRNS,
 
-//  Tab              Q             W        E        R        T        Y        U        I        O        P        [{            ]}       \|               PgDn
-    LCAG(KC_EQL),    LCAG(KC_F10), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LCAG(KC_F11), KC_TRNS, LCAG(KC_F12),    KC_TRNS,
+//  Tab              Q             W        E        R        T            Y        U        I        O        P        [{            ]}       \|               PgDn
+    LCAG(KC_EQL),    LCAG(KC_F10), KC_TRNS, KC_TRNS, KC_TRNS, LCAG(KC_F2), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, LCAG(KC_F11), KC_TRNS, LCAG(KC_F12),    KC_TRNS,
 
 //    Esc            A        S        D        F        G        H        J        K        L        ;:       '"          Enter                            End
       KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_TRNS, KC_TRNS,    KC_TRNS,                         KC_TRNS,
 
-//    Shift            Z        X        C        V        B        N        M        ,<       .>       /?         Shift            Up
-      KC_TRNS,         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS,         LCA(KC_ENT),
+//    Shift            Z        X        C            V        B        N        M        ,<       .>       /?         Shift            Up
+      KC_TRNS,         KC_TRNS, KC_TRNS, LCAG(KC_F1), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,   KC_TRNS,         LCA(KC_ENT),
 
 //    Ctrl           Alt      Fn       Super        Fn(lg)            Space         Ctrl     Alt      Fn             Left           Down           Right
       KC_TRNS,       KC_TRNS, KC_TRNS, KC_TRNS,     KC_TRNS,          KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS,       LCA(KC_LEFT),  LCAG(KC_LEFT), LCA(KC_RGHT)
