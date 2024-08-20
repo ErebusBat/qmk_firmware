@@ -348,7 +348,7 @@ ifeq ($(strip $(RGBLIGHT_ENABLE)), yes)
 endif
 
 LED_MATRIX_ENABLE ?= no
-VALID_LED_MATRIX_TYPES := is31fl3731 is31fl3742a is31fl3743a is31fl3745 is31fl3746a ckled2001 custom
+VALID_LED_MATRIX_TYPES := is31fl3731 is31fl3742a is31fl3743a is31fl3745 is31fl3746a ckled2001 snled27351_spi custom
 # TODO: is31fl3733 is31fl3737 is31fl3741
 
 ifeq ($(strip $(LED_MATRIX_ENABLE)), yes)
@@ -412,11 +412,17 @@ endif
         QUANTUM_LIB_SRC += i2c_master.c
     endif
 
+    ifeq ($(strip $(RGB_MATRIX_DRIVER)), snled27351_spi)
+        OPT_DEFS += -DSNLED27351_SPI -DSTM32_SPI -DHAL_USE_SPI=TRUE
+        COMMON_VPATH += $(DRIVER_PATH)/led
+        SRC += snled27351-simple-spi.c
+        QUANTUM_LIB_SRC += spi_master.c
+    endif
 endif
 
 RGB_MATRIX_ENABLE ?= no
 
-VALID_RGB_MATRIX_TYPES := aw20216 is31fl3731 is31fl3733 is31fl3736 is31fl3737 is31fl3741 is31fl3742a is31fl3743a is31fl3745 is31fl3746a ckled2001 ws2812 custom
+VALID_RGB_MATRIX_TYPES := aw20216 is31fl3731 is31fl3733 is31fl3736 is31fl3737 is31fl3741 is31fl3742a is31fl3743a is31fl3745 is31fl3746a ckled2001 snled27351_spi ws2812 custom
 ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
     ifeq ($(filter $(RGB_MATRIX_DRIVER),$(VALID_RGB_MATRIX_TYPES)),)
         $(call CATASTROPHIC_ERROR,Invalid RGB_MATRIX_DRIVER,RGB_MATRIX_DRIVER="$(RGB_MATRIX_DRIVER)" is not a valid matrix type)
@@ -512,6 +518,13 @@ endif
         COMMON_VPATH += $(DRIVER_PATH)/led
         SRC += ckled2001.c
         QUANTUM_LIB_SRC += i2c_master.c
+    endif
+
+    ifeq ($(strip $(RGB_MATRIX_DRIVER)), snled27351_spi)
+        OPT_DEFS += -DSNLED27351_SPI -DSTM32_SPI -DHAL_USE_SPI=TRUE
+        COMMON_VPATH += $(DRIVER_PATH)/led
+        SRC += snled27351-spi.c
+        QUANTUM_LIB_SRC += spi_master.c
     endif
 
     ifeq ($(strip $(RGB_MATRIX_DRIVER)), ws2812)

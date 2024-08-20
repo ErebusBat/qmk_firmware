@@ -244,4 +244,23 @@ const led_matrix_driver_t led_matrix_driver = {
     .set_value_all = ckled2001_set_value_all,
 };
 #    endif
+#elif defined(SNLED27351_SPI)
+#    include "spi_master.h"
+
+static void init(void) {
+    spi_init();
+
+    snled27351_init_drivers();
+}
+
+static void flush(void) {
+    snled27351_flush();
+}
+
+const rgb_matrix_driver_t rgb_matrix_driver = {
+    .init          = init,
+    .flush         = flush,
+    .set_color     = snled27351_set_value,
+    .set_color_all = snled27351_set_value_all,
+};
 #endif

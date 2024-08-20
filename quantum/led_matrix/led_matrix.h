@@ -36,6 +36,9 @@
 #ifdef CKLED2001
 #    include "ckled2001-simple.h"
 #endif
+#ifdef SNLED27351_SPI
+#    include "snled27351-simple-spi.h"
+#endif
 
 #ifndef LED_MATRIX_LED_FLUSH_LIMIT
 #    define LED_MATRIX_LED_FLUSH_LIMIT 16
