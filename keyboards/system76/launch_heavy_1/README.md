@@ -1,40 +1,62 @@
-## Flashing firmware:
-* Clone this repository and `cd` into the `qmk_firmware` directory.
-* After cloning, you probably need to run `make git-submodule` as well as `./util/qmk_install`.
-   - You may also need to install dependencies: `sudo apt install avrdude gcc-avr avr-libc`
-* To build the firmware without flashing the keyboard, use `make (keyboard name):(layout name)`
-   - For example, if you want to build the `default` layout for the Launch keyboard, run:
-```
-make system76/launch_heavy_1:default
-```
-* To flash the firmware, you'll use the same build command, but with `dfu` added to the end:
-```
-make system76/launch_heavy_1:default:dfu
-```
-   - After it builds, you will see a repeating message that says:
-```
-dfu-programmer: no device present.
-ERROR: Bootloader not found. Trying again in 5s.
-```
-Next, unplug your keyboard from your computer, hold the ESC key (while the keyboard is unplugged), and plug the keyboard back in while holding the ESC key. Once the keyboard is plugged in, the ESC key can be released.
-* Note: on some distros, dfu-programmer has trouble detecting the keyboard unless you run the `make` command with `sudo`.
-* To flash the firmware using ISP, you will need a USBasp device, and a tag connect cable.
-  - Build the firmware and bootloader with:
-```
-make system76/launch_heavy_1:default:production
-```
-  - Run avrdude to flash the fuses:
-```
-avrdude -c usbasp -p at90usb646 -U lfuse:w:0x5E:m -U hfuse:w:0xDB:m -U efuse:w:0xFB:m -U lock:w:0xFF:m
-```
-  - Run avrdude to flash the ROM:
-```
-avrdude -c usbasp -p at90usb646 -U flash:w:system76_launch_heavy_1_default_production.hex
+# System76 Launch Configurable Keyboard (launch_heavy_1)
+
+![System76 Launch Configurable Keyboard](https://images.prismic.io/system76/b71307ac-dae6-4863-b7ca-804cd61c7ef8_launch_overhead.png?auto=compress,format&w=750)
+
+The Launch Configurable Keyboard is engineered to be comfortable, fully customizable, and make your workflow more efficient.
+
+- High-speed USB Hub
+- Works on Linux, Windows and macOS
+- 100% Open Source
+- Made in Colorado
+
+Additional Launch Keyboard resources:
+
+- Keyboard Maintainer: [System76](https://github.com/system76)
+- Hardware Supported: [System76 Launch GitHub Repository](https://github.com/system76/launch)
+- Hardware Availability: [Shop System76](https://system76.com/accessories/launch)
+
+## Building Firmware
+
+To build the firmware using `make` (after setting up the build environment), e.g.:
+
+```bash
+make -r system76/launch_heavy_1:default
 ```
 
-## Making your own layout:
-If you want to create your own layout, go to the `keymaps` directory and copy one of the maps in there. It will likely be easiest to start with the default layout, but the other layouts in there may be helpful references. The name of the directory you create will be the name of your layout. To prevent build errors, it is recommended to use only lowercase letters, underscores, and numbers for the name of your layout.
+Equivalently, using the QMK CLI:
 
-Inside of each layout directory, there is a file called `keymap.c`. The commented out grid area in this file is a visual reference for the actual key assignments below it. When modifying a layout, modifying this visual reference first makes it easier to design a layout, as well as keeping the actual layout below it organized.
+```bash
+qmk compile -kb system76/launch_heavy_1 -km default
+```
 
-Once your layout is designed, change the keycodes below to match your design. A full list of available keycodes can be found in the [QMK docs](https://beta.docs.qmk.fm/reference/keycodes). Use the shorter keycode alias to help keep these lined up (e.g. use `KC_ESC` instead of `KC_ESCAPE`).
+## Flashing Firmware (DFU)
+
+To build and flash the firmware on the keyboard, e.g.:
+
+```bash
+make -r system76/launch_heavy_1:default:flash
+```
+
+Equivalently, using the QMK CLI:
+
+```bash
+qmk flash -kb system76/launch_heavy_1 -km default
+```
+
+## Flashing Firmware (ISP)
+
+To flash the firmware (and/or bootloader) using ISP refer to the [_ISP Flashing Guide_](https://docs.qmk.fm/#/isp_flashing_guide).
+
+> **Factory fuse values** => Low: `0x5E`, High: `0x99`, Extended: `0xF3`, Lock Bits: `0xFF`
+
+## Environment Setup
+
+See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. If new to QMK, start with the [_Complete Newbs Guide_](https://docs.qmk.fm/#/newbs).
+
+## Bootloader
+
+Enter the bootloader in 3 ways:
+
+- **Bootmagic reset**: Hold down the key at (0,0) in the matrix (Escape) and plug in the keyboard.
+- **Keycode in layout**: Press the key mapped to `QK_BOOT` in the second layer (Escape).
+- **Electrical reset**: Briefly short AVR ISP's GND (6) and RST (5) pads on the back of the PCB.
