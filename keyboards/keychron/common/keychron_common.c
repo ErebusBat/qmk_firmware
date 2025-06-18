@@ -129,7 +129,7 @@ __attribute__((weak)) void keyboard_post_init_kb(void) {
 }
 #endif
 
-#ifdef PROTOCOL_CHIBIOS
+#if defined(PROTOCOL_CHIBIOS) && !defined(MCU_WB32)
 void restart_usb_driver(USBDriver *usbp) {
     // Do nothing. Restarting the USB driver on these boards breaks it.
 }

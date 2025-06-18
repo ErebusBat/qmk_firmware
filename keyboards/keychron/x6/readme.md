@@ -1,12 +1,12 @@
 # Lemokey X6
 
-![Lemokey X6]()
+![Lemokey X6](https://cdn.shopify.com/s/files/1/0059/0630/1017/files/Lemokey_X6_QMK_65_layout_Mechanical_Keyboard-2.jpg)
 
-A customizable 96% low profile keyboard.
+A customizable 65% keyboard.
 
 * Keyboard Maintainer: [Keychron](https://github.com/keychron)
 * Hardware Supported: Lemokey X6
-* Hardware Availability: [Keychron](https://www.keychron.com)
+* Hardware Availability: [Keychron](https://www.keychron.com/products/lemokey-x6-qmk-wired-mechanical-keyboard?srsltid=AfmBOoqGszv4uXVfi5e1QlazYLRWmQvvSJwoYBX2-TfXSvOcNh_8wKcR)
 
 Make example for this keyboard (after setting up your build environment):
 
