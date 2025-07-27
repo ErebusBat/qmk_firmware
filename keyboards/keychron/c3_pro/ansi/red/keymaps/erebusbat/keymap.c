@@ -15,6 +15,7 @@
  */
 
 #include QMK_KEYBOARD_H
+#include "erebusbat.h"
 
 enum layers{
     MAC_BASE,
