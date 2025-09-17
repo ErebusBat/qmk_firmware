@@ -279,17 +279,21 @@ __attribute__((weak)) void via_custom_value_command(uint8_t *data, uint8_t lengt
 // Keyboard level code can override this, but shouldn't need to.
 // Controlling custom features should be done by overriding
 // via_custom_value_command_kb() instead.
-__attribute__((weak)) bool via_command_kb(uint8_t *data, uint8_t length) {
+__attribute__((weak)) bool via_command_kb(uint8_t src, uint8_t *data, uint8_t length) {
     return false;
 }
 
-void raw_hid_receive(uint8_t *data, uint8_t length) {
+__attribute__((weak)) void via_raw_hid_send(uint8_t src, uint8_t *data, uint8_t length) {
+    raw_hid_send(data, length);
+}
+
+void raw_hid_receive(uint8_t src, uint8_t *data, uint8_t length) {
     uint8_t *command_id   = &(data[0]);
     uint8_t *command_data = &(data[1]);
 
     // If via_command_kb() returns true, the command was fully
     // handled, including calling raw_hid_send()
-    if (via_command_kb(data, length)) {
+    if (via_command_kb(src, data, length)) {
         return;
     }
 
@@ -469,7 +473,7 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
 
     // Return the same buffer, optionally with values changed
     // (i.e. returning state to the host, or the unhandled state).
-    raw_hid_send(data, length);
+    via_raw_hid_send(src, data, length);
 }
 
 #if defined(BACKLIGHT_ENABLE)
