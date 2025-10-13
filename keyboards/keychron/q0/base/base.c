@@ -24,9 +24,9 @@ const snled27351_led_t PROGMEM g_snled27351_leds[SNLED27351_LED_COUNT] = {
 /* Refer to SNLED27351 manual for these locations
  *   driver
  *   |  R location
- *   |  |       G location
- *   |  |       |       B location
- *   |  |       |       | */
+ *   |  |           G location
+ *   |  |           |           B location
+ *   |  |           |           | */
     {0, CB6_CA5,    CB4_CA5,    CB5_CA5}, // 0
     {0, CB9_CA5,    CB7_CA5,    CB8_CA5}, // 1
     {0, CB12_CA5,    CB10_CA5,    CB11_CA5}, // 2

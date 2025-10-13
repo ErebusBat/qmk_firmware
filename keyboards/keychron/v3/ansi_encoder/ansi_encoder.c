@@ -22,9 +22,9 @@ const snled27351_led_t PROGMEM g_snled27351_leds[SNLED27351_LED_COUNT] = {
 /* Refer to SNLED27351 manual for these locations
  *   driver
  *   |  R location
- *   |  |       G location
- *   |  |       |       B location
- *   |  |       |       | */
+ *   |  |           G location
+ *   |  |           |           B location
+ *   |  |           |           | */
     {0, CB9_CA1,    CB7_CA1,    CB8_CA1},
     {0, CB9_CA2,    CB7_CA2,    CB8_CA2},
     {0, CB9_CA3,    CB7_CA3,    CB8_CA3},
@@ -38,7 +38,6 @@ const snled27351_led_t PROGMEM g_snled27351_leds[SNLED27351_LED_COUNT] = {
     {0, CB9_CA11,   CB7_CA11,   CB8_CA11},
     {0, CB9_CA12,   CB7_CA12,   CB8_CA12},
     {0, CB9_CA13,   CB7_CA13,   CB8_CA13},
-    // {0, CB9_CA14,   CB7_CA14,   CB8_CA14}, // Encoder
     {0, CB9_CA15,   CB7_CA15,   CB8_CA15},
     {0, CB9_CA16,   CB7_CA16,   CB8_CA16},
     {1, CB9_CA15,   CB7_CA15,   CB8_CA15},
