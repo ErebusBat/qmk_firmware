@@ -192,6 +192,18 @@ void protocol_pre_task(void) {
                 // Pause for a while to let things settle...
                 wait_ms(USB_SUSPEND_WAKEUP_DELAY);
 #    endif
+                wait_ms(300);
+#ifdef MOUSEKEY_ENABLE
+                // Wiggle to wakeup
+                mousekey_on(MS_LEFT);
+                mousekey_send();
+                wait_ms(10);
+                mousekey_on(MS_RGHT);
+                mousekey_send();
+                wait_ms(10);
+                mousekey_off((MS_RGHT));
+                mousekey_send();
+#endif
             }
         }
         /* Woken up */
