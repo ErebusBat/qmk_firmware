@@ -1,1 +1,1 @@
-SRC += matrix.c
+KEYCHRON_RGB_ENABLE=yes
