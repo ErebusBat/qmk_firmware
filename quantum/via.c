@@ -61,6 +61,13 @@
 #    include "led_matrix.h"
 #endif
 
+#if defined(RGB_MATRIX_ENABLE)
+#include "nvm_eeprom_eeconfig_internal.h"
+#include "eeprom.h"
+
+static uint8_t rgb_matrix_value_id_mask;
+#endif
+
 // Can be called in an overriding via_init_kb() to test if keyboard level code usage of
 // EEPROM is invalid and use/save defaults.
 bool via_eeprom_is_valid(void) {
@@ -704,6 +711,7 @@ void via_qmk_rgb_matrix_set_value(uint8_t *data) {
     // data = [ value_id, value_data ]
     uint8_t *value_id   = &(data[0]);
     uint8_t *value_data = &(data[1]);
+    rgb_matrix_value_id_mask |= 0x01U << *value_id;
     switch (*value_id) {
         case id_qmk_rgb_matrix_brightness: {
             rgb_matrix_sethsv_noeeprom(rgb_matrix_get_hue(), rgb_matrix_get_sat(), scale8(value_data[0], RGB_MATRIX_MAXIMUM_BRIGHTNESS));
@@ -730,7 +738,29 @@ void via_qmk_rgb_matrix_set_value(uint8_t *data) {
 }
 
 void via_qmk_rgb_matrix_save(void) {
-    eeconfig_force_flush_rgb_matrix();
+    if (rgb_matrix_value_id_mask == (0x01U << id_qmk_rgb_matrix_brightness)) {
+        uint8_t *addr = (uint8_t*)EECONFIG_RGB_MATRIX + offsetof(rgb_config_t, hsv.v);
+        eeprom_write_byte(addr, rgb_matrix_config.hsv.v);
+    }
+
+    if (rgb_matrix_value_id_mask == (0x01U << id_qmk_rgb_matrix_effect)) {
+        uint8_t mode = (rgb_matrix_config.mode << 2) | rgb_matrix_config.enable;
+        eeprom_write_byte((uint8_t*)EECONFIG_RGB_MATRIX, mode);
+    }
+
+    if (rgb_matrix_value_id_mask == (0x01U << id_qmk_rgb_matrix_color)) {
+        uint8_t *addr = (uint8_t*)EECONFIG_RGB_MATRIX + offsetof(rgb_config_t, hsv.h);
+        eeprom_write_byte(addr,  rgb_matrix_config.hsv.h);
+        addr = (uint8_t*)EECONFIG_RGB_MATRIX + offsetof(rgb_config_t, hsv.s);
+        eeprom_write_byte(addr,  rgb_matrix_config.hsv.s);
+    }
+
+    if (rgb_matrix_value_id_mask == (0x01U << id_qmk_rgb_matrix_effect_speed)) {
+        uint8_t *addr = (uint8_t*)EECONFIG_RGB_MATRIX + offsetof(rgb_config_t, speed);
+        eeprom_write_byte(addr, rgb_matrix_config.speed);
+    }
+
+    rgb_matrix_value_id_mask = 0;
 }
 
 #endif // RGB_MATRIX_ENABLE
