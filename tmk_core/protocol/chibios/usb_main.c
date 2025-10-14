@@ -51,6 +51,11 @@ extern keymap_config_t keymap_config;
 #    define usb_lld_disconnect_bus(usbp)
 #endif
 
+#ifdef USB_REPORT_INTERVAL_ENABLE
+extern void usb_endpoint_in_tx(USBDriver *usbp, usbep_t ep);
+uint8_t usb_report_interval = 0;
+#endif
+
 extern usb_endpoint_in_t  usb_endpoints_in[USB_ENDPOINT_IN_COUNT];
 extern usb_endpoint_out_t usb_endpoints_out[USB_ENDPOINT_OUT_COUNT];
 
@@ -320,11 +325,51 @@ static bool usb_requests_hook_cb(USBDriver *usbp) {
     return false;
 }
 
+static __attribute__((unused)) void usb_sof_cb(USBDriver *usbp) {
+#if defined(USB_REPORT_INTERVAL_ENABLE)
+    wait_us(20);
+    if (usbp->epc[KEYBOARD_IN_EPNUM]) {
+        USBInEndpointState *isp = usbp->epc[KEYBOARD_IN_EPNUM]->in_state;
+
+        if (isp->report_interval_count < usbp->report_interval[KEYBOARD_IN_EPNUM]) ++isp->report_interval_count;
+
+        if (!usbGetTransmitStatusI(usbp, KEYBOARD_IN_EPNUM)) {
+            usb_endpoint_in_tx(usbp, KEYBOARD_IN_EPNUM);
+        }
+    }
+
+    if (usbp->epc[SHARED_IN_EPNUM]) {
+        USBInEndpointState *isp = usbp->epc[SHARED_IN_EPNUM]->in_state;
+
+        if (isp->report_interval_count < usbp->report_interval[SHARED_IN_EPNUM]) ++isp->report_interval_count;
+
+        if (!usbGetTransmitStatusI(usbp, SHARED_IN_EPNUM)) {
+            usb_endpoint_in_tx(usbp, SHARED_IN_EPNUM);
+        }
+    }
+#endif
+    (void)usbp;
+}
+
 static const USBConfig usbcfg = {
     usb_event_cb,          /* USB events callback */
     usb_get_descriptor_cb, /* Device GET_DESCRIPTOR request callback */
     usb_requests_hook_cb,  /* Requests hook callback */
+    usb_sof_cb,            /* SOF callback */
 };
+
+#if defined(USB_REPORT_INTERVAL_ENABLE)
+void update_usb_report_interval(USBDriver *usbp, uint8_t interval) {
+    for (int i = 0; i < USB_ENDPOINT_IN_COUNT; i++) {
+        usbp->report_interval[i] = 0;
+    }
+
+    usbp->report_interval[USB_ENDPOINT_IN_SHARED] = interval;
+#if !defined(KEYBOARD_SHARED_EP)
+    usbp->report_interval[USB_ENDPOINT_IN_KEYBOARD] = interval;
+#endif
+}
+#endif
 
 void init_usb_driver(USBDriver *usbp) {
     for (int i = 0; i < USB_ENDPOINT_IN_COUNT; i++) {
@@ -336,6 +381,9 @@ void init_usb_driver(USBDriver *usbp) {
         usb_endpoint_out_init(&usb_endpoints_out[i]);
         usb_endpoint_out_start(&usb_endpoints_out[i]);
     }
+#if defined(USB_REPORT_INTERVAL_ENABLE)
+    update_usb_report_interval(usbp, usb_report_interval);
+#endif
 
     /*
      * Activates the USB driver and then the USB bus pull-up on D+.
@@ -372,6 +420,9 @@ __attribute__((weak)) void restart_usb_driver(USBDriver *usbp) {
         usb_endpoint_out_init(&usb_endpoints_out[i]);
         usb_endpoint_out_start(&usb_endpoints_out[i]);
     }
+#if defined(USB_REPORT_INTERVAL_ENABLE)
+    update_usb_report_interval(usbp, usb_report_interval);
+#endif
 
     usbStart(usbp, &usbcfg);
     usbConnectBus(usbp);
