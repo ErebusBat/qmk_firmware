@@ -64,7 +64,7 @@ bool snled27351_write(uint8_t index, uint8_t page, uint8_t reg, uint8_t *data, u
 
     if (index > ARRAY_SIZE(((pin_t[])DRIVER_CS_PINS)) - 1) return false;
 
-    if (!spi_start(cs_pins[index], false, 0, SNLED23751_SPI_DIVISOR)) {
+    if (!spi_start(cs_pins[index], false, 0, SNLED27351_SPI_DIVISOR)) {
         spi_stop();
         return false;
     }

@@ -248,8 +248,8 @@ void snled27351_flush(void) {
 }
 
 void snled27351_shutdown(void) {
-#    if defined(SN27351_SDB_PIN)
-    gpio_write_pin_low(SN27351_SDB_PIN);
+#    if defined(SNLED27351_SDB_PIN)
+    gpio_write_pin_low(SNLED27351_SDB_PIN);
 #    else
     for (uint8_t i = 0; i < SNLED27351_DRIVER_COUNT; i++)
         snled27351_sw_shutdown(i);
@@ -257,8 +257,8 @@ void snled27351_shutdown(void) {
 }
 
 void snled27351_exit_shutdown(void) {
-#    if defined(SN27351_SDB_PIN)
-    gpio_write_pin_high(SN27351_SDB_PIN);
+#    if defined(SNLED27351_SDB_PIN)
+    gpio_write_pin_high(SNLED27351_SDB_PIN);
 #    else
     for (uint8_t i = 0; i < SNLED27351_DRIVER_COUNT; i++)
         snled27351_sw_return_normal(i);

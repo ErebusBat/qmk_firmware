@@ -26,8 +26,8 @@
 #    define SPI_DRIVER SPID1
 #    define SPI_SCK_PIN A5
 #    define SPI_MOSI_PIN A7
-#    define SN27351_SDB_PIN C10
-#    define SNLED23751_SPI_DIVISOR 64
+#    define SNLED27351_SDB_PIN C10
+#    define SNLED27351_SPI_DIVISOR 64
 #endif
 
 /* Custom keycodes */
