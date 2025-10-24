@@ -34,11 +34,11 @@
 #endif
 #if defined(LK_WIRELESS_ENABLE) || defined(KC_BLUETOOTH_ENABLE)
 #    include "wireless.h"
-#ifdef LK_WIRELESS_ENABLE
-#    include "lkbt51.h"
-#else
-    #include "ckbt51.h"
-#endif
+#    ifdef LK_WIRELESS_ENABLE
+#        include "lkbt51.h"
+#    else
+#        include "ckbt51.h"
+#    endif
 #endif
 
 #ifdef RAW_ENABLE
@@ -87,7 +87,6 @@ void get_firmware_version(uint8_t *data) {
 
 void kc_raw_hid_send(uint8_t src, uint8_t *data, uint8_t len) {
     if (src == RAW_HID_SRC_USB) {
-        //raw_hid_send(data, len);
         extern host_driver_t chibios_driver;
         chibios_driver.send_raw_hid(data, len);
     }
@@ -178,10 +177,10 @@ bool kc_raw_hid_rx(uint8_t src, uint8_t *data, uint8_t length) {
                     break;
 #    endif
 #    if defined(USB_REPORT_INTERVAL_ENABLE)
-                case REPORT_RATE_GET ... REPORT_RATE_SET:
+                case REPORT_RATE_GET ... REPORT_RATE_SET: {
                     extern void report_rate_hid_rx(uint8_t * data, uint8_t length);
                     report_rate_hid_rx(data, length);
-                    break;
+                } break;
 #    endif
                 default:
                     data[0] = 0xFF;
