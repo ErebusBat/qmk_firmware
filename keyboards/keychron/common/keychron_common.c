@@ -326,7 +326,7 @@ void encoder_cb_init(void) {
 }
 #endif
 
-#if defined(RGB_MATRIX_ENABLE) && defined(LED_MATRIX_ENABLE)
+#if defined(RGB_MATRIX_ENABLE) || defined(LED_MATRIX_ENABLE)
 bool led_update_kb(led_t led_state) {
     bool res = led_update_user(led_state);
     if (res) {
