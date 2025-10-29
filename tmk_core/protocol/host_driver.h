@@ -32,8 +32,13 @@ typedef struct {
 #ifdef RAW_ENABLE
     void (*send_raw_hid)(uint8_t *, uint8_t);
 #endif
+#ifdef JOYSTICK_ENABLE
+   void (*send_joystick)(report_joystick_t *);
+#endif
+#ifdef XINPUT_ENABLE
+   void (*send_xinput)(report_xinput_t *);
+#endif
 } host_driver_t;
 
-void send_joystick(report_joystick_t *report);
 void send_digitizer(report_digitizer_t *report);
 void send_programmable_button(report_programmable_button_t *report);
