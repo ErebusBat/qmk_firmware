@@ -22,6 +22,10 @@ endif
 include $(KEYCHRON_COMMON_DIR)/language/language.mk
 include $(KEYCHRON_COMMON_DIR)/snap_click/snap_click.mk
 
+ifeq ($(strip $(INFO_CHAGNED_NOTIFY_ENABLE)), yes)
+OPT_DEFS += -DINFO_CHAGNED_NOTIFY_ENABLE
+endif
+
 ifeq ($(strip $(KEYCHRON_RGB_ENABLE)), yes)
 ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
 include $(KEYCHRON_COMMON_DIR)/rgb/rgb.mk

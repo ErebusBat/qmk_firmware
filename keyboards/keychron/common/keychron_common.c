@@ -16,6 +16,7 @@
 
 #include QMK_KEYBOARD_H
 #include "keychron_common.h"
+#include "keychron_raw_hid.h"
 #include "backlit_indicator.h"
 #ifdef FACTORY_TEST_ENABLE
 #    include "factory_test.h"
@@ -30,6 +31,8 @@
 #    include "led_matrix.h"
 #endif
 #include "config.h"
+#include "usb_descriptor.h"
+#include "raw_hid.h"
 
 #ifdef KEYCOMBO_OS_SELECT_ENABLE
 #    ifndef MAC_BASE_LAYER
@@ -346,5 +349,18 @@ bool led_update_kb(led_t led_state) {
     }
 
     return res;
+}
+#endif
+
+#ifdef INFO_CHAGNED_NOTIFY_ENABLE
+layer_state_t default_layer_state_set_kb(layer_state_t state) {
+    uint8_t buf[RAW_EPSIZE] = {0};
+
+    buf[0] = KC_GET_DEFAULT_LAYER;
+    buf[1] = get_highest_layer(state);
+
+    raw_hid_send(buf, RAW_EPSIZE);
+
+    return default_layer_state_set_user(state);
 }
 #endif

@@ -172,6 +172,7 @@ static inline void factory_timer_check(void) {
             eeprom_update_transport(get_transport());
 #    endif
 #endif
+            factory_reset_nofity();
 #ifdef RGB_MATRIX_ENABLE
             RGB color = {.r = 255, .g = 0, .b = 0};
             backlight_indicator_start(250, 250, 3, color);

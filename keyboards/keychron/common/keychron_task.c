@@ -37,6 +37,12 @@ bool process_record_keychron(uint16_t keycode, keyrecord_t *record) {
     extern bool process_record_wireless(uint16_t keycode, keyrecord_t * record);
     if (!process_record_wireless(keycode, record)) return false;
 #endif
+
+#ifdef USB_REPORT_INTERVAL_ENABLE
+    extern bool process_record_report_rate(uint16_t keycode, keyrecord_t * record);
+    if (!process_record_report_rate(keycode, record)) return false;
+#endif
+
 #ifdef FACTORY_TEST_ENABLE
     if (!process_record_factory_test(keycode, record)) return false;
 #endif
