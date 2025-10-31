@@ -42,7 +42,8 @@ enum {
     FEATURE_SNAP_CLICK          = 0x01U << 6,
     FEATURE_KEYCHRON_RGB        = 0x01U << 7,
 
-    FEATURE_QUICK_START         = 0x01 << 8
+    FEATURE_QUICK_START         = 0x01 << 8,
+    FEATURE_NKRO                = 0x01 << 9,
 };
 
 enum {
@@ -52,7 +53,8 @@ enum {
     MISC_SNAP_CLICK          = 0x01 << 3,
     MISC_WIRELESS_LPM        = 0x01 << 4,
     MISC_REPORT_REATE        = 0x01 << 5,
-    MISC_QUICK_START         = 0x01 << 6
+    MISC_QUICK_START         = 0x01 << 6,
+    MISC_NKRO                = 0x01 << 7,
 };
 
 enum {
@@ -70,7 +72,16 @@ enum {
     WIRELESS_LPM_SET,
     REPORT_RATE_GET,
     REPORT_RATE_SET,
+    DIP_SWITCH_GET,
+    DIP_SWITCH_SET,         // 0x10
     FACTORY_RESET,
+    NKRO_GET,
+    NKRO_SET,
+};
+
+enum {
+    KC_SUCCESS = 0,
+    KC_FAIL,
 };
 
 void kc_raw_hid_send(uint8_t src, uint8_t *data, uint8_t len);

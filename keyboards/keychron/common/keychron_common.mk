@@ -8,7 +8,8 @@ SRC += \
     $(KEYCHRON_COMMON_DIR)/factory_test.c \
     $(KEYCHRON_COMMON_DIR)/backlit_indicator.c \
     $(KEYCHRON_COMMON_DIR)/eeconfig_kb.c \
-    $(KEYCHRON_COMMON_DIR)/dfu_info.c
+    $(KEYCHRON_COMMON_DIR)/dfu_info.c \
+    $(KEYCHRON_COMMON_DIR)/nkro.c
 
 VPATH += $(KEYCHRON_COMMON_DIR)
 

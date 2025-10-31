@@ -43,6 +43,7 @@
 
 #ifdef RAW_ENABLE
 extern void dfu_info_rx(uint8_t *data, uint8_t length);
+extern void nkro_rx(uint8_t *data, uint8_t length);
 
 void get_support_feature(uint8_t *data) {
     data[0] = 0;
@@ -70,7 +71,7 @@ void get_support_feature(uint8_t *data) {
 #    endif
         ;
 
-    data[2] = (FEATURE_QUICK_START >> 8);
+    data[2] = (FEATURE_QUICK_START >> 8) | (FEATURE_NKRO >> 8);
 }
 
 void get_firmware_version(uint8_t *data) {
@@ -153,7 +154,11 @@ bool kc_raw_hid_rx(uint8_t src, uint8_t *data, uint8_t length) {
 #    ifdef USB_REPORT_INTERVAL_ENABLE
                               | MISC_REPORT_REATE
 #    endif
-                              | MISC_QUICK_START;
+                              | MISC_QUICK_START
+#    ifdef NKRO_ENABLE
+                              | MISC_NKRO
+#    endif
+                        ;
                     break;
 
                 case DFU_INFO_GET:
@@ -185,6 +190,10 @@ bool kc_raw_hid_rx(uint8_t src, uint8_t *data, uint8_t length) {
                     report_rate_hid_rx(data, length);
                 } break;
 #    endif
+                case NKRO_GET ... NKRO_SET:
+                    nkro_rx(data, length);
+                    break;
+
                 default:
                     data[0] = 0xFF;
                     data[1] = 0x00;
