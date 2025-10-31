@@ -288,7 +288,7 @@ static inline uint16_t KEYCODE2SYSTEM(uint8_t key) {
 }
 
 /* keycode to consumer usage */
-static inline uint16_t KEYCODE2CONSUMER(uint8_t key) {
+static inline uint16_t KEYCODE2CONSUMER(uint16_t key) {
     switch (key) {
         case KC_AUDIO_MUTE:
             return AUDIO_MUTE;
@@ -344,6 +344,8 @@ static inline uint16_t KEYCODE2CONSUMER(uint8_t key) {
             return AC_DESKTOP_SHOW_ALL_WINDOWS;
         case KC_LAUNCHPAD:
             return AC_SOFT_KEY_LEFT;
+        case RESERVED_KEYCODE_RAGE:
+            return 0x1CC + (key - QK_CONSUMER_RESERVED_0);
         default:
             return 0;
     }

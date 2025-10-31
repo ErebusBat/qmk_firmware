@@ -69,6 +69,8 @@ void get_support_feature(uint8_t *data) {
               | FEATURE_KEYCHRON_RGB
 #    endif
         ;
+
+    data[2] = (FEATURE_QUICK_START >> 8);
 }
 
 void get_firmware_version(uint8_t *data) {
@@ -151,12 +153,13 @@ bool kc_raw_hid_rx(uint8_t src, uint8_t *data, uint8_t length) {
 #    ifdef USB_REPORT_INTERVAL_ENABLE
                               | MISC_REPORT_REATE
 #    endif
-                        ;
+                              | MISC_QUICK_START;
                     break;
 
                 case DFU_INFO_GET:
                     dfu_info_rx(data, length);
                     break;
+
                 case LANGUAGE_GET ... LANGUAGE_SET:
                     language_rx(data, length);
                     break;

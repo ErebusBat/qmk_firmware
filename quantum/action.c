@@ -972,7 +972,7 @@ __attribute__((weak)) void register_code(uint8_t code) {
 #ifdef EXTRAKEY_ENABLE
     } else if (IS_SYSTEM_KEYCODE(code)) {
         host_system_send(KEYCODE2SYSTEM(code));
-    } else if (IS_CONSUMER_KEYCODE(code)) {
+    } else if (IS_CONSUMER_KEYCODE(code) || IS_CONSUMER_RESERVED_KEYCODE(code)) {
         host_consumer_send(KEYCODE2CONSUMER(code));
 #endif
 
@@ -1029,7 +1029,7 @@ __attribute__((weak)) void unregister_code(uint8_t code) {
 #ifdef EXTRAKEY_ENABLE
     } else if (IS_SYSTEM_KEYCODE(code)) {
         host_system_send(0);
-    } else if (IS_CONSUMER_KEYCODE(code)) {
+    } else if (IS_CONSUMER_KEYCODE(code) || IS_CONSUMER_RESERVED_KEYCODE(code)) {
         host_consumer_send(0);
 #endif
 

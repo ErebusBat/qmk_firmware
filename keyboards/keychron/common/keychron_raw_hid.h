@@ -41,6 +41,8 @@ enum {
     FEATURE_DYNAMIC_DEBOUNCE    = 0x01U << 5,
     FEATURE_SNAP_CLICK          = 0x01U << 6,
     FEATURE_KEYCHRON_RGB        = 0x01U << 7,
+
+    FEATURE_QUICK_START         = 0x01 << 8
 };
 
 enum {
@@ -50,6 +52,7 @@ enum {
     MISC_SNAP_CLICK          = 0x01 << 3,
     MISC_WIRELESS_LPM        = 0x01 << 4,
     MISC_REPORT_REATE        = 0x01 << 5,
+    MISC_QUICK_START         = 0x01 << 6
 };
 
 enum {
@@ -71,4 +74,3 @@ enum {
 };
 
 void kc_raw_hid_send(uint8_t src, uint8_t *data, uint8_t len);
-
