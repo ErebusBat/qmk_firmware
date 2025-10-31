@@ -57,8 +57,8 @@ void get_support_feature(uint8_t *data) {
 #    ifdef ANANLOG_MATRIX
               | FEATURE_ANALOG_MATRIX
 #    endif
-#    ifdef INFO_CHAGNED_NOTIFY_ENABLE
-              | FEATURE_INFO_CHAGNED_NOTIFY
+#    ifdef STATE_NOTIFY_ENABLE
+              | FEATURE_STATE_NOTIFY
 #    endif
 #    ifdef DYNAMIC_DEBOUNCE_ENABLE
               | FEATURE_DYNAMIC_DEBOUNCE
@@ -71,7 +71,7 @@ void get_support_feature(uint8_t *data) {
 #    endif
         ;
 
-    data[2] = (FEATURE_QUICK_START >> 8) | (FEATURE_NKRO >> 8);
+    data[2] = (FEATURE_QUICK_START | FEATURE_NKRO) >> 8;
 }
 
 void get_firmware_version(uint8_t *data) {

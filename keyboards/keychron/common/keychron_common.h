@@ -19,6 +19,9 @@
 #include <stdint.h>
 #include <assert.h>
 #include "keycodes.h"
+#ifdef STATE_NOTIFY_ENABLE
+#    include "state_notify.h"
+#endif
 
 #ifndef CUSTOM_KEYCODES_ENABLE
 // clang-format off
@@ -120,7 +123,8 @@ enum {
 #include "keycodes_custom.h"
 #endif
 
-static_assert(NEW_SAFE_RANGE <= 0x7E1F/* QK_KB_31 */, "Keycode overflow");
+// clang-format on
+static_assert(NEW_SAFE_RANGE <= 0x7E1F /* QK_KB_31 */, "Keycode overflow");
 
 typedef struct PACKED {
     uint8_t len;

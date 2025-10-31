@@ -33,28 +33,29 @@ enum {
 };
 
 enum {
+    // Byte 0
     FEATURE_DEFAULT_LAYER       = 0x01U << 0,
     FEATURE_BLUETOOTH           = 0x01U << 1,
     FEATURE_P24G                = 0x01U << 2,
     FEATURE_ANALOG_MATRIX       = 0x01U << 3,
-    FEATURE_INFO_CHAGNED_NOTIFY = 0x01U << 4,
+    FEATURE_STATE_NOTIFY        = 0x01U << 4,
     FEATURE_DYNAMIC_DEBOUNCE    = 0x01U << 5,
     FEATURE_SNAP_CLICK          = 0x01U << 6,
     FEATURE_KEYCHRON_RGB        = 0x01U << 7,
-
-    FEATURE_QUICK_START         = 0x01 << 8,
-    FEATURE_NKRO                = 0x01 << 9,
+    // Byte 1
+    FEATURE_QUICK_START         = 0x01U << 8,
+    FEATURE_NKRO                = 0x01U << 9,
 };
 
 enum {
-    MISC_DFU_INFO            = 0x01 << 0,
-    MISC_LANGUAGE            = 0x01 << 1,
-    MISC_DEBOUNCE            = 0x01 << 2,
-    MISC_SNAP_CLICK          = 0x01 << 3,
-    MISC_WIRELESS_LPM        = 0x01 << 4,
-    MISC_REPORT_REATE        = 0x01 << 5,
-    MISC_QUICK_START         = 0x01 << 6,
-    MISC_NKRO                = 0x01 << 7,
+    MISC_DFU_INFO            = 0x01U << 0,
+    MISC_LANGUAGE            = 0x01U << 1,
+    MISC_DEBOUNCE            = 0x01U << 2,
+    MISC_SNAP_CLICK          = 0x01U << 3,
+    MISC_WIRELESS_LPM        = 0x01U << 4,
+    MISC_REPORT_REATE        = 0x01U << 5,
+    MISC_QUICK_START         = 0x01U << 6,
+    MISC_NKRO                = 0x01U << 7,
 };
 
 enum {

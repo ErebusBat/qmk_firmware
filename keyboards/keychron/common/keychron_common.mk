@@ -1,4 +1,5 @@
 OPT_DEFS += -DFACTORY_TEST_ENABLE -DAPDAPTIVE_NKRO_ENABLE -DVIA_INSECURE
+OPT_DEFS += -DSTATE_NOTIFY_ENABLE
 
 KEYCHRON_COMMON_DIR = $(TOP_DIR)/keyboards/keychron/common
 SRC += \
@@ -9,7 +10,8 @@ SRC += \
     $(KEYCHRON_COMMON_DIR)/backlit_indicator.c \
     $(KEYCHRON_COMMON_DIR)/eeconfig_kb.c \
     $(KEYCHRON_COMMON_DIR)/dfu_info.c \
-    $(KEYCHRON_COMMON_DIR)/nkro.c
+    $(KEYCHRON_COMMON_DIR)/nkro.c \
+	$(KEYCHRON_COMMON_DIR)/state_notify.c
 
 VPATH += $(KEYCHRON_COMMON_DIR)
 
@@ -22,10 +24,6 @@ endif
 
 include $(KEYCHRON_COMMON_DIR)/language/language.mk
 include $(KEYCHRON_COMMON_DIR)/snap_click/snap_click.mk
-
-ifeq ($(strip $(INFO_CHAGNED_NOTIFY_ENABLE)), yes)
-OPT_DEFS += -DINFO_CHAGNED_NOTIFY_ENABLE
-endif
 
 ifeq ($(strip $(KEYCHRON_RGB_ENABLE)), yes)
 ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)

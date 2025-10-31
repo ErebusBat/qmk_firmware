@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if USB_REPORT_INTERVAL_ENABLE
+#ifdef USB_REPORT_INTERVAL_ENABLE
 
 #    include <string.h>
 #    include "eeconfig_kb.h"
@@ -25,6 +25,7 @@
 #    include "usb_endpoints.h"
 #    include "backlit_indicator.h"
 #    include "eeprom.h"
+#    include "keychron_common.h"
 
 #    ifndef KEY_RATE_SELECT
 #        define KEY_RATE_SELECT KC_K
@@ -93,16 +94,9 @@ static bool report_rate_set(uint8_t *data, bool notify) {
     eeprom_update_byte((uint8_t *)(EECONFIG_BASE_HSUSB_REPORT_RATE), report_rate_div);
     report_rate_update_interval();
 
-#    ifdef INFO_CHAGNED_NOTIFY_ENABLE
+#    ifdef STATE_NOTIFY_ENABLE
     if (notify) {
-        uint8_t buf[RAW_EPSIZE] = {0};
-        buf[0]                  = KC_MISC_CMD_GROUP;
-        buf[1]                  = REPORT_RATE_GET;
-        buf[2]                  = 0;
-        buf[3]                  = report_rate_div;
-        buf[4]                  = 0x7F;
-
-        raw_hid_send(buf, RAW_EPSIZE);
+        usb_report_rate_notify(report_rate_div);
     }
 #    endif
     (void)notify;

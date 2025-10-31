@@ -39,6 +39,9 @@
 #endif
 #include "config.h"
 #include "version.h"
+#ifdef STATE_NOTIFY_ENABLE
+#    include "state_notify.h"
+#endif
 
 #ifndef BL_CYCLE_KEY
 #    define BL_CYCLE_KEY KC_RIGHT
@@ -105,17 +108,6 @@ void factory_timer_start(void) {
     factory_reset_timer = timer_read32();
 }
 
-// #ifdef INFO_CHAGNED_NOTIFY_ENABLE
-void factory_reset_nofity(void) {
-    uint8_t buf[RAW_EPSIZE] = {0};
-
-    buf[0] = KC_MISC_CMD_GROUP;
-    buf[1] = FACTORY_RESET;
-
-    raw_hid_send(buf, RAW_EPSIZE);
-}
-// #endif
-
 static inline void factory_timer_check(void) {
     if (timer_elapsed32(factory_reset_timer) > 3000) {
         factory_reset_timer = 0;
@@ -172,7 +164,9 @@ static inline void factory_timer_check(void) {
             eeprom_update_transport(get_transport());
 #    endif
 #endif
+#ifdef STATE_NOTIFY_ENABLE
             factory_reset_nofity();
+#endif
 #ifdef RGB_MATRIX_ENABLE
             RGB color = {.r = 255, .g = 0, .b = 0};
             backlight_indicator_start(250, 250, 3, color);
