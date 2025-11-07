@@ -33,6 +33,9 @@
 #include "config.h"
 #include "usb_descriptor.h"
 #include "raw_hid.h"
+#ifdef ANANLOG_MATRIX
+#    include "profile.h"
+#endif
 
 #ifdef KEYCOMBO_OS_SELECT_ENABLE
 #    ifndef MAC_BASE_LAYER
@@ -90,7 +93,7 @@ void keychron_common_init(void) {
     extern void report_rate_init(void);
     report_rate_init();
 #endif
-#ifdef SNAP_CLICK_ENABLE
+#if defined(SNAP_CLICK_ENABLE) && !defined(ANANLOG_MATRIX)
     extern void snap_click_init(void);
     snap_click_init();
 #endif
@@ -274,6 +277,11 @@ void keychron_common_task(void) {
         is_siri_active = false;
         siri_timer     = 0;
     }
+
+#ifdef ANANLOG_MATRIX
+    process_profile_select_combo();
+#endif
+
 #if defined(WIN_LOCK_HOLD_TIME)
     if (winlock_timer) {
         if (keymap_config.no_gui) {

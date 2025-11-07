@@ -24,7 +24,7 @@ void eeconfig_init_kb_datablock(void) {
     extern void debounce_config_reset(void);
     debounce_config_reset();
 #endif
-#if defined(SNAP_CLICK_ENABLE)
+#if defined(SNAP_CLICK_ENABLE) && !defined(ANANLOG_MATRIX)
     extern void snap_click_config_reset(void);
     snap_click_config_reset();
 #endif

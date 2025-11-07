@@ -25,6 +25,9 @@
 #ifdef RETAIL_DEMO_ENABLE
 #    include "retail_demo.h"
 #endif
+#ifdef ANANLOG_MATRIX
+#include "profile.h"
+#endif
 
 __attribute__((weak)) bool process_record_keychron_kb(uint16_t keycode, keyrecord_t *record) {
     return true;
@@ -32,6 +35,10 @@ __attribute__((weak)) bool process_record_keychron_kb(uint16_t keycode, keyrecor
 
 bool process_record_keychron(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_keychron_common(keycode, record)) return false;
+
+#ifdef ANANLOG_MATRIX
+    if (!process_record_profile(keycode, record)) return false;
+#endif
 
 #if defined(LK_WIRELESS_ENABLE) || defined(KC_BLUETOOTH_ENABLE)
     extern bool process_record_wireless(uint16_t keycode, keyrecord_t * record);
@@ -47,7 +54,7 @@ bool process_record_keychron(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_factory_test(keycode, record)) return false;
 #endif
 
-#ifdef SNAP_CLICK_ENABLE
+#if defined(SNAP_CLICK_ENABLE) && !defined(ANANLOG_MATRIX)
     extern bool process_record_snap_click(uint16_t keycode, keyrecord_t * record);
     if (!process_record_snap_click(keycode, record)) return false;
 #endif
@@ -76,6 +83,9 @@ __attribute__((weak)) bool led_matrix_indicators_keychron(void) {
     extern bool led_matrix_indicators_bt(void);
     led_matrix_indicators_bt();
 #    endif
+#ifdef ANANLOG_MATRIX
+    analog_matrix_indicator();
+#endif
 #    ifdef FACTORY_TEST_ENABLE
     factory_test_indicator();
 #    endif
@@ -92,6 +102,9 @@ __attribute__((weak)) bool rgb_matrix_indicators_keychron(void) {
     extern bool rgb_matrix_indicators_bt(void);
     rgb_matrix_indicators_bt();
 #    endif
+#ifdef ANANLOG_MATRIX
+    analog_matrix_indicator();
+#endif
 #    ifdef FACTORY_TEST_ENABLE
     factory_test_indicator();
 #    endif

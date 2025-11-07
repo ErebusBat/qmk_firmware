@@ -63,7 +63,7 @@ void get_support_feature(uint8_t *data) {
 #    ifdef DYNAMIC_DEBOUNCE_ENABLE
               | FEATURE_DYNAMIC_DEBOUNCE
 #    endif
-#    ifdef SNAP_CLICK_ENABLE
+#    if defined(SNAP_CLICK_ENABLE) && !defined(ANANLOG_MATRIX)
               | FEATURE_SNAP_CLICK
 #    endif
 #    ifdef KEYCHRON_RGB_ENABLE
@@ -73,6 +73,31 @@ void get_support_feature(uint8_t *data) {
 
     data[2] = (FEATURE_QUICK_START | FEATURE_NKRO) >> 8;
 }
+
+#    ifdef ANANLOG_MATRIX
+void via_raw_hid_send(uint8_t src, uint8_t *data, uint8_t length);
+
+void send_analog_matrix(uint8_t *data, uint8_t length) {
+    uint8_t offset = data[2];
+    uint8_t rows   = 28 / ((MATRIX_COLS + 7) / 8);
+    uint8_t i      = 3;
+    for (uint8_t row = 0; row < rows && row + offset < MATRIX_ROWS; row++) {
+        matrix_row_t value = analog_matrix_get_row(row + offset);
+#        if (MATRIX_COLS > 24)
+        data[i++] = (value >> 24) & 0xFF;
+#        endif
+#        if (MATRIX_COLS > 16)
+        data[i++] = (value >> 16) & 0xFF;
+#        endif
+#        if (MATRIX_COLS > 8)
+        data[i++] = (value >> 8) & 0xFF;
+#        endif
+        data[i++] = value & 0xFF;
+    }
+
+    via_raw_hid_send(RAW_HID_SRC_USB, data, length);
+}
+#    endif
 
 void get_firmware_version(uint8_t *data) {
     uint8_t i = 0;
@@ -104,6 +129,13 @@ void kc_raw_hid_send(uint8_t src, uint8_t *data, uint8_t len) {
 }
 
 bool kc_raw_hid_rx(uint8_t src, uint8_t *data, uint8_t length) {
+#    if defined(ANANLOG_MATRIX) && defined(VIA_ENABLE)
+    if (src == RAW_HID_SRC_USB && data[0] == id_get_keyboard_value && data[1] == id_switch_matrix_state) {
+        send_analog_matrix(data, length);
+        return true;
+    }
+#    endif
+
     switch (data[0]) {
 #    ifdef VIA_ENABLE
         case id_get_protocol_version:
@@ -145,7 +177,7 @@ bool kc_raw_hid_rx(uint8_t src, uint8_t *data, uint8_t length) {
 #    ifdef DYNAMIC_DEBOUNCE_ENABLE
                               | MISC_DEBOUNCE
 #    endif
-#    ifdef SNAP_CLICK_ENABLE
+#    if defined(SNAP_CLICK_ENABLE) && !defined(ANANLOG_MATRIX)
                               | MISC_SNAP_CLICK
 #    endif
 #    if defined(LK_WIRELESS_ENABLE) || defined(KC_BLUETOOTH_ENABLE)
@@ -174,7 +206,7 @@ bool kc_raw_hid_rx(uint8_t src, uint8_t *data, uint8_t length) {
                     debounce_rx(data, length);
                     break;
 #    endif
-#    if defined(SNAP_CLICK_ENABLE)
+#    if defined(SNAP_CLICK_ENABLE) && !defined(ANANLOG_MATRIX)
                 case SNAP_CLICK_GET_INFO ... SNAP_CLICK_SAVE:
                     snap_click_rx(data, length);
                     break;

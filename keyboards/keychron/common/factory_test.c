@@ -37,6 +37,9 @@
 #ifdef SNAP_CLICK_ENABLE
 #    include "snap_click.h"
 #endif
+#ifdef ANANLOG_MATRIX
+#    include "analog_matrix.h"
+#endif
 #include "config.h"
 #include "version.h"
 #ifdef STATE_NOTIFY_ENABLE
@@ -54,6 +57,25 @@
 #ifndef P2P4G_CELAR_MASK
 #    define P2P4G_CELAR_MASK P2P4G_CLEAR_PAIRING_TYPE_C
 #endif
+
+#ifdef ANANLOG_MATRIX
+#    ifndef J_KEY_ROW
+#        define J_KEY_ROW 3
+#    endif
+
+#    ifndef J_KEY_COL
+#        define J_KEY_COL 7
+#    endif
+
+#    ifndef Z_KEY_ROW
+#        define Z_KEY_ROW 4
+#    endif
+
+#    ifndef Z_KEY_COL
+#        define Z_KEY_COL 2
+#    endif
+#endif
+#define KEY_MASK(r, c) (virtual_matrix[r] & (1 << c))
 
 enum {
     BACKLIGHT_TEST_OFF = 0,
@@ -122,7 +144,13 @@ static inline void factory_timer_check(void) {
 #endif
             backlight_test_mode = BACKLIGHT_TEST_OFF;
 
-            eeconfig_init();
+#ifdef ANANLOG_MATRIX
+            eeconfig_disable();
+            analog_matrix_eeconfig_init();
+            analog_matrix_clear_advance_keys();
+#endif
+            if (!eeconfig_is_enabled()) eeconfig_init();
+
             eeconfig_read_keymap(&keymap_config);
 #if !defined(KEYCOMBO_OS_SELECT_ENABLE) && !defined(KEYCOMBO_OS_TOGGLE_ENABLE)
             default_layer_set(default_layer_tmp);
@@ -130,7 +158,7 @@ static inline void factory_timer_check(void) {
 #ifdef DYNAMIC_DEBOUNCE_ENABLE
             debounce_config_reset();
 #endif
-#ifdef SNAP_CLICK_ENABLE
+#if defined(SNAP_CLICK_ENABLE) && !defined(ANANLOG_MATRIX)
             snap_click_config_reset();
 #endif
 #ifdef LED_MATRIX_ENABLE
@@ -319,8 +347,35 @@ bool factory_test_indicator(void) {
     return true;
 }
 
+#ifdef ANANLOG_MATRIX
+void analog_matrix_factory_reset(void) {
+    extern matrix_row_t virtual_matrix[MATRIX_ROWS];
+
+    if (factory_reset_state & KEY_PRESS_FN) {
+        if ((factory_reset_state & KEY_PRESS_J) == 0 && KEY_MASK(J_KEY_ROW, J_KEY_COL)) {
+            factory_reset_state |= KEY_PRESS_J;
+        } else if ((factory_reset_state & KEY_PRESS_J) && KEY_MASK(J_KEY_ROW, J_KEY_COL) == 0) {
+            factory_reset_state &= ~KEY_PRESS_J;
+            factory_reset_timer = 0;
+        }
+
+        if ((factory_reset_state & KEY_PRESS_Z) == 0 && KEY_MASK(Z_KEY_ROW, Z_KEY_COL)) {
+            factory_reset_state |= KEY_PRESS_Z;
+        } else if ((factory_reset_state & KEY_PRESS_Z) && KEY_MASK(Z_KEY_ROW, Z_KEY_COL) == 0) {
+            factory_reset_state &= ~KEY_PRESS_Z;
+            factory_reset_timer = 0;
+        }
+
+        if (factory_reset_state == KEY_PRESS_FACTORY_RESET && factory_reset_timer == 0) factory_timer_start();
+    }
+}
+#endif
+
 bool factory_test_task(void) {
     if (factory_reset_timer) factory_timer_check();
+#ifdef ANANLOG_MATRIX
+    analog_matrix_factory_reset();
+#endif
 
     return true;
 }
