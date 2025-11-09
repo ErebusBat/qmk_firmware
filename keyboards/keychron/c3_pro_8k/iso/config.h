@@ -18,7 +18,7 @@
 
 #ifdef RGB_MATRIX_ENABLE
 /* RGB Matrix Driver Configuration */
-#    define DRIVER_CS_PINS \
+#    define SNLED27351_SELECT_PINS \
         { A15, C11 }
 
 /* RGB Matrix Configuration */

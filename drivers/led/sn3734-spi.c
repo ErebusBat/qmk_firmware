@@ -51,10 +51,10 @@
 
 #define SN3734_DRIVER_COUNT (sizeof(cs_pins) / sizeof(pin_t))
 
-#ifdef DRIVER_CS_PINS
-pin_t cs_pins[] = DRIVER_CS_PINS;
+#ifdef SN3734_SELECT_PINS
+pin_t cs_pins[] = SN3734_SELECT_PINS;
 #else
-error "no DRIVER_CS_PINS defined"
+error "no SN3734_SELECT_PINS defined"
 #endif
 
 typedef struct sn3734_driver_t {
@@ -75,7 +75,7 @@ sn3734_driver_t driver_buffers[SN3734_DRIVER_COUNT] = {{
 bool sn3734_write(uint8_t index, uint8_t page, uint8_t reg, uint8_t *data, uint16_t len) {
     static uint8_t spi_transfer_buffer[2] = {0};
 
-    if (index > ARRAY_SIZE(((pin_t[])DRIVER_CS_PINS)) - 1) return false;
+    if (index > ARRAY_SIZE(((pin_t[])SN3734_SELECT_PINS)) - 1) return false;
 
     if (!spi_start(cs_pins[index], false, 0, SN3734_SPI_DIVISOR)) {
         spi_stop();

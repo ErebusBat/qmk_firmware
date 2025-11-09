@@ -21,7 +21,7 @@
 #    define RGB_MATRIX_LED_COUNT 105
 
 /* RGB Matrix Driver Configuration */
-#    define DRIVER_CS_PINS \
+#    define SNLED27351_SELECT_PINS \
         { A8, C9 }
 
 /* Set LED driver current */

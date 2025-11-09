@@ -33,10 +33,10 @@
 #define SNLED27351_READ (1 << 7)
 #define SNLED27351_PATTERN (2 << 4)
 
-#ifdef DRIVER_CS_PINS
-pin_t cs_pins[] = DRIVER_CS_PINS;
+#ifdef SNLED27351_SELECT_PINS
+pin_t cs_pins[] = SNLED27351_SELECT_PINS;
 #else
-error "no DRIVER_CS_PINS defined"
+error "no SNLED27351_SELECT_PINS defined"
 #endif
 
 // These buffers match the snled27351 PWM registers.
@@ -62,7 +62,7 @@ snled27351_driver_t driver_buffers[SNLED27351_DRIVER_COUNT] = {{
 bool snled27351_write(uint8_t index, uint8_t page, uint8_t reg, uint8_t *data, uint8_t len) {
     static uint8_t spi_transfer_buffer[2] = {0};
 
-    if (index > ARRAY_SIZE(((pin_t[])DRIVER_CS_PINS)) - 1) return false;
+    if (index > ARRAY_SIZE(((pin_t[])SNLED27351_SELECT_PINS)) - 1) return false;
 
     if (!spi_start(cs_pins[index], false, 0, SNLED27351_SPI_DIVISOR)) {
         spi_stop();

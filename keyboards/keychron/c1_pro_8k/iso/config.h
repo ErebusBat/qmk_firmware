@@ -20,7 +20,7 @@
 /* RGB Matrix Configuration */
 #    define RGB_MATRIX_LED_COUNT 88
 #    define DRIVER_COUNT 2
-#    define DRIVER_CS_PINS \
+#    define SNLED27351_SELECT_PINS \
         { A8, C9 }
 
 /* Scan phase of led driver */
