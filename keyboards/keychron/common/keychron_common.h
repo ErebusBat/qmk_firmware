@@ -19,9 +19,6 @@
 #include <stdint.h>
 #include <assert.h>
 #include "keycodes.h"
-#ifdef STATE_NOTIFY_ENABLE
-#    include "state_notify.h"
-#endif
 
 #ifndef CUSTOM_KEYCODES_ENABLE
 // clang-format off

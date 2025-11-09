@@ -14,8 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "quantum.h"
-#include "keychron_common.h"
+#include "keychron.h"
 
 void eeconfig_init_kb(void) {
     default_layer_set(1U << WIN_BASE_LAYER);

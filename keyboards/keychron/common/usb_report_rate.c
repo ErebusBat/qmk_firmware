@@ -25,7 +25,7 @@
 #    include "usb_endpoints.h"
 #    include "backlit_indicator.h"
 #    include "eeprom.h"
-#    include "keychron_common.h"
+#    include "state_notify.h"
 
 #    ifndef KEY_RATE_SELECT
 #        define KEY_RATE_SELECT KC_K

@@ -14,8 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "quantum.h"
-#include "keychron_common.h"
+#include "keychron.h"
 
 #define POWER_ON_LED_DURATION 3000
 
