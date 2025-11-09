@@ -338,7 +338,7 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
     return matrix_changed | changed;
 }
 
-void matrix_lpm(void) {
+void matrix_enter_low_power(void) {
     adcStop(&ADCD1);
 
 #ifdef HC164_DS

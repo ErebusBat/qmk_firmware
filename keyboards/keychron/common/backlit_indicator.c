@@ -70,12 +70,11 @@ void indicator_eeconfig_reload(void) {
 
 __attribute__((weak)) void os_state_indicate(void) {
 #    if defined(RGB_DISABLE_WHEN_USB_SUSPENDED) || defined(LED_DISABLE_WHEN_USB_SUSPENDED)
-    if (
 #        if defined(LK_WIRELESS_ENABLE) || defined(KC_BLUETOOTH_ENABLE)
-        get_transport() == TRANSPORT_USB &&
+    if (get_transport() == TRANSPORT_USB && USB_DRIVER.state == USB_SUSPENDED) return;
+#        else
+    if (USB_DRIVER.state == USB_SUSPENDED) return;
 #        endif
-        USB_DRIVER.state == USB_SUSPENDED)
-        return;
 #    endif
 
 #    if defined(NUM_LOCK_INDEX)

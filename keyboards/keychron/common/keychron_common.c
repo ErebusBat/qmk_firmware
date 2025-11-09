@@ -344,14 +344,18 @@ bool led_update_kb(led_t led_state) {
         led_update_ports(led_state);
 
         if (!LED_DRIVER_IS_ENABLED()) {
-#    if defined(LED_MATRIX_DRIVER_SHUTDOWN_ENABLE) || defined(RGB_MATRIX_DRIVER_SHUTDOWN_ENABLE)
-            LED_DRIVER_EXIT_SHUTDOWN();
+#    if defined(LED_MATRIX_ENABLE) && defined(LED_MATRIX_DRIVER_SHUTDOWN_ENABLE)
+            led_matrix_driver_exit_shutdown();
+#    elif defined(RGB_MATRIX_ENABLE) && defined(RGB_MATRIX_DRIVER_SHUTDOWN_ENABLE)
+            rgb_matrix_driver_exit_shutdown();
 #    endif
             SET_ALL_LED_OFF();
             os_state_indicate();
             LED_DRIVER.flush();
-#    if defined(LED_MATRIX_DRIVER_SHUTDOWN_ENABLE) || defined(RGB_MATRIX_DRIVER_SHUTDOWN_ENABLE)
-            if (LED_DRIVER_ALLOW_SHUTDOWN()) LED_DRIVER_SHUTDOWN();
+#    if defined(LED_MATRIX_ENABLE) && defined(LED_MATRIX_DRIVER_SHUTDOWN_ENABLE)
+            if (led_matrix_driver_allow_shutdown()) led_matrix_driver_shutdown();
+#    elif defined(RGB_MATRIX_ENABLE) && defined(RGB_MATRIX_DRIVER_SHUTDOWN_ENABLE)
+            if (rgb_matrix_driver_allow_shutdown()) rgb_matrix_driver_shutdown();
 #    endif
         }
     }

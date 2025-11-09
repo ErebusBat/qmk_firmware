@@ -403,9 +403,11 @@ void kc_rgb_matrix_rx(bool usb, uint8_t *data, uint8_t length) {
 
 void os_state_indicate(void) {
 #    if defined(RGB_DISABLE_WHEN_USB_SUSPENDED) || defined(LED_DISABLE_WHEN_USB_SUSPENDED)
+#        if defined(LK_WIRELESS_ENABLE) || defined(KC_BLUETOOTH_ENABLE)
     if (get_transport() == TRANSPORT_USB && USB_DRIVER.state == USB_SUSPENDED) return;
-#    else
+#        else
     if (USB_DRIVER.state == USB_SUSPENDED) return;
+#        endif
 #    endif
 
 #    if (defined(NUM_LOCK_INDEX) && !defined(DIM_NUM_LOCK)) || (defined(CAPS_LOCK_INDEX) && !defined(DIM_CAPS_LOCK)) || defined(SCROLL_LOCK_INDEX) || defined(COMPOSE_LOCK_INDEX) || defined(KANA_LOCK_INDEX)
