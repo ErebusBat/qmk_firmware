@@ -20,27 +20,31 @@
 #include "usb_descriptor.h"
 
 layer_state_t default_layer_state_set_kb(layer_state_t state) {
+#ifdef RAW_ENABLE
     uint8_t buf[RAW_EPSIZE] = {0};
 
     buf[0] = KC_GET_DEFAULT_LAYER;
     buf[1] = get_highest_layer(state);
 
     raw_hid_send(buf, RAW_EPSIZE);
-
+#endif
     return default_layer_state_set_user(state);
 }
 
 void factory_reset_nofity(void) {
+#ifdef RAW_ENABLE
     uint8_t buf[RAW_EPSIZE] = {0};
 
     buf[0] = KC_MISC_CMD_GROUP;
     buf[1] = FACTORY_RESET;
 
     raw_hid_send(buf, RAW_EPSIZE);
+#endif
 }
 
 #ifdef USB_REPORT_INTERVAL_ENABLE
 void usb_report_rate_notify(uint8_t report_rate_div) {
+#    ifdef RAW_ENABLE
     uint8_t buf[RAW_EPSIZE] = {0};
 
     buf[0] = KC_MISC_CMD_GROUP;
@@ -50,5 +54,6 @@ void usb_report_rate_notify(uint8_t report_rate_div) {
     buf[4] = 0x7F;
 
     raw_hid_send(buf, RAW_EPSIZE);
+#    endif
 }
 #endif
