@@ -144,8 +144,8 @@ static inline void factory_timer_check(void) {
 #endif
             backlight_test_mode = BACKLIGHT_TEST_OFF;
 
-#ifdef ANANLOG_MATRIX
             eeconfig_disable();
+#ifdef ANANLOG_MATRIX
             analog_matrix_eeconfig_init();
             analog_matrix_clear_advance_keys();
 #endif
