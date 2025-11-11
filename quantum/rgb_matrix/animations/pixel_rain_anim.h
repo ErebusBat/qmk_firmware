@@ -5,10 +5,10 @@
 RGB_MATRIX_EFFECT(PIXEL_RAIN)
 #    ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
-static fast_timer_t timer        = 0;
+static fast_timer_t timer[2]        = { 0, 0 };
 
 void PIXEL_RAIN_init(void) {
-    timer = 0;
+    timer[0] = timer[1] = 0;
 }
 
 bool PIXEL_RAIN(effect_params_t* params) {
@@ -19,13 +19,13 @@ bool PIXEL_RAIN(effect_params_t* params) {
     if (params->iter == 0) {
         region_mask |= 0x01 << params->region;
 
-        if (timer_elapsed_fast(timer) > (320 - rgb_matrix_config.speed)) {
+        if (timer_elapsed_fast(timer[params->region]) > (320 - rgb_matrix_config.speed)) {
             index[params->region] = random8_max(RGB_MATRIX_LED_COUNT);
             timer_update          = true;
         }
     } else {
         if (timer_update) {
-            timer        = timer_read_fast();
+            timer[params->region]        = timer_read_fast();
             timer_update = false;
         }
         region_mask = 0;
