@@ -59,20 +59,36 @@
 #endif
 
 #ifdef ANANLOG_MATRIX
+#    ifndef FACTORY_KEY_COL_OFFSET
+#        define FACTORY_KEY_COL_OFFSET 0
+#    endif
+
 #    ifndef J_KEY_ROW
-#        define J_KEY_ROW 3
+#        if MATRIX_ROWS == 5
+#            define J_KEY_ROW 2
+#        elif MATRIX_ROWS == 6
+#            define J_KEY_ROW 3
+#        else
+#            error "J_KEY_ROW is not set"
+#        endif
 #    endif
 
 #    ifndef J_KEY_COL
-#        define J_KEY_COL 7
+#        define J_KEY_COL (FACTORY_KEY_COL_OFFSET + 7)
 #    endif
 
 #    ifndef Z_KEY_ROW
-#        define Z_KEY_ROW 4
+#        if MATRIX_ROWS == 5
+#            define Z_KEY_ROW 3
+#        elif MATRIX_ROWS == 6
+#            define Z_KEY_ROW 4
+#        else
+#            error "J_KEY_ROW is not set"
+#        endif
 #    endif
 
 #    ifndef Z_KEY_COL
-#        define Z_KEY_COL 2
+#        define Z_KEY_COL (FACTORY_KEY_COL_OFFSET + 2)
 #    endif
 #endif
 #define KEY_MASK(r, c) (virtual_matrix[r] & (1 << c))
