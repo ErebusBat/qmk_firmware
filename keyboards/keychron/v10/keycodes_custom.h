@@ -1,4 +1,4 @@
-/* Copyright 2020 ~ 2025 @ Keychron(https://www.keychron.com)
+/* Copyright 2025 @ Keychron (https://www.keychron.com)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,23 @@
 
 #pragma once
 
-#include_next <mcuconf.h>
+#include "keycodes.h"
 
-#undef STM32_I2C_USE_I2C1
-#define STM32_I2C_USE_I2C1 TRUE
+enum custom_keycodes {
+    KC_LOPTN = QK_KB_2,
+    KC_ROPTN,
+    KC_LCMMD,
+    KC_RCMMD,
+    KC_MAC_SIRI,
+    KC_WIN_TASK_VIEW,
+    KC_WIN_FILE_EXPLORER,
+    KC_MAC_SCREEN_SHOT,
+    KC_WIN_CORTANA,
+    NEW_SAFE_RANGE,
+};
+
+#define KC_SIRI KC_MAC_SIRI
+#define KC_TASK KC_WIN_TASK_VIEW
+#define KC_FILE KC_WIN_FILE_EXPLORER
+#define KC_SNAP KC_MAC_SCREEN_SHOT
+#define KC_CTANA KC_WIN_CORTANA
