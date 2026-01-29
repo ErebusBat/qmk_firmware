@@ -16,6 +16,23 @@
 
 #pragma once
 
-#define HAL_USE_I2C TRUE
+#include "keycodes.h"
 
-#include_next <halconf.h>
+enum custom_keycodes {
+    KC_LOPTN = QK_KB_2,
+    KC_ROPTN,
+    KC_LCMMD,
+    KC_RCMMD,
+    KC_MAC_SIRI,
+    KC_WIN_TASK_VIEW,
+    KC_WIN_FILE_EXPLORER,
+    KC_MAC_SCREEN_SHOT,
+    KC_WIN_CORTANA,
+    NEW_SAFE_RANGE,
+};
+
+#define KC_SIRI KC_MAC_SIRI
+#define KC_TASK KC_WIN_TASK_VIEW
+#define KC_FILE KC_WIN_FILE_EXPLORER
+#define KC_SNAP KC_MAC_SCREEN_SHOT
+#define KC_CTANA KC_WIN_CORTANA
