@@ -23,9 +23,9 @@ Each keyboard family lives on its own branch tracking its respective upstream:
 | Branch | Upstream | Keyboards |
 |---|---|---|
 | `playground` | keychron/playground | Keychron C3 Pro |
-| `hall_effect_playground` | keychron | Keychron K2 HE |
-| `master` | sys76 | System76 Launch 1 |
-| `origin/erebusbat-keyboard` | sys76 | System76 Launch 1 (custom keymap) |
+| `hall_effect_playground` | keychron/hall_effect_playground | Keychron K2 HE |
+| `erebusbat-keyboard` | sys76/master | System76 Launch 1 (custom keymap) |
+| `master` | sys76/master | System76 Launch 1 (default keymaps only) |
 
 **Always check out the correct branch before working on a keyboard.**
 
@@ -35,7 +35,7 @@ The following files are shared across all branches and must be kept in sync:
 - `CLAUDE.md` — this file
 - `activate.sh` — QMK build environment activation script
 
-After updating a shared file on any branch, sync it to the other branches:
+After updating a shared file on any branch, sync it to the other branches (`playground`, `hall_effect_playground`, `master`, `erebusbat-keyboard`):
 
 ```bash
 # From the target branch, pull the file from the source branch:
@@ -83,6 +83,12 @@ qmk flash -kb keychron/c3_pro/ansi/red -km erebusbat
 ```bash
 qmk compile -kb keychron/k2_he/ansi_rgb -km erebusbat
 qmk flash -kb keychron/k2_he/ansi_rgb -km erebusbat
+```
+
+**System76 Launch 1** (branch: `erebusbat-keyboard`):
+```bash
+qmk compile -kb system76/launch_1 -km erebusbat
+qmk flash -kb system76/launch_1 -km erebusbat
 ```
 
 ### DFU Mode
