@@ -7,9 +7,9 @@
    `make system76/launch_alpha_2:jeremy`
 * To flash the firmware, you'll use the same build command, but with `flash` added to the end:
    `make system76/launch_alpha_2:default:flash`
-   - After it builds, you will see a message that says `Detecting USB port, reset your controller now...`. You then want to hit the "RESET" key on the keyboard if it is programmed into the layout. 
+   - After it builds, you will see a message that says `Detecting USB port, reset your controller now...`. You then want to hit the "RESET" key on the keyboard if it is programmed into the layout.
    - In the default layout, it is Fn+Esc. If a RESET key is not programmed into the layout, you will have to manually reset the controller.
-   
+
 ## Making your own layout:
 If you want to create your own layout, go to the `keymaps` directory and copy one of the maps in there. You'll probably want to start with the default layout, but the other layouts in there may be helpful references. The name of the directory you create will be the name of your layout. Ensure that it has no spaces or strange symbols, as this could lead to build errors.
 

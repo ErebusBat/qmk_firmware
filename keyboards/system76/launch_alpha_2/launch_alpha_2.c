@@ -1,5 +1,4 @@
 #include "dynamic_keymap.h"
-#include "tmk_core/common/eeprom.h"
 
 #include "launch_alpha_2.h"
 

@@ -1,6 +1,5 @@
 #include "dynamic_keymap.h"
 #include "raw_hid.h"
-#include "tmk_core/common/eeprom.h"
 #include "version.h"
 
 #include "launch_test.h"

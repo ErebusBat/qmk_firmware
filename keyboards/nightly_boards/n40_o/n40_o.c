@@ -14,14 +14,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "n40_o.h"
+#include "quantum.h"
+#include "encoder_action.h"
 
 void matrix_scan_kb(void) {
     encoder_action_unregister();
     matrix_scan_user();
 }
 
-void encoder_update_kb(uint8_t index, bool clockwise) {
+bool encoder_update_kb(uint8_t index, bool clockwise) {
+//    if (!encoder_update_user(index, clockwise)) return false;
     encoder_action_register(index, clockwise);
-    // encoder_update_user(index, clockwise);
+    return true;
 };
