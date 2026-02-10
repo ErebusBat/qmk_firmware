@@ -16,6 +16,10 @@
 
 #pragma once
 
+/* Winlock indicator */
+#define LED_WIN_LOCK_PIN A3
+#define LED_WIN_LOCK_PIN_ON_STATE 1
+
 #ifdef LED_MATRIX_ENABLE
 /* RGB Matrix Driver Configuration */
 #    define DRIVER_COUNT 1
@@ -32,10 +36,6 @@
 /* turn off effects when suspended */
 #    define LED_DISABLE_WHEN_USB_SUSPENDED
 
-// LED Matrix Animation modes. Explicitly enabled
-// For full list of effects, see:
-// https://docs.qmk.fm/#/feature_led_matrix?id=led-matrix-effects
-// #if defined(LED_MATRIX_KEYPRESSES) || defined(LED_MATRIX_KEYRELEASES)
 #    define LED_MATRIX_KEYPRESSES
 #    define LED_MATRIX_KEYRELEASES
 #endif
