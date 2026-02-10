@@ -29,6 +29,14 @@ Each keyboard family lives on its own branch tracking its respective upstream:
 
 **Always check out the correct branch before working on a keyboard.**
 
+## Build Environment Setup (macOS)
+
+```bash
+brew tap qmk/qmk
+brew install qmk/qmk/qmk
+qmk setup -H $HOME/src/erebusbat/qmk_firmware
+```
+
 ## Build Commands
 
 This repo uses the `qmk` CLI. General pattern:
