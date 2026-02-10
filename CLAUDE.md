@@ -23,7 +23,8 @@ Each keyboard family lives on its own branch tracking its respective upstream:
 | Branch | Upstream | Keyboards |
 |---|---|---|
 | `playground` | keychron/playground | Keychron C3 Pro |
-| `hall_effect_playground` | keychron/hall_effect_playground | Keychron K2 HE |
+| `k2_he_2025q3` | keychron/2025q3 | Keychron K2 HE (v1.2.x compatible) |
+| `hall_effect_playground` | keychron/hall_effect_playground | Keychron K2 HE (**DEPRECATED** — v1.1.0, incompatible with v1.2.x firmware) |
 | `erebusbat-keyboard` | sys76/master | System76 Launch 1 (custom keymap) |
 | `master` | sys76/master | System76 Launch 1 (default keymaps only) |
 
@@ -35,7 +36,7 @@ The following files are shared across all branches and must be kept in sync:
 - `CLAUDE.md` — this file
 - `activate.sh` — QMK build environment activation script
 
-After updating a shared file on any branch, sync it to the other branches (`playground`, `hall_effect_playground`, `master`, `erebusbat-keyboard`):
+After updating a shared file on any branch, sync it to the other branches (`playground`, `k2_he_2025q3`, `hall_effect_playground`, `master`, `erebusbat-keyboard`):
 
 ```bash
 # From the target branch, pull the file from the source branch:
@@ -79,10 +80,10 @@ qmk compile -kb keychron/c3_pro/ansi/red -km erebusbat
 qmk flash -kb keychron/c3_pro/ansi/red -km erebusbat
 ```
 
-**Keychron K2 HE** (branch: `hall_effect_playground`):
+**Keychron K2 HE** (branch: `k2_he_2025q3`):
 ```bash
-qmk compile -kb keychron/k2_he/ansi_rgb -km erebusbat
-qmk flash -kb keychron/k2_he/ansi_rgb -km erebusbat
+qmk compile -kb keychron/k2_he/ansi -km erebusbat
+qmk flash -kb keychron/k2_he/ansi -km erebusbat
 ```
 
 **System76 Launch 1** (branch: `erebusbat-keyboard`):
@@ -98,7 +99,7 @@ To flash, the keyboard must be in DFU mode. Hold **Esc** while plugging in the U
 ### Per-keyboard documentation
 
 Keyboard-specific docs (recovery procedures, hardware reset, EEPROM warnings) live in per-keyboard CLAUDE.md files on their respective branches:
-- **K2 HE**: `keyboards/keychron/k2_he/CLAUDE.md` (branch: `hall_effect_playground`)
+- **K2 HE**: `keyboards/keychron/k2_he/CLAUDE.md` (branch: `k2_he_2025q3`)
 
 ## ErebusBat Keymap Architecture
 
