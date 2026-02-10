@@ -71,13 +71,13 @@ ________________________________________________________________________________
   |            |        |       |        |                 |                 |        |        |             |   |  HOME  |  PGDN  |  END   |
   |____________|________|_______|________|_________________|_________________|________|________|_____________|   |________|________|________|
 
-* 'RESET' resets the controller and puts the board into firmware flashing mode. If this key is hit accidentally, just unplug the board
+* 'QK_BOOT' resets the controller and puts the board into firmware flashing mode. If this key is hit accidentally, just unplug the board
 *        and plug it back in.
 */
 
   [1] = LAYOUT(
 //  ESC      F1       F2        F3       F4       F5       F6       F7       F8       F9       F10      F11      F12      Del                   Home
-    RESET,   KC_TRNS, KC_TRNS,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_F21,  KC_F22,  KC_MEDIA_PREV_TRACK,  KC_MPLY,
+    QK_BOOT, KC_TRNS, KC_TRNS,  KC_F13,  KC_F14,  KC_F15,  KC_F16,  KC_F17,  KC_F18,  KC_F19,  KC_F20,  KC_F21,  KC_F22,  KC_MEDIA_PREV_TRACK,  KC_MPLY,
 
 //  `~       1        2         3        4        5        6        7        8        9        0        -_       =+       Bksp                  PgUp
     KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RGB_TOG, RGB_VAD, RGB_VAI, KC_MEDIA_NEXT_TRACK,  KC_VOLU,
