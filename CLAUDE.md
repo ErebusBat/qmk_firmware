@@ -37,6 +37,17 @@ brew install qmk/qmk/qmk
 qmk setup -H $HOME/src/erebusbat/qmk_firmware
 ```
 
+`qmk setup` may fail to install the ARM/AVR toolchains due to a deprecated `--ignore-pinned` flag in newer Homebrew versions. If you see errors about `ignorePinned`, install the toolchains manually:
+
+```bash
+brew install arm-none-eabi-gcc
+brew tap osx-cross/avr
+brew install osx-cross/avr/avr-gcc@8
+brew link --force osx-cross/avr/avr-gcc@8
+```
+
+The `avr-gcc@8` formula is keg-only, so the `brew link --force` is required to put it on PATH. Then re-run `qmk setup` to verify.
+
 ## Build Commands
 
 This repo uses the `qmk` CLI. General pattern:
