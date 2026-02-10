@@ -32,21 +32,21 @@ Each keyboard family lives on its own branch tracking its respective upstream:
 ## Build Environment Setup (macOS)
 
 ```bash
-brew tap qmk/qmk
-brew install qmk/qmk/qmk
+curl -fsSL https://install.qmk.fm | sh
 qmk setup -H $HOME/src/erebusbat/qmk_firmware
 ```
 
-`qmk setup` may fail to install the ARM/AVR toolchains due to a deprecated `--ignore-pinned` flag in newer Homebrew versions. If you see errors about `ignorePinned`, install the toolchains manually:
+The install script installs the QMK CLI, ARM/AVR toolchains, and flashing utilities to `~/Library/Application Support/qmk`.
+
+### Activating the build environment
+
+The QMK toolchains are not on PATH by default. Before compiling, source the activation script in your current shell:
 
 ```bash
-brew install arm-none-eabi-gcc
-brew tap osx-cross/avr
-brew install osx-cross/avr/avr-gcc@8
-brew link --force osx-cross/avr/avr-gcc@8
+source activate.sh
 ```
 
-The `avr-gcc@8` formula is keg-only, so the `brew link --force` is required to put it on PATH. Then re-run `qmk setup` to verify.
+This prepends the QMK toolchain paths for the current session only.
 
 ## Build Commands
 
