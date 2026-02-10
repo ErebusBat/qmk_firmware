@@ -126,6 +126,8 @@ If the K2 HE enters this error state, the recovery procedure is:
 5. Use Keychron Launcher's firmware upgrade feature to flash official stock firmware
 6. After the keyboard is fully recovered with stock firmware, you can flash the custom `erebusbat` keymap again
 
+**Keychron official firmware downloads**: https://www.keychron.com/pages/firmware-and-json-files-of-the-keychron-he-series-keyboards
+
 **Incident reference**: Commit `29296632f2` (VIA enable) triggered the issue when `eeconfig_init()` was called during troubleshooting, corrupting hall effect calibration. Reverted in `5eb29de2ef`. Recovery required flashing the stock `via` keymap compiled at commit `5eb29de2ef` on `hall_effect_playground` (Keychron upstream source from merge `9d61696df8`), then using Keychron Launcher web app firmware upgrade to fully restore EEPROM state.
 
 ## ErebusBat Keymap Architecture
