@@ -44,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         UG_TOGG,      UG_NEXT,      UG_VALU,  UG_HUEU,  UG_SATU,  UG_SPDU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,
         _______,      UG_PREV,      UG_VALD,  UG_HUED,  UG_SATD,  UG_SPDD,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  _______,  _______,            KC_MPLY,            _______,
         C(KC_LSFT),                 C(KC_Z),  C(KC_X),  C(KC_C),  C(KC_V),  BAT_LVL,  NK_TOGG,  _______,  _______,  _______,  _______,            _______,  KC_VOLU,  KC_MUTE,
-        _______,      C(KC_LOPTN),  C(KC_LCMMD),                            C(KC_SPC),                              _______,  _______,  _______,  KC_MPRV,  KC_VOLD,  KC_MNXT),
+        _______,      C(KC_LALT),   C(KC_LGUI),                             C(KC_SPC),                              _______,  _______,  _______,  KC_MPRV,  KC_VOLD,  KC_MNXT),
 
     [WIN_BASE] = LAYOUT_ansi_84(
         EB_ESC_HYPR,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,           KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,   KC_PSCR,  KC_DEL,   UG_NEXT,
