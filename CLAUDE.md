@@ -29,6 +29,21 @@ Each keyboard family lives on its own branch tracking its respective upstream:
 
 **Always check out the correct branch before working on a keyboard.**
 
+## Cross-Branch Shared Files
+
+The following files are shared across all branches and must be kept in sync:
+- `CLAUDE.md` — this file
+- `activate.sh` — QMK build environment activation script
+
+After updating a shared file on any branch, sync it to the other branches:
+
+```bash
+# From the target branch, pull the file from the source branch:
+/opt/homebrew/bin/git checkout <source-branch> -- CLAUDE.md activate.sh
+/opt/homebrew/bin/git add -f CLAUDE.md activate.sh
+/opt/homebrew/bin/git commit -m "Sync shared files from <source-branch>"
+```
+
 ## Build Environment Setup (macOS)
 
 ```bash
