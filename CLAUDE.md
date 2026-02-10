@@ -95,6 +95,39 @@ qmk flash -kb system76/launch_1 -km erebusbat
 
 To flash, the keyboard must be in DFU mode. Hold **Esc** while plugging in the USB cable.
 
+### Hardware Reset (K2 HE only)
+
+If the keyboard firmware is completely corrupt (cannot enter DFU via Esc+plug), there is a **small gold contact pad underneath the spacebar, to the left**. It does not look like a traditional button. Press it down (e.g. with a plastic fork) while plugging in the USB cable to force entry into the STM32 system bootloader. In this deeply broken state the keyboard lights will not work, so confirm DFU mode with:
+
+```bash
+dfu-util -l
+```
+
+Then flash manually:
+
+```bash
+dfu-util -a 0 -d 0483:DF11 -s 0x08000000:leave -D <firmware.bin>
+```
+
+### K2 HE EEPROM / Hall Effect Calibration Recovery
+
+**CRITICAL WARNING**: Never call `eeconfig_init()` or `eeconfig_disable()` directly in custom firmware for the K2 HE. The hall effect keyboard stores per-key analog calibration data in EEPROM. Corrupting this data causes a persistent error state (green light flashing under the 4 key on any keypress) that **survives firmware reflashing** because EEPROM persists across flashes.
+
+If the K2 HE enters this error state, the recovery procedure is:
+
+1. Put keyboard in DFU mode (Esc+plug or hardware reset pad under spacebar — see above)
+2. Flash the stock Keychron `via` keymap from this repo:
+   ```bash
+   qmk compile -kb keychron/k2_he/ansi_rgb -km via
+   dfu-util -a 0 -d 0483:DF11 -s 0x08000000:leave -D keychron_k2_he_ansi_rgb_via.bin
+   ```
+3. Try Fn+J+Z factory reset (hold 3 seconds until red flash)
+4. If still broken, use **Keychron Launcher** web app (https://launcher.keychron.com) to connect and reset
+5. Use Keychron Launcher's firmware upgrade feature to flash official stock firmware
+6. After the keyboard is fully recovered with stock firmware, you can flash the custom `erebusbat` keymap again
+
+**Incident reference**: Commit `29296632f2` (VIA enable) triggered the issue when `eeconfig_init()` was called during troubleshooting, corrupting hall effect calibration. Reverted in `5eb29de2ef`. Recovery required flashing the stock `via` keymap compiled at commit `5eb29de2ef` on `hall_effect_playground` (Keychron upstream source from merge `9d61696df8`), then using Keychron Launcher web app firmware upgrade to fully restore EEPROM state.
+
 ## ErebusBat Keymap Architecture
 
 All custom keymaps live under `keyboards/<vendor>/<board>/.../keymaps/erebusbat/` and share common conventions.
