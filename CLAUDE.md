@@ -92,6 +92,20 @@ qmk compile -kb system76/launch_1 -km erebusbat
 qmk flash -kb system76/launch_1 -km erebusbat
 ```
 
+### Flashing Workflow
+
+**Before flashing firmware**, consider using a tmux pane for better workflow:
+
+1. **Check if a pane is already claimed:** If working in tmux, check if there's a claimed pane for the session
+2. **Offer to claim a pane:** If no pane is claimed, ask the user if they want to claim one using `/claim-pane <pane-id>`
+3. **Benefits of using tmux:**
+   - Persistent output history
+   - Can monitor flash progress
+   - Environment (activate.sh) persists across commands
+   - Easy to reference output later
+
+**This is not required** - flash commands work fine with the regular Bash tool, but tmux provides a better experience for iterative firmware development.
+
 ### DFU Mode
 
 To flash, the keyboard must be in DFU mode. Hold **Esc** while plugging in the USB cable.
