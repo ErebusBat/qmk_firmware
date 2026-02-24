@@ -82,5 +82,10 @@ void keyboard_post_init_user(void) {
     // Force MAC_BASE as default layer
     default_layer_set(1U << MAC_BASE);
     eeconfig_update_default_layer(1U << MAC_BASE);
+
+    // Force LED on with custom effect at startup, bypassing stale EEPROM
+    led_matrix_enable_noeeprom();
+    led_matrix_mode_noeeprom(LED_MATRIX_CUSTOM_SOLID_REACTIVE_OVERLAY);
+    led_matrix_set_val_noeeprom(128);
 }
 

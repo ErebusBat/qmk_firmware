@@ -21,3 +21,7 @@
 #define PERMISSIVE_HOLD   // Immediately select hold action when another key is pressed
 #define HOLD_ON_OTHER_KEY_PRESS  // Alternative to PERMISSIVE_HOLD with different behavior
 // #define QUICK_TAP_TERM 120  // Allows quick double-taps to always register as taps
+
+// LED Matrix defaults
+#define LED_MATRIX_DEFAULT_MODE LED_MATRIX_CUSTOM_SOLID_REACTIVE_OVERLAY
+#define LED_MATRIX_DEFAULT_VAL  128
