@@ -24,10 +24,6 @@ enum layers{
     WIN_FN,
 };
 
-enum custom_keycodes {
-    EB_SCRN = SAFE_RANGE
-};
-
 #define KC_TASK LGUI(KC_TAB)
 #define KC_FLXP LGUI(KC_E)
 
@@ -77,17 +73,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,            _______,
         _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______),
 };
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case EB_SCRN:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LGUI(SS_LSFT("4")));
-            }
-            return false;
-    }
-    return true;
-}
 
 void keyboard_post_init_user(void) {
     // Force MAC_BASE as default layer

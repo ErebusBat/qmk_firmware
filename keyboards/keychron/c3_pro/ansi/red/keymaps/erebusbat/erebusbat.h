@@ -8,6 +8,7 @@
 
 #define EB_CAPS MT(MOD_LCTL, KC_ESC)
 #define EB_ESC_HYPR MT(MOD_HYPR, KC_ESC)
+#define EB_SCRN SGUI(KC_4)
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Windowing Commands - Raycast Windowing Integration
