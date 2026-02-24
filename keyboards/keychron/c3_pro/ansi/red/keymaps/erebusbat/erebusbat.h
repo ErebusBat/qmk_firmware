@@ -9,6 +9,16 @@
 #define EB_CAPS MT(MOD_LCTL, KC_ESC)
 #define EB_ESC_HYPR MT(MOD_HYPR, KC_ESC)
 #define EB_SCRN SGUI(KC_4)
+#define EB_KC_DICT HYPR(KC_BSLS)          // Hyper + Backslash
+#define EB_LLM_DICT HYPR(KC_RBRC)         // Hyper + ]
+
+////////////////////////////////////////////////////////////////////////////////
+/// Tap Dance
+////////////////////////////////////////////////////////////////////////////////
+enum {
+    TD_DICT,
+};
+#define EB_DICT TD(TD_DICT)
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Windowing Commands - Raycast Windowing Integration
