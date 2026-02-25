@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to agentic coding tools working with code in this repository.
 
 ## Repository Overview
 
@@ -33,15 +33,15 @@ Each keyboard family lives on its own branch tracking its respective upstream:
 ## Cross-Branch Shared Files
 
 The following files are shared across all branches and must be kept in sync:
-- `CLAUDE.md` — this file
+- `AGENTS.md` — this file
 - `activate.sh` — QMK build environment activation script
 
 After updating a shared file on any branch, sync it to the other branches (`playground`, `k2_he_2025q3`, `hall_effect_playground`, `master`, `erebusbat-keyboard`):
 
 ```bash
 # From the target branch, pull the file from the source branch:
-/opt/homebrew/bin/git checkout <source-branch> -- CLAUDE.md activate.sh
-/opt/homebrew/bin/git add -f CLAUDE.md activate.sh
+/opt/homebrew/bin/git checkout <source-branch> -- AGENTS.md activate.sh
+/opt/homebrew/bin/git add -f AGENTS.md activate.sh
 /opt/homebrew/bin/git commit -m "Sync shared files from <source-branch>"
 ```
 
@@ -112,8 +112,8 @@ To flash, the keyboard must be in DFU mode. Hold **Esc** while plugging in the U
 
 ### Per-keyboard documentation
 
-Keyboard-specific docs (recovery procedures, hardware reset, EEPROM warnings) live in per-keyboard CLAUDE.md files on their respective branches:
-- **K2 HE**: `keyboards/keychron/k2_he/CLAUDE.md` (branch: `k2_he_2025q3`)
+Keyboard-specific docs (recovery procedures, hardware reset, EEPROM warnings) live in per-keyboard AGENTS.md files on their respective branches:
+- **K2 HE**: `keyboards/keychron/k2_he/AGENTS.md` (branch: `k2_he_2025q3`)
 
 ## ErebusBat Keymap Architecture
 

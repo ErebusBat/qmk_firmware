@@ -1,6 +1,6 @@
 # Erebusbat Keymap for Keychron K2 HE
 
-See `keyboards/keychron/k2_he/CLAUDE.md` for K2 HE-specific docs (DFU, hardware reset, EEPROM recovery, porting notes).
+See `keyboards/keychron/k2_he/AGENTS.md` for K2 HE-specific docs (DFU, hardware reset, EEPROM recovery, porting notes).
 
 ## Overview
 Custom QMK keymap for Keychron K2 HE (Hall Effect) ANSI keyboard with 4 layers defined in `keymap.c`:
@@ -41,5 +41,5 @@ qmk flash -kb keychron/k2_he/ansi -km erebusbat
 ├── keymap.c    # Main keymap definitions
 ├── config.h    # Mod-tap timing configuration
 ├── erebusbat.h # Custom keycode definitions
-└── CLAUDE.md   # This documentation file
+└── AGENTS.md   # This documentation file
 ```
