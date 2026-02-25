@@ -49,6 +49,12 @@ After updating a shared file on any branch, sync it to the other branches (`play
 /opt/homebrew/bin/git commit -m "Sync shared files from <source-branch>"
 ```
 
+After multi-branch syncs, push all updated branches together:
+
+```bash
+git push origin k2_he_2025q3 playground erebusbat-keyboard
+```
+
 ## Build Environment Setup (macOS)
 
 ```bash
