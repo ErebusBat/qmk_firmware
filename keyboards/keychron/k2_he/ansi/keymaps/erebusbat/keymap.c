@@ -42,7 +42,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,      KC_BRID,      KC_BRIU,  KC_MCTRL, KC_LNPAD, UG_VALD,  UG_VALU,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,  _______,  KC_DEL,      UG_NEXT,
         _______,      BT_HST1,      BT_HST2,  BT_HST3,  P2P4G,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_DEL,                _______,
         UG_TOGG,      UG_NEXT,      UG_VALU,  UG_HUEU,  UG_SATU,  UG_SPDU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,               _______,
-        _______,      UG_PREV,      UG_VALD,  UG_HUED,  UG_SATD,  UG_SPDD,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  _______,  _______,            KC_MPLY,               _______,
+        _______,      UG_PREV,      UG_VALD,  UG_HUED,  UG_SATD,  UG_SPDD,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  _______,  _______,            EB_TUI_NL,                _______,
         C(KC_LSFT),                 C(KC_Z),  C(KC_X),  C(KC_C),  C(KC_V),  BAT_LVL,  NK_TOGG,  _______,  _______,  _______,  _______,            _______,  KC_VOLU,     KC_MUTE,
         _______,      C(KC_LALT),   C(KC_LGUI),                             C(KC_SPC),                              _______,  _______,  _______,  KC_MPRV,  KC_VOLD,     KC_MNXT),
 

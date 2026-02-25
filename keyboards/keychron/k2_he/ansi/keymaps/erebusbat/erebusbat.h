@@ -6,10 +6,11 @@
 
 #pragma once
 
-#define EB_CAPS MT(MOD_LCTL, KC_ESC)      // Tap: Esc, Hold: Left Ctrl
-#define EB_ESC_HYPR MT(MOD_HYPR, KC_ESC)  // Tap: Esc, Hold: Hyper
-#define EB_KC_DICT HYPR(KC_BSLS)          // Hyper + \     .
-#define EB_LLM_DICT HYPR(KC_RBRC)         // Hyper + ]
+#define EB_CAPS MT(MOD_LCTL, KC_ESC)     // Tap: Esc, Hold: Left Ctrl
+#define EB_ESC_HYPR MT(MOD_HYPR, KC_ESC) // Tap: Esc, Hold: Hyper
+#define EB_KC_DICT HYPR(KC_BSLS)         // Hyper + \     .
+#define EB_LLM_DICT HYPR(KC_RBRC)        // Hyper + ]
+#define EB_TUI_NL S(A(KC_ENT))           // TUI NewLine: Shift + Option + Enter
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Tap Dance
@@ -34,16 +35,16 @@ enum {
 /// +─────+─────+
 /// |  A  |  B  |
 /// +─────+─────+
-#define EB_HLF_A LCAG(KC_LEFT)  // Left half
-#define EB_HLF_B LCAG(KC_RGHT)  // Right half
+#define EB_HLF_A LCAG(KC_LEFT) // Left half
+#define EB_HLF_B LCAG(KC_RGHT) // Right half
 
 /// - Thirds (Equal width columns)
 /// +───+───+───+
 /// | A | B | C |
 /// +───+───+───+
-#define EB_3RD_A LCAG(KC_F10)   // Left third
-#define EB_3RD_B LCAG(KC_F11)   // Center third
-#define EB_3RD_C LCAG(KC_F12)   // Right third
+#define EB_3RD_A LCAG(KC_F10) // Left third
+#define EB_3RD_B LCAG(KC_F11) // Center third
+#define EB_3RD_C LCAG(KC_F12) // Right third
 
 /// - Two Thirds (Wide columns)
 /// +───────+───+
@@ -65,10 +66,10 @@ enum {
 /// +───+───+
 /// | C | D |  Bottom row
 /// +───+───+
-#define EB_QTR_A LCAG(KC_U)     // Top-left
-#define EB_QTR_B LCAG(KC_I)     // Top-right
-#define EB_QTR_C LCAG(KC_J)     // Bottom-left
-#define EB_QTR_D LCAG(KC_K)     // Bottom-right
+#define EB_QTR_A LCAG(KC_U) // Top-left
+#define EB_QTR_B LCAG(KC_I) // Top-right
+#define EB_QTR_C LCAG(KC_J) // Bottom-left
+#define EB_QTR_D LCAG(KC_K) // Bottom-right
 
 /// - Sixths (2x3 grid)
 /// +───+───+───+
@@ -76,9 +77,9 @@ enum {
 /// +───+───+───+
 /// | D | E | F |  Bottom row
 /// +───+───+───+
-#define EB_6th_A LCAG(KC_F1)    // Top-left
-#define EB_6th_B LCAG(KC_F2)    // Top-center
-#define EB_6th_C LCAG(KC_F3)    // Top-right
-#define EB_6th_D LCAG(KC_1)     // Bottom-left
-#define EB_6th_E LCAG(KC_2)     // Bottom-center
-#define EB_6th_F LCAG(KC_3)     // Bottom-right
+#define EB_6th_A LCAG(KC_F1) // Top-left
+#define EB_6th_B LCAG(KC_F2) // Top-center
+#define EB_6th_C LCAG(KC_F3) // Top-right
+#define EB_6th_D LCAG(KC_1)  // Bottom-left
+#define EB_6th_E LCAG(KC_2)  // Bottom-center
+#define EB_6th_F LCAG(KC_3)  // Bottom-right
