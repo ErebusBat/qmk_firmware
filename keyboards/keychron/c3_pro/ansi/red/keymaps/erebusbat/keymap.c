@@ -87,5 +87,6 @@ void keyboard_post_init_user(void) {
     led_matrix_enable_noeeprom();
     led_matrix_mode_noeeprom(LED_MATRIX_CUSTOM_SOLID_REACTIVE_OVERLAY);
     led_matrix_set_val_noeeprom(128);
+    led_matrix_set_speed_noeeprom(64);  // slow fade (~1s back to full)
 }
 
