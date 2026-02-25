@@ -30,6 +30,10 @@ Each keyboard family lives on its own branch tracking its respective upstream:
 
 **Always check out the correct branch before working on a keyboard.**
 
+## Git Worktrees
+
+If a git worktree exists for the target keyboard branch, use that worktree (or attempt to) instead of switching branches in the current worktree. This avoids conflicts with a dirty working tree and keeps keyboard-specific work isolated.
+
 ## Cross-Branch Shared Files
 
 The following files are shared across all branches and must be kept in sync:
@@ -94,17 +98,26 @@ qmk flash -kb system76/launch_1 -km erebusbat
 
 ### Flashing Workflow
 
-**Before flashing firmware**, consider using a tmux pane for better workflow:
+**Required for flashing**: use a dedicated tmux pane created from the current OpenCode pane.
 
-1. **Check if a pane is already claimed:** If working in tmux, check if there's a claimed pane for the session
-2. **Offer to claim a pane:** If no pane is claimed, ask the user if they want to claim one using `/claim-pane <pane-id>`
-3. **Benefits of using tmux:**
-   - Persistent output history
-   - Can monitor flash progress
-   - Environment (activate.sh) persists across commands
-   - Easy to reference output later
+1. **Find the current pane id via Bash**:
+   ```bash
+   tmux display-message -p '#{pane_id} #{session_name}:#{window_index}.#{pane_index}'
+   ```
+2. **Split that pane** (use the tmux tool) to create a new dedicated pane.
+3. **First command in the new pane**:
+   ```bash
+   export CLAUDE_CODE_PANE=1
+   ```
+4. **Use that pane for** `source activate.sh`, compile, and `qmk flash`.
 
-**This is not required** - flash commands work fine with the regular Bash tool, but tmux provides a better experience for iterative firmware development.
+**Recommended for long-running tasks**: use the same tmux pane workflow for lengthy compiles or debugging sessions.
+
+**Benefits**:
+- Persistent output history
+- Can monitor flash progress
+- Environment (activate.sh) persists across commands
+- Easy to reference output later
 
 ### DFU Mode
 
