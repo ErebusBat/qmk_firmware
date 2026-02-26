@@ -11,6 +11,7 @@
 #define EB_KC_DICT HYPR(KC_BSLS)         // Hyper + \     .
 #define EB_LLM_DICT HYPR(KC_RBRC)        // Hyper + ]
 #define EB_TUI_NL S(A(KC_ENT))           // TUI NewLine: Shift + Option + Enter
+#define EB_AI_NXT C(S(KC_RGHT))          // AI Next: Ctrl + Shift + Right
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Tap Dance
