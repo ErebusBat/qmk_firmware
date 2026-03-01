@@ -112,14 +112,13 @@ tap_dance_action_t tap_dance_actions[] = {
 };
 
 void keyboard_post_init_user(void) {
-    // Force MAC_BASE as default layer
+    // Force MAC_BASE as default layer or things will be weird
     default_layer_set(1U << MAC_BASE);
-    eeconfig_update_default_layer(1U << MAC_BASE);
 
-    // Force LED on with custom effect at startup, bypassing stale EEPROM
+    // Force LED on with our custom effect at startup, without reading or writing EEPROM
+    // Change the brightness and speed to our values defined in config.h
     led_matrix_enable_noeeprom();
     led_matrix_mode_noeeprom(LED_MATRIX_CUSTOM_SOLID_REACTIVE_OVERLAY);
-    led_matrix_set_val_noeeprom(128);
-    led_matrix_set_speed_noeeprom(64);  // slow fade (~1s back to full)
+    led_matrix_set_val_noeeprom(LED_MATRIX_DEFAULT_VAL );
+    led_matrix_set_speed_noeeprom(LED_MATRIX_DEFAULT_SPD);  // slow fade (~1s back to full)
 }
-

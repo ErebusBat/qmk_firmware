@@ -17,11 +17,20 @@
 #pragma once
 
 // Mod-tap configuration
-#define TAPPING_TERM 200  // Default is 200ms, you can try 175-250
-#define PERMISSIVE_HOLD   // Immediately select hold action when another key is pressed
-#define HOLD_ON_OTHER_KEY_PRESS  // Alternative to PERMISSIVE_HOLD with different behavior
+#define TAPPING_TERM 200        // Default is 200ms, you can try 175-250
+#define PERMISSIVE_HOLD         // Immediately select hold action when another key is pressed
+#define HOLD_ON_OTHER_KEY_PRESS // Alternative to PERMISSIVE_HOLD with different behavior
 // #define QUICK_TAP_TERM 120  // Allows quick double-taps to always register as taps
 
-// LED Matrix defaults
+// LED Matrix defaults. The keyboard_post_init_user() method in keymap.c forces these on boot.
 #define LED_MATRIX_DEFAULT_MODE LED_MATRIX_CUSTOM_SOLID_REACTIVE_OVERLAY
-#define LED_MATRIX_DEFAULT_VAL  128
+#define LED_MATRIX_DEFAULT_VAL 255
+//
+// Approx fade time (reactive effects; higher speed = faster):
+// Speed | ~Fade
+// 16    | ~4s
+// 32    | ~2s
+// 64    | ~1s
+// 128   | ~0.5s
+// 255   | ~0.25s
+#define LED_MATRIX_DEFAULT_SPD 64
