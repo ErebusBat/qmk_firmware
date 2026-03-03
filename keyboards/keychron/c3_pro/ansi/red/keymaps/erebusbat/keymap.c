@@ -111,6 +111,14 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_DICT] = ACTION_TAP_DANCE_DOUBLE(EB_KC_DICT, KC_ENT),
 };
 
+// Key override: Shift + EB_AI_NXT sends EB_AI_PRV (global across layers).
+// Requires KEY_OVERRIDE_ENABLE = yes in rules.mk.
+const key_override_t ai_prev_on_shift = ko_make_basic(MOD_MASK_SHIFT, EB_AI_NXT, EB_AI_PRV);
+const key_override_t** key_overrides = (const key_override_t*[]){
+    &ai_prev_on_shift,
+    NULL, // Terminator required by QMK to mark end of overrides list.
+};
+
 void keyboard_post_init_user(void) {
     // Force MAC_BASE as default layer or things will be weird
     default_layer_set(1U << MAC_BASE);
