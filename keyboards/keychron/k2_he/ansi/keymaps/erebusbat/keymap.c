@@ -73,8 +73,10 @@ tap_dance_action_t tap_dance_actions[] = {
 // Key override: Shift + EB_AI_NXT sends EB_AI_PRV (global across layers).
 // Requires KEY_OVERRIDE_ENABLE = yes in rules.mk.
 const key_override_t  ai_prev_on_shift = ko_make_basic(MOD_MASK_SHIFT, EB_AI_NXT, EB_AI_PRV);
+const key_override_t  tui_nl_on_shift  = ko_make_basic(MOD_MASK_SHIFT, EB_DICT, EB_TUI_NL);
 const key_override_t *key_overrides[]  = {
     &ai_prev_on_shift,
+    &tui_nl_on_shift,
     NULL, // Terminator required by QMK to mark end of overrides list.
 };
 
