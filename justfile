@@ -21,3 +21,6 @@ edit:
 
 vim-keymap km=KEYMAP kb=KEYBOARD:
 	vim keyboards/{{ kb }}/keymaps/{{ km }}/*
+
+render-keymap-ascii layer="L_BASE" min_key_width="" kb=KEYBOARD km=KEYMAP:
+	ruby util/render_keymap_ascii.rb --keymap keyboards/{{kb}}/keymaps/{{km}}/keymap.c --info keyboards/{{kb}}/info.json --layer {{layer}} {{ if min_key_width != "" { "--min-key-width " + min_key_width } else { "" } }}
