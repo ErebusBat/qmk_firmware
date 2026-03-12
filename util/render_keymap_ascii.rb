@@ -281,6 +281,8 @@ begin
   end
 
   unit_width = compute_unit_width(keys, options[:min_key_width])
+  $stderr.puts("effective_min_key_width=#{unit_width}")
+  $stderr.puts("passed_min_key_width=#{options[:min_key_width]}") unless options[:min_key_width].nil?
   puts render_rows(keys, unit_width)
 rescue StandardError => e
   warn "Error: #{e.message}"
