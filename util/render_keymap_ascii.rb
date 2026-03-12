@@ -179,28 +179,19 @@ def render_rows(keys, unit_width)
   sorted_rows = grouped.keys.sort
   output = []
 
-  sorted_rows.each_with_index do |row_y, index|
+  sorted_rows.each do |row_y|
     row_keys = grouped[row_y].sort_by { |key| key[:x] }
 
-    prepared = []
-    row_keys.each_with_index do |key, key_index|
-      inner = [(key[:w] * unit_width).round, 1].max
+    prepared = row_keys.map do |key|
+      total_width = [(key[:w] * unit_pitch).round + 1, 3].max
+      inner = total_width - 2
       label = key[:label][0, inner]
+      left = (key[:x] * unit_pitch).round + 1
 
-      left = if key_index.zero?
-               (key[:x] * unit_pitch).round + 1
-             else
-               prev_key = row_keys[key_index - 1]
-               prev_prepared = prepared[key_index - 1]
-               gap_units = key[:x] - (prev_key[:x] + prev_key[:w])
-               gap_chars = (gap_units * unit_pitch).round
-               prev_prepared[:right] + [gap_chars, 0].max
-             end
-
-      prepared << {
+      {
         left: left,
         inner: inner,
-        right: left + inner + 1,
+        right: left + total_width - 1,
         label: label
       }
     end
