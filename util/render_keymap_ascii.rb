@@ -237,7 +237,6 @@ def render_rows(keys, unit_width)
     output << top.join.rstrip
     output << mid.join.rstrip
     output << bot.join.rstrip
-    output << "" unless index == sorted_rows.length - 1
   end
 
   output.join("\n")
