@@ -21,39 +21,42 @@
 #include "eeprom.h"
 #include "quantum.h"
 #include "raw_hid.h"
-#include "thelio_io_2/config.h"
 #include "version.h"
 #ifdef DYNAMIC_KEYMAP_ENABLE
-    #include "dynamic_keymap.h"
+#    include "dynamic_keymap.h"
 #endif // DYNAMIC_KEYMAP_ENABLE
 
 #include "system76_ec.h"
 
+#ifndef SYSTEM76_EC_EEPROM_CASE_REV_SIZE
+#    define SYSTEM76_EC_EEPROM_CASE_REV_SIZE 0
+#endif
+
 enum Command {
-    CMD_PROBE         = 1,   // Probe for System76 EC protocol
-    CMD_BOARD         = 2,   // Read board string
-    CMD_VERSION       = 3,   // Read version string
-    CMD_RESET         = 6,   // Reset to bootloader
-    CMD_FAN_GET       = 7,   // Get fan speeds
-    CMD_FAN_SET       = 8,   // Set fan speeds
-    CMD_KEYMAP_GET    = 9,   // Get keyboard map index
-    CMD_KEYMAP_SET    = 10,  // Set keyboard map index
-    CMD_LED_GET_VALUE = 11,  // Get LED value by index
-    CMD_LED_SET_VALUE = 12,  // Set LED value by index
-    CMD_LED_GET_COLOR = 13,  // Get LED color by index
-    CMD_LED_SET_COLOR = 14,  // Set LED color by index
-    CMD_LED_GET_MODE  = 15,  // Get LED matrix mode and speed
-    CMD_LED_SET_MODE  = 16,  // Set LED matrix mode and speed
-    CMD_MATRIX_GET    = 17,  // Get currently pressed keys
-    CMD_LED_SAVE      = 18,  // Save LED settings to ROM
-    CMD_SET_NO_INPUT  = 19,  // Enable/disable no input mode
-    CMD_SECURITY_GET  = 20,  // Get security state
-    CMD_SECURITY_SET  = 21,  // Set security state
-    CMD_FAN_GET_RPM   = 22,  // Get fan rpm
-    CMD_FAN_GET_MODE  = 23,  // Get fan mode
-    CMD_FAN_SET_MODE  = 24,  // Set fan mode
-    CMD_CASE_REV_GET  = 25,  // Get case revision
-    CMD_CASE_REV_SET  = 26,  // Set case revision
+    CMD_PROBE         = 1,  // Probe for System76 EC protocol
+    CMD_BOARD         = 2,  // Read board string
+    CMD_VERSION       = 3,  // Read version string
+    CMD_RESET         = 6,  // Reset to bootloader
+    CMD_FAN_GET       = 7,  // Get fan speeds
+    CMD_FAN_SET       = 8,  // Set fan speeds
+    CMD_KEYMAP_GET    = 9,  // Get keyboard map index
+    CMD_KEYMAP_SET    = 10, // Set keyboard map index
+    CMD_LED_GET_VALUE = 11, // Get LED value by index
+    CMD_LED_SET_VALUE = 12, // Set LED value by index
+    CMD_LED_GET_COLOR = 13, // Get LED color by index
+    CMD_LED_SET_COLOR = 14, // Set LED color by index
+    CMD_LED_GET_MODE  = 15, // Get LED matrix mode and speed
+    CMD_LED_SET_MODE  = 16, // Set LED matrix mode and speed
+    CMD_MATRIX_GET    = 17, // Get currently pressed keys
+    CMD_LED_SAVE      = 18, // Save LED settings to ROM
+    CMD_SET_NO_INPUT  = 19, // Enable/disable no input mode
+    CMD_SECURITY_GET  = 20, // Get security state
+    CMD_SECURITY_SET  = 21, // Set security state
+    CMD_FAN_GET_RPM   = 22, // Get fan rpm
+    CMD_FAN_GET_MODE  = 23, // Get fan mode
+    CMD_FAN_SET_MODE  = 24, // Set fan mode
+    CMD_CASE_REV_GET  = 25, // Get case revision
+    CMD_CASE_REV_SET  = 26, // Set case revision
 };
 
 bool input_disabled = false;
@@ -98,9 +101,11 @@ void system76_ec_unlock(void) {
     bootloader_unlocked = true;
 }
 
-bool system76_ec_is_unlocked(void) { return bootloader_unlocked; }
+bool system76_ec_is_unlocked(void) {
+    return bootloader_unlocked;
+}
 
-__attribute__((weak)) bool system76_ec_fan_get(uint8_t index, uint8_t * duty) {
+__attribute__((weak)) bool system76_ec_fan_get(uint8_t index, uint8_t *duty) {
     return false;
 }
 
@@ -108,11 +113,11 @@ __attribute__((weak)) bool system76_ec_fan_set(uint8_t index, uint8_t duty) {
     return false;
 }
 
-__attribute__((weak)) bool system76_ec_fan_get_rpm(uint8_t index, uint16_t * rpm) {
+__attribute__((weak)) bool system76_ec_fan_get_rpm(uint8_t index, uint16_t *rpm) {
     return false;
 }
 
-__attribute__((weak)) bool system76_ec_led_get_mode(uint8_t layer, uint8_t * mode, uint8_t * speed) {
+__attribute__((weak)) bool system76_ec_led_get_mode(uint8_t layer, uint8_t *mode, uint8_t *speed) {
     return false;
 }
 
@@ -120,7 +125,7 @@ __attribute__((weak)) bool system76_ec_led_set_mode(uint8_t layer, uint8_t mode,
     return false;
 }
 
-__attribute__((weak)) bool system76_ec_security_get(enum SecurityState * security_state) {
+__attribute__((weak)) bool system76_ec_security_get(enum SecurityState *security_state) {
     return false;
 }
 
@@ -132,7 +137,7 @@ __attribute__((weak)) bool system76_ec_security_set(enum SecurityState security_
 enum Mode {
     MODE_SOLID_COLOR = 0,
     MODE_PER_KEY,
-    #ifndef DISABLE_RGB_MATRIX_ANIMATIONS
+#    ifndef DISABLE_RGB_MATRIX_ANIMATIONS
     MODE_CYCLE_ALL,
     MODE_CYCLE_LEFT_RIGHT,
     MODE_CYCLE_UP_DOWN,
@@ -144,7 +149,7 @@ enum Mode {
     MODE_RAINDROPS,
     MODE_SPLASH,
     MODE_MULTISPLASH,
-    #endif  // DISABLE_RGB_MATRIX_ANIMATIONS
+#    endif // DISABLE_RGB_MATRIX_ANIMATIONS
     MODE_ACTIVE_KEYS,
     MODE_DISABLED,
     MODE_LAST,
@@ -262,7 +267,7 @@ void system76_ec_rgb_layer(layer_state_t layer_state) {
         }
     }
 }
-#endif  // RGB_MATRIX_CUSTOM_KB
+#endif // RGB_MATRIX_CUSTOM_KB
 
 // Read or write EEPROM data with checks for being inside System76 EC region.
 bool system76_ec_case_rev(uint8_t *buf, size_t size, bool write) {
@@ -301,7 +306,7 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
             break;
         case CMD_RESET:
             if (bootloader_unlocked) {
-                data[1] = 0;
+                data[1]          = 0;
                 bootloader_reset = true;
             }
             break;
@@ -353,7 +358,7 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
                 for (uint8_t layer = 0; layer < DYNAMIC_KEYMAP_LAYER_COUNT; layer++) {
                     if (index == (0xF0 | layer)) {
                         layer_rgb[layer].hsv.v = value;
-                        data[1] = 0;
+                        data[1]                = 0;
                         system76_ec_rgb_layer(layer_state);
                         break;
                     }
@@ -393,7 +398,7 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
 
                 if (index < RGB_MATRIX_LED_COUNT) {
                     raw_rgb_data[index] = rgb;
-                    data[1] = 0;
+                    data[1]             = 0;
                 } else {
                     for (uint8_t layer = 0; layer < DYNAMIC_KEYMAP_LAYER_COUNT; layer++) {
                         if (index == (0xF0 | layer)) {
@@ -432,7 +437,7 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
                 if (layer < DYNAMIC_KEYMAP_LAYER_COUNT && mode < MODE_LAST) {
                     layer_rgb[layer].mode  = mode_map[mode];
                     layer_rgb[layer].speed = speed;
-                    data[1] = 0;
+                    data[1]                = 0;
                     system76_ec_rgb_layer(layer_state);
                 }
             }
@@ -443,7 +448,7 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
                 data[1] = 0;
             }
             break;
-#else   // RGB_MATRIX_CUSTOM_KB
+#else  // RGB_MATRIX_CUSTOM_KB
         case CMD_LED_GET_MODE:
             if (system76_ec_led_get_mode(data[2], &data[3], &data[4])) {
                 data[1] = 0;
@@ -454,7 +459,7 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
                 data[1] = 0;
             }
             break;
-#endif  // RGB_MATRIX_CUSTOM_KB
+#endif // RGB_MATRIX_CUSTOM_KB
         case CMD_MATRIX_GET: {
             // TODO: Improve performance?
             data[2] = matrix_rows();
@@ -485,7 +490,7 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
         case CMD_SET_NO_INPUT: {
             clear_keyboard();
             input_disabled = data[2] != 0;
-            data[1] = 0;
+            data[1]        = 0;
         } break;
         case CMD_FAN_GET_RPM: {
             uint16_t rpm = 0;
