@@ -1,6 +1,13 @@
 #include QMK_KEYBOARD_H
 #include "erebusbat.h"
 
+
+enum layers {
+    L_BASE = 0,  // 0
+    L_FN1,   // 1
+    L_WM,
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* Layer 0, default layer
@@ -25,7 +32,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         |____________|________|_______|________|_________________|_________________|________|________|_____________|   |________|________|________|
   */
 
-    [0] = LAYOUT(
+    [L_BASE] = LAYOUT(
         //     ESC      F1       F2       F3       F4       F5       F6       F7       F8       F9       F10      F11      F12      Del           Home
         KC_ESC, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_DEL, KC_HOME,
 
@@ -52,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
     /* Layer 1, function layer
-__________________________________________________________________________________________________________________________________  ________
+        __________________________________________________________________________________________________________________________________  ________
         |        |        |        |        |        |        |        |        |        |        |        |        |        |            || PLAY/  |
         | RESET  |        |        |  F13   |  F14   |  F15   |  F16   |  F17   |  F18   |  F19   |  F20   |  F21   |  F22   | Media <=   || PAUSE  |
         |________|________|________|________|________|________|________|________|________|________|________|________|________|____________||________|
@@ -76,7 +83,7 @@ ________________________________________________________________________________
 *        and plug it back in.
 */
 
-    [1] = LAYOUT(
+    [L_FN1] = LAYOUT(
         // ESC      F1       F2       F3      F4      F5      F6      F7      F8      F9      F10     F11     F12           Del                   Home
         QK_BOOT, KC_TRNS, KC_TRNS, KC_F13, KC_F14, KC_F15, KC_F16, KC_F17, KC_F18, KC_F19, KC_F20, KC_F21, KC_F22, KC_MEDIA_PREV_TRACK,           KC_MPLY,
 
@@ -84,7 +91,7 @@ ________________________________________________________________________________
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, RGB_TOG, RGB_VAD, RGB_VAI, KC_MEDIA_NEXT_TRACK, KC_VOLU,
 
         // Tab      Q        W        E        R        T        Y        U        I        O       P        [{       ]}       \|                 PgDn
-        EB_SCRN, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,              KC_VOLD,
+        KC_SNAP, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,              KC_VOLD,
 
         // Esc      A        S        D        F        G        H        J        K      L        ;:       '"       Enter                        End
         KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_TRNS, KC_TRNS, KC_TRNS,                        KC_MUTE,
@@ -120,58 +127,26 @@ ________________________________________________________________________________
 
 */
 
-    [2] = LAYOUT(
+    [L_WM] = LAYOUT(
 
-        //  ESC              F1         F2         F3         F4          F5         F6          F7          F8          F9       F10      F11      F12      Del                           Home
-        EB_LOCK, EB_WM_QTR_A, EB_WM_QTR_B, EB_WM_23RD_A, EB_WM_23RD_B, EB_WM_23RD_C, EB_WM_6TH_A, EB_WM_6TH_B, EB_WM_6TH_C, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+        //  ESC     F1        F2        F3         F4         F5         F6        F7        F8          F9       F10      F11      F12      Del              Home
+        EB_LOCK, EB_QTR_A, EB_QTR_B, EB_23RD_A, EB_23RD_B, EB_23RD_C, EB_6TH_A, EB_6TH_B, EB_6TH_C,   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,         KC_TRNS,
 
-        //  `~               1          2          3          4           5          6           7           8           9        0        -_       =+       Bksp                          PgUp
-        KC_TRNS, EB_WM_QTR_C, EB_WM_QTR_D, EB_WM_HLF_A, EB_WM_HLF_B, EB_WM_FULLS, EB_WM_6TH_D, EB_WM_6TH_E, EB_WM_6TH_F, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+        //  `~      1         2          3          4           5         6         7         8         9        0        -_       =+       Bksp              PgUp
+        KC_TRNS, EB_QTR_C, EB_QTR_D,  EB_HLF_A,  EB_HLF_B,   EB_FULLS, EB_6TH_D, EB_6TH_E, EB_6TH_F, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS,
 
-        //  Tab              Q             W        E        R        T            Y        U        I        O        P        [{            ]}       \|               PgDn
-        EB_WM_23RD_R, EB_WM_3RD_A, KC_TRNS, KC_TRNS, KC_TRNS, EB_WM_6TH_T, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, EB_WM_3RD_B, KC_TRNS, EB_WM_3RD_C, KC_TRNS,
+        //  Tab       Q         W        E        R        T        Y        U        I        O        P        [{        ]}       \|                        PgDn
+        EB_23RD_C, EB_3RD_A, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, EB_3RD_A, KC_TRNS, EB_3RD_C,                 KC_TRNS,
 
-        //    Esc            A        S        D        F        G        H        J        K        L        ;:       '"          Enter                            End
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+        // Esc      A        S        D        F        G        H        J        K      L        ;:       '"                      Enter                     End
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_TRNS, KC_TRNS,                KC_TRNS,                  KC_TRNS,
 
-        //    Shift            Z        X        C            V        B        N        M        ,<       .>       /?         Shift            Up
-        KC_TRNS, KC_TRNS, KC_TRNS, EB_WM_6TH_L, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, EB_WM_CENTER,
+        // Shift    Z        X        C        V        B        N        M        ,<       .>       /?       Shift                 Up
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,              KC_TRNS,
 
-        //    Ctrl           Alt      Fn       Super        Fn(lg)            Space         Ctrl     Alt      Fn             Left           Down           Right
-        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, EB_WM_MOVE_LEFT, EB_WM_MOVE_LEFT_WIDE, EB_WM_MOVE_RIGHT),
+        // Ctrl     Alt      Fn       Super               SpcL     SpcR                        Ctrl     Alt      Fn             Left           Down           Right
+        KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,            KC_TRNS, KC_TRNS,                    KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS,    KC_TRNS,       KC_TRNS),
 
-    //     Old Layer 2
-    //     /* Layer 2, Window Management (OSX - Rectangle Pro)
-    // ____________________________________________________________________________________________________________________________________________
-    // |        |        |        |        |        |        |        |        |        |        |        |        |        |            ||        |
-    // |Layer0  | LCGA   |  LCGA  |  LCGA  |        |        |        |        |        |        |        |  LCGA  | LCGA   |  LCGA      ||        |
-    // |________|_(F1)___|__(F2)__|__(F3)__|________|________|________|________|________|________|________|__(F11)_|_(F12)__|___(=)______||________|
-    // |        |        |        |        |        |        |        |        |        |        |        |        |        |            ||        |
-    // |        |        |        |        |        |        |        |HYPER(7)|HYPER(8)|HYPER(9)|        |        | LCGA   |            ||        |
-    // |________|________|________|________|________|________|________|________|________|________|________|________|__(=)___|____________||________|
-    // |            |        |        |        |        |        |        |        |        |        |        |        |        |        ||        |
-    // |OSX ScrnSht | LCA(D) | LCA(F) | LCA(G) |        |        |        |HYPER(U)|HYPER(I)|HYPER(O)|        | LCA(◀) | LCA(▶) |        ||        |
-    // |____________|________|________|________|________|________|________|________|________|________|________|________|________|________||________|
-    //   |            |        |        |        |        |        |        |        |        |        |        |        |            |   |        |
-    //   |            | LCA(E) | LCGA(H)| LCA(T) |        |        |        |        |        |        |        |        |            |   |        |
-    //   |____________|________|________|________|________|________|________|________|________|________|________|________|____________|___|________|
-    //   |                |        |        |        |        |        |        |        |        |        |        |            |        |
-    //   |                | LCGA(D)|        | LCGA(F)|        |        |        |        |        |        |LCGA(/) |            |LCA(CR) |
-    //   |________________|________|________|________|________|________|________|________|________|________|________|____________|________|_________
-    //   |            |        |       |        |                 |                 |        |        |             |   |        |        |        |
-    //   |            |        |       |        |                 |                 |        |        |             |   |        |LCGA(◀) |        |
-    //   |____________|________|_______|________|_________________|_________________|________|________|_____________|   |________|________|________|
-    //
-    // */
-    //
-    //   [2] = LAYOUT(
-    //                 TO(0), LCTL(LGUI(LALT(KC_F1))), LCTL(LGUI(LALT(KC_F2))), LCTL(LGUI(LALT(KC_F3))), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,  KC_TRNS,   KC_TRNS, KC_TRNS,   LCTL(LGUI(LALT(KC_F11))), LCTL(LGUI(LALT(KC_F12))), LCTL(LGUI(LALT(KC_EQL))),     KC_TRNS,
-    //               KC_TRNS,                 KC_TRNS,                 KC_TRNS,                 KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, HYPR(KC_7), HYPR(KC_8), HYPR(KC_9), KC_TRNS,                    KC_TRNS, LCTL(LGUI(LALT(KC_EQL))),                  KC_TRNS,     KC_TRNS,
-    //      LSFT(LGUI(KC_5)),            LCTL(LALT(KC_D)),        LCTL(LALT(KC_F)),        LCTL(LALT(KC_G)), KC_TRNS, KC_TRNS, KC_TRNS, HYPR(KC_U), HYPR(KC_I), HYPR(KC_O), KC_TRNS, LCTL(LALT(KC_LEFT)),       LCTL(LALT(KC_RIGHT)), KC_TRNS, KC_TRNS,
-    //                 KC_TRNS,       LCTL(LALT(KC_E)),                KC_TRNS,       LCTL(LALT(KC_T)), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS,                   KC_TRNS, KC_TRNS,    KC_TRNS,     KC_TRNS,
-    //                 KC_TRNS, LCTL(LGUI(LALT(KC_D))), LCTL(LGUI(LALT(KC_H))), LCTL(LGUI(LALT(KC_F))), KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, LCTL(LGUI(LALT(KC_SLSH))),   KC_TRNS,  LCTL(LALT(KC_ENT)),
-    //                 KC_TRNS,                KC_TRNS,                KC_TRNS,                KC_TRNS, KC_TRNS, KC_TRNS,               KC_TRNS, KC_TRNS, KC_TRNS,                       KC_TRNS,  LCTL(LGUI(LALT(KC_LEFT))), KC_TRNS
-    //   ),
 
     /* Layer 3
 ____________________________________________________________________________________________________________________________________________
@@ -196,5 +171,4 @@ ________________________________________________________________________________
 
 */
 
-    [3] = LAYOUT(KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
 };
