@@ -24,7 +24,9 @@ LABEL_MAP = {
   "KC_VOLU" => "VOL+",
   "KC_VOLD" => "VOL-",
   "KC__VOLUP" => "VOL+",
-  "KC__VOLDOWN" => "VOL-"
+  "KC__VOLDOWN" => "VOL-",
+  "KC_MEDIA_PREV_TRACK" => "<==",
+  "KC_MEDIA_NEXT_TRACK" => "==>",
 }.freeze
 
 PREFIX_STRIP = {
@@ -42,6 +44,53 @@ PATTERN_RULES = [
   [/^LT\((\d+),\s*([^)]+)\)$/, ->(m) { "LT#{m[1]}/#{normalize_basic(m[2])}" }],
   [/^MT\(([^,]+),\s*([^)]+)\)$/, ->(m) { "MT/#{normalize_basic(m[2])}" }]
 ].freeze
+
+# Compute the display width of a string, accounting for wide characters (e.g. emoji).
+# East Asian wide/fullwidth characters and most emoji occupy 2 terminal columns.
+def char_width(cp)
+  if cp >= 0x1F000 ||            # emoji and symbols
+     cp >= 0x2300 && cp <= 0x23FF || # misc technical (⏮, ⏭, ⏯, etc.)
+     cp >= 0x2600 && cp <= 0x27BF || # misc symbols, dingbats
+     cp >= 0x2B50 && cp <= 0x2B55 || # stars etc
+     cp >= 0x1F300 && cp <= 0x1FAFF   # emoticons, transport, etc
+    2
+  else
+    1
+  end
+end
+
+def display_width(str)
+  chars = str.chars
+  total = 0
+  i = 0
+  while i < chars.length
+    cp = chars[i].ord
+    next_cp = chars[i + 1]&.ord
+    if next_cp == 0xFE0E # VS15: text presentation → 1 column
+      total += 1
+      i += 2
+    elsif next_cp == 0xFE0F # VS16: emoji presentation → 2 columns
+      total += 2
+      i += 2
+    elsif cp >= 0xFE00 && cp <= 0xFE0F # standalone variation selector
+      i += 1
+    else
+      total += char_width(cp)
+      i += 1
+    end
+  end
+  total
+end
+
+# Center a string within `width` display columns, padding with spaces.
+def display_center(str, width)
+  dw = display_width(str)
+  return str if dw >= width
+  total_pad = width - dw
+  left_pad = total_pad / 2
+  right_pad = total_pad - left_pad
+  "#{' ' * left_pad}#{str}#{' ' * right_pad}"
+end
 
 def normalize_basic(token)
   raw = token.to_s.strip
@@ -174,7 +223,7 @@ def compute_unit_width(keys, min_key_width, token_width: false)
     width = key[:w]
     width = 1.0 if width <= 0
     label = token_width ? key[:token] : key[:label]
-    (label.length.to_f / width).ceil
+    (display_width(label).to_f / width).ceil
   end.max || 3
 
   auto = [auto, 3].max
@@ -229,9 +278,41 @@ def render_rows(keys, unit_width)
       mid[left] = "|"
       mid[right] = "|"
 
-      padded = key[:label].center(inner)
-      padded.chars.each_with_index do |char, offset|
-        mid[left + 1 + offset] = char
+      padded = display_center(key[:label], inner)
+      chars = padded.chars
+      col = left + 1
+      ci = 0
+      while ci < chars.length
+        ch = chars[ci]
+        cp = ch.ord
+        next_cp = chars[ci + 1]&.ord
+
+        if cp >= 0xFE00 && cp <= 0xFE0F
+          # Stray variation selector: append to previous cell
+          mid[col - 1] = "#{mid[col - 1]}#{ch}" if col > left + 1
+          ci += 1
+        elsif next_cp == 0xFE0E
+          # Text presentation: base + VS15 = 1 column
+          mid[col] = "#{ch}#{chars[ci + 1]}"
+          col += 1
+          ci += 2
+        elsif next_cp == 0xFE0F
+          # Emoji presentation: base + VS16 = 2 columns
+          mid[col] = "#{ch}#{chars[ci + 1]}"
+          col += 1
+          mid[col] = "" if col <= right - 1
+          col += 1
+          ci += 2
+        else
+          cw = char_width(cp)
+          mid[col] = ch
+          col += 1
+          if cw == 2
+            mid[col] = "" if col <= right - 1
+            col += 1
+          end
+          ci += 1
+        end
       end
     end
 
