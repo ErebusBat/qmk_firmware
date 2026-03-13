@@ -5,8 +5,17 @@ require "json"
 require "optparse"
 
 LABEL_MAP = {
-  "_______" => "TRNS",
-  "XXXXXXX" => "NO",
+  "KC_TRNS" => "    ",
+  "_______" => "    ",
+  "XXXXXXX" => "",
+  "KC_GRV"  => "~",
+  "KC_COMM" => ",<",
+  "KC_DOT"  => ".>",
+  "KC_SLSH" => "/?",
+  "KC_SCLN" => ";:",
+  "KC_QUOT" => "'\"",
+  "KC_MINS" => "-",
+  "KC_EQL"  => "=+",
   "KC_MPLY" => "PLAY",
   "KC_MSTP" => "STOP",
   "KC_MPRV" => "PREV",
@@ -20,7 +29,7 @@ LABEL_MAP = {
 
 PREFIX_STRIP = {
   "KC_" => "",
-  "RGB_" => "RGB_"
+  "RGB_" => "💡"
 }.freeze
 
 PATTERN_RULES = [
@@ -160,11 +169,12 @@ def load_geometry(info_path)
   end
 end
 
-def compute_unit_width(keys, min_key_width)
+def compute_unit_width(keys, min_key_width, token_width: false)
   auto = keys.map do |key|
     width = key[:w]
     width = 1.0 if width <= 0
-    (key[:label].length.to_f / width).ceil
+    label = token_width ? key[:token] : key[:label]
+    (label.length.to_f / width).ceil
   end.max || 3
 
   auto = [auto, 3].max
@@ -235,7 +245,8 @@ end
 
 options = {
   layer: "1",
-  min_key_width: nil
+  min_key_width: nil,
+  token_width: false
 }
 
 parser = OptionParser.new do |opts|
@@ -245,6 +256,7 @@ parser = OptionParser.new do |opts|
   opts.on("--info PATH", "Path to keyboard info.json") { |v| options[:info] = v }
   opts.on("--layer VALUE", "Layer selector exactly as in keymap, e.g. 1 or L_BASE") { |v| options[:layer] = v }
   opts.on("--min-key-width N", Integer, "Minimum inner width for a 1u key") { |v| options[:min_key_width] = v }
+  opts.on("--token-width", "Size cells based on raw keymap token width instead of display labels") { options[:token_width] = true }
 end
 
 begin
@@ -270,7 +282,7 @@ begin
     geo.merge(token: tokens[idx], label: normalize_label(tokens[idx]))
   end
 
-  unit_width = compute_unit_width(keys, options[:min_key_width])
+  unit_width = compute_unit_width(keys, options[:min_key_width], token_width: options[:token_width])
   $stderr.puts("effective_min_key_width=#{unit_width}")
   $stderr.puts("passed_min_key_width=#{options[:min_key_width]}") unless options[:min_key_width].nil?
   puts render_rows(keys, unit_width)
