@@ -232,7 +232,7 @@ def compute_unit_width(keys, min_key_width, token_width: false)
   [auto, min_key_width].max
 end
 
-def render_rows(keys, unit_width)
+def render_rows(keys, unit_width, blank: false)
   unit_pitch = unit_width + 1
   grouped = keys.group_by { |key| key[:y] }
   sorted_rows = grouped.keys.sort
@@ -277,6 +277,8 @@ def render_rows(keys, unit_width)
 
       mid[left] = "|"
       mid[right] = "|"
+
+      next if blank
 
       padded = display_center(key[:label], inner)
       chars = padded.chars
@@ -327,7 +329,8 @@ end
 options = {
   layer: "1",
   min_key_width: nil,
-  token_width: false
+  token_width: false,
+  blank: false
 }
 
 parser = OptionParser.new do |opts|
@@ -338,6 +341,7 @@ parser = OptionParser.new do |opts|
   opts.on("--layer VALUE", "Layer selector exactly as in keymap, e.g. 1 or L_BASE") { |v| options[:layer] = v }
   opts.on("--min-key-width N", Integer, "Minimum inner width for a 1u key") { |v| options[:min_key_width] = v }
   opts.on("--token-width", "Size cells based on raw keymap token width instead of display labels") { options[:token_width] = true }
+  opts.on("--blank", "Render box layout with empty key labels") { options[:blank] = true }
 end
 
 begin
@@ -363,10 +367,12 @@ begin
     geo.merge(token: tokens[idx], label: normalize_label(tokens[idx]))
   end
 
+  token_unit_width = compute_unit_width(keys, options[:min_key_width], token_width: true)
   unit_width = compute_unit_width(keys, options[:min_key_width], token_width: options[:token_width])
   $stderr.puts("effective_min_key_width=#{unit_width}")
+  $stderr.puts("token_min_key_width=#{token_unit_width}")
   $stderr.puts("passed_min_key_width=#{options[:min_key_width]}") unless options[:min_key_width].nil?
-  puts render_rows(keys, unit_width)
+  puts render_rows(keys, unit_width, blank: options[:blank])
 rescue StandardError => e
   warn "Error: #{e.message}"
   exit 1
