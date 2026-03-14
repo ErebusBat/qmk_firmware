@@ -123,6 +123,12 @@ The Drop Shift v1 uses Massdrop's custom `ARM_ATSAM` HAL — **not** standard QM
 
 The existing QMK toolchain at `~/Library/Application Support/qmk/bin` already includes `arm-none-eabi-gcc`. `source activate.sh` is sufficient.
 
+#### `-fcommon` workaround (GCC 10+)
+
+The Massdrop codebase defines variables directly in `tmk_core/protocol/arm_atsam/i2c_master.h` (specifically `dmac_desc` and `dmac_desc_wb`). When that header is included by multiple translation units, older GCC silently merged them as "common" (tentative) symbols. GCC 10 changed the default to `-fno-common`, making these hard linker errors.
+
+The keymap's `rules.mk` adds `EXTRAFLAGS += -fcommon` to restore the old behavior. This is a property of the upstream Massdrop code, not our keymap — every keymap for this board needs it.
+
 ### DFU Mode
 
 To flash, the keyboard must be in DFU mode. Hold **Esc** while plugging in the USB cable.
