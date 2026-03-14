@@ -1,5 +1,6 @@
 KEYBOARD := "system76/launch_1"
 KEYMAP := "erebusbat"
+LAYER := "L_BASE"
 KEYMAP_DIR := "keyboards/" + KEYBOARD + "/keymaps/" + KEYMAP
 
 compile:
@@ -22,8 +23,11 @@ edit:
 vim-keymap km=KEYMAP kb=KEYBOARD:
 	vim keyboards/{{ kb }}/keymaps/{{ km }}/*
 
-render-keymap-ascii layer="L_BASE" min_key_width="" kb=KEYBOARD km=KEYMAP:
+render-keymap-ascii layer=LAYER min_key_width="" kb=KEYBOARD km=KEYMAP:
 	ruby util/render_keymap_ascii.rb --keymap keyboards/{{kb}}/keymaps/{{km}}/keymap.c --info keyboards/{{kb}}/info.json --layer {{layer}} {{ if min_key_width != "" { "--min-key-width " + min_key_width } else { "" } }}
 
-render-keymap-ascii-blank layer="L_BASE" min_key_width="" kb=KEYBOARD km=KEYMAP:
+render-keymap-ascii-blank layer=LAYER min_key_width="" kb=KEYBOARD km=KEYMAP:
 	ruby util/render_keymap_ascii.rb --keymap keyboards/{{kb}}/keymaps/{{km}}/keymap.c --info keyboards/{{kb}}/info.json --layer {{layer}} --blank {{ if min_key_width != "" { "--min-key-width " + min_key_width } else { "" } }}
+
+format-keymap layer=LAYER min_key_width="" kb=KEYBOARD km=KEYMAP:
+    ruby util/format_keymap.rb --keymap keyboards/{{kb}}/keymaps/{{km}}/keymap.c --info keyboards/{{kb}}/info.json
