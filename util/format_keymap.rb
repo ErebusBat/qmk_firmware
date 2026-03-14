@@ -10,6 +10,83 @@ require "json"
 require "optparse"
 
 # ---------------------------------------------------------------------------
+# Label normalization (for base-layer comments; shared logic with render_keymap_ascii.rb)
+# ---------------------------------------------------------------------------
+
+LABEL_MAP = {
+  "KC_TRNS" => "    ",
+  "_______" => "    ",
+  "XXXXXXX" => "",
+  "KC_GRV"  => "~",
+  "KC_COMM" => ",<",
+  "KC_DOT"  => ".>",
+  "KC_SLSH" => "/?",
+  "KC_SCLN" => ";:",
+  "KC_QUOT" => "'\"",
+  "KC_MINS" => "-",
+  "KC_EQL"  => "=+",
+  "KC_MPLY" => "PLAY",
+  "KC_MSTP" => "STOP",
+  "KC_MPRV" => "PREV",
+  "KC_MNXT" => "NEXT",
+  "KC_MUTE" => "MUTE",
+  "KC_VOLU" => "VOL+",
+  "KC_VOLD" => "VOL-",
+  "KC__VOLUP"   => "VOL+",
+  "KC__VOLDOWN" => "VOL-",
+  "KC_MEDIA_PREV_TRACK" => "<==",
+  "KC_MEDIA_NEXT_TRACK" => "==>",
+}.freeze
+
+PREFIX_STRIP = {
+  "KC_"  => "",
+  "RGB_" => "💡",
+}.freeze
+
+PATTERN_RULES = [
+  [/^MO\((\d+)\)$/,                  ->(m) { "MO#{m[1]}" }],
+  [/^OSL\((\d+)\)$/,                 ->(m) { "OSL#{m[1]}" }],
+  [/^TO\((\d+)\)$/,                  ->(m) { "TO#{m[1]}" }],
+  [/^DF\((\d+)\)$/,                  ->(m) { "DF#{m[1]}" }],
+  [/^TG\((\d+)\)$/,                  ->(m) { "TG#{m[1]}" }],
+  [/^TT\((\d+)\)$/,                  ->(m) { "TT#{m[1]}" }],
+  [/^LT\((\d+),\s*([^)]+)\)$/,       ->(m) { "LT#{m[1]}/#{normalize_basic(m[2])}" }],
+  [/^MT\(([^,]+),\s*([^)]+)\)$/,     ->(m) { "MT/#{normalize_basic(m[2])}" }],
+].freeze
+
+def normalize_basic(token)
+  raw = token.to_s.strip
+  return LABEL_MAP[raw] if LABEL_MAP.key?(raw)
+  PREFIX_STRIP.each do |prefix, replacement|
+    return "#{replacement}#{raw.delete_prefix(prefix)}" if raw.start_with?(prefix)
+  end
+  raw
+end
+
+def normalize_label(token)
+  raw = token.to_s.strip
+  return LABEL_MAP[raw] if LABEL_MAP.key?(raw)
+  PATTERN_RULES.each do |regex, formatter|
+    match = regex.match(raw)
+    return formatter.call(match) if match
+  end
+  normalize_basic(raw)
+end
+
+# Number of leading spaces to prepend to a label so its text aligns with the
+# corresponding characters in the token. Only applies when a bare prefix was
+# stripped (e.g. "KC_" → ""), so the remaining text lines up column-for-column.
+def label_indent(token)
+  raw = token.to_s.strip
+  return 0 if LABEL_MAP.key?(raw)
+  return 0 if PATTERN_RULES.any? { |regex, _| regex.match(raw) }
+  PREFIX_STRIP.each do |prefix, replacement|
+    return prefix.length if raw.start_with?(prefix) && replacement.empty?
+  end
+  0
+end
+
+# ---------------------------------------------------------------------------
 # Shared parsing helpers (duplicated from render_keymap_ascii.rb)
 # ---------------------------------------------------------------------------
 
@@ -99,6 +176,9 @@ end
 # Formatting logic
 # ---------------------------------------------------------------------------
 
+CODE_INDENT    = "        "   # 8 spaces — standard keymap body indent
+COMMENT_INDENT = "     // "   # 5 spaces + "// " = 8 chars, aligns labels with tokens
+
 def compute_unit_width(keys, min_key_width = nil)
   auto = keys.map do |key|
     w = [key[:w], 0.25].max
@@ -110,62 +190,76 @@ def compute_unit_width(keys, min_key_width = nil)
   min_key_width ? [result, min_key_width].max : result
 end
 
+def build_row_parts(row, unit_width, total_keys, &content_for)
+  parts  = []
+  cursor = 0
+
+  row.each do |key|
+    key_col = (key[:x] * unit_width).round
+    key_end = ((key[:x] + key[:w]) * unit_width).round
+    slot    = key_end - key_col
+
+    gap = key_col - cursor
+    parts << " " * gap if gap > 0
+
+    parts << content_for.call(key, slot)
+    cursor = key_col + slot
+  end
+
+  parts.join.rstrip
+end
+
 # Format one layer's tokens into lines that visually approximate the keyboard.
-# Returns an array of strings (one per row), without a surrounding wrapper.
-def format_layer_rows(tokens, geometry, unit_width)
+# label_tokens: array of tokens from the base layer (for comment headers); nil = no comments.
+def format_layer_rows(tokens, geometry, unit_width, label_tokens: nil)
   total = tokens.length
-  keys = geometry.each_with_index.map { |geo, i| geo.merge(token: tokens[i], idx: i) }
+  keys  = geometry.each_with_index.map { |geo, i| geo.merge(token: tokens[i], idx: i) }
 
   rows = keys.group_by { |k| k[:y] }.sort_by { |y, _| y }.map { |_, ks| ks.sort_by { |k| k[:x] } }
 
   lines = []
   rows.each do |row|
-    parts = []
-    cursor = 0  # current column (in unit_width units * actual chars)
-
-    row.each do |key|
-      is_last  = key[:idx] == total - 1
-      key_col  = (key[:x] * unit_width).round
-      key_end  = ((key[:x] + key[:w]) * unit_width).round
-      slot     = key_end - key_col
-      content  = is_last ? key[:token] : "#{key[:token]},"
-
-      # Fill any gap between cursor and this key's expected column
-      gap = key_col - cursor
-      parts << " " * gap if gap > 0
-
-      # Pad content to slot width (unit_width guarantees content.length < slot)
-      parts << content.ljust(slot)
-      cursor = key_col + slot
+    if label_tokens
+      lines << ""
+      comment = build_row_parts(row, unit_width, total) do |key, slot|
+        base_token = label_tokens[key[:idx]]
+        indent     = label_indent(base_token)
+        (" " * indent + normalize_label(base_token)).ljust(slot)
+      end
+      lines << COMMENT_INDENT + comment
     end
 
-    lines << parts.join.rstrip
+    code = build_row_parts(row, unit_width, total) do |key, slot|
+      content = key[:idx] == total - 1 ? key[:token] : "#{key[:token]},"
+      content.ljust(slot)
+    end
+    lines << CODE_INDENT + code
   end
 
   lines
 end
 
-def format_layer(layer_name, tokens, geometry, unit_width, indent: "        ")
-  rows = format_layer_rows(tokens, geometry, unit_width)
-  body = rows.map { |r| indent + r }.join("\n")
-  "    [#{layer_name}] = LAYOUT(\n#{body}),"
+def format_layer(layer_name, tokens, geometry, unit_width, label_tokens: nil)
+  rows = format_layer_rows(tokens, geometry, unit_width, label_tokens: label_tokens)
+  "    [#{layer_name}] = LAYOUT(\n#{rows.join("\n")}),"
 end
 
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
-options = { layer: nil, min_key_width: nil }
+options = { layer: nil, min_key_width: nil, labels: true }
 
 parser = OptionParser.new do |opts|
-  opts.banner = "Usage: ruby util/format_keymap.rb --keymap <path> --info <path> [--layer <selector>] [--min-key-width <n>]"
+  opts.banner = "Usage: ruby util/format_keymap.rb --keymap <path> --info <path> [options]"
   opts.separator ""
   opts.separator "  If --layer is omitted, all layers are formatted."
   opts.separator ""
-  opts.on("--keymap PATH", "Path to keymap.c") { |v| options[:keymap] = v }
-  opts.on("--info PATH",   "Path to keyboard info.json") { |v| options[:info] = v }
-  opts.on("--layer VALUE", "Layer to format (e.g. L_BASE). Omit for all layers.") { |v| options[:layer] = v }
-  opts.on("--min-key-width N", Integer, "Minimum inner width for a 1u key") { |v| options[:min_key_width] = v }
+  opts.on("--keymap PATH",        "Path to keymap.c")                                          { |v| options[:keymap] = v }
+  opts.on("--info PATH",          "Path to keyboard info.json")                                 { |v| options[:info] = v }
+  opts.on("--layer VALUE",        "Layer to format (e.g. L_BASE). Omit for all layers.")        { |v| options[:layer] = v }
+  opts.on("--min-key-width N", Integer, "Minimum inner width for a 1u key")                     { |v| options[:min_key_width] = v }
+  opts.on("--no-labels",          "Omit base-layer key label comments above each row")          { options[:labels] = false }
 end
 
 begin
@@ -181,8 +275,15 @@ end
 begin
   keymap_source = File.read(options[:keymap])
   geometry      = load_geometry(options[:info])
+  all_names     = extract_all_layer_names(keymap_source)
 
-  layer_names = options[:layer] ? [options[:layer]] : extract_all_layer_names(keymap_source)
+  # Load base layer tokens for label comments (first layer in file)
+  label_tokens = if options[:labels] && all_names.any?
+    extract_layer_tokens(keymap_source, all_names.first)
+  end
+
+  requested   = options[:layer]
+  layer_names = (requested.nil? || requested.downcase == "all") ? all_names : [requested]
   raise "No layers found" if layer_names.empty?
 
   output_blocks = layer_names.map do |name|
@@ -190,7 +291,7 @@ begin
     keys       = geometry.each_with_index.map { |geo, i| geo.merge(token: tokens[i]) }
     unit_width = compute_unit_width(keys, options[:min_key_width])
     $stderr.puts "#{name}: unit_width=#{unit_width}"
-    format_layer(name, tokens, geometry, unit_width)
+    format_layer(name, tokens, geometry, unit_width, label_tokens: label_tokens)
   end
 
   puts output_blocks.join("\n\n")

@@ -352,27 +352,36 @@ begin
     exit 1
   end
 
-  layer_selector = resolve_layer_selector(options[:layer])
-
   keymap_source = File.read(options[:keymap])
-  tokens = extract_layer_tokens(keymap_source, layer_selector)
-  geometry = load_geometry(options[:info])
+  geometry      = load_geometry(options[:info])
 
-  if tokens.length != geometry.length
-    warn "Token count (#{tokens.length}) does not match geometry count (#{geometry.length})"
-    exit 1
+  requested = options[:layer]
+  layer_names = (requested.nil? || requested.downcase == "all") \
+    ? keymap_source.scan(/\[\s*([^\]]+)\s*\]\s*=\s*LAYOUT\s*\(/m).map { |m| m[0].strip }
+    : [resolve_layer_selector(requested)]
+
+  raise "No layers found" if layer_names.empty?
+
+  layer_names.each_with_index do |layer_selector, i|
+    tokens = extract_layer_tokens(keymap_source, layer_selector)
+
+    if tokens.length != geometry.length
+      warn "Token count (#{tokens.length}) does not match geometry count (#{geometry.length}) for layer #{layer_selector}"
+      next
+    end
+
+    keys = geometry.each_with_index.map do |geo, idx|
+      geo.merge(token: tokens[idx], label: normalize_label(tokens[idx]))
+    end
+
+    token_unit_width = compute_unit_width(keys, options[:min_key_width], token_width: true)
+    unit_width       = compute_unit_width(keys, options[:min_key_width], token_width: options[:token_width])
+
+    puts "" if i > 0
+    puts "# #{layer_selector}"
+    puts "# effective_min_key_width=#{unit_width} token_min_key_width=#{token_unit_width}#{options[:min_key_width] ? " passed_min_key_width=#{options[:min_key_width]}" : ""}"
+    puts render_rows(keys, unit_width, blank: options[:blank])
   end
-
-  keys = geometry.each_with_index.map do |geo, idx|
-    geo.merge(token: tokens[idx], label: normalize_label(tokens[idx]))
-  end
-
-  token_unit_width = compute_unit_width(keys, options[:min_key_width], token_width: true)
-  unit_width = compute_unit_width(keys, options[:min_key_width], token_width: options[:token_width])
-  $stderr.puts("effective_min_key_width=#{unit_width}")
-  $stderr.puts("token_min_key_width=#{token_unit_width}")
-  $stderr.puts("passed_min_key_width=#{options[:min_key_width]}") unless options[:min_key_width].nil?
-  puts render_rows(keys, unit_width, blank: options[:blank])
 rescue StandardError => e
   warn "Error: #{e.message}"
   exit 1
