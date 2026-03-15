@@ -106,15 +106,20 @@ qmk compile -kb massdrop/shift -km erebusbat
 
 The Drop Shift v1 uses a Microchip SAMD51J18A MCU with an Atmel SAM-BA bootloader. Flash with `mdloader`:
 
-1. **Install mdloader** — not in Homebrew; download from [GitHub Releases](https://github.com/Massdrop/mdloader/releases) (current: v1.0.7):
-   - Download `mdloader_mac` and `applet-flash-samd51j18a.bin` — **both files must be in the same directory**
-   - Install to `~/bin/` and make executable: `chmod +x ~/bin/mdloader_mac`
+1. **Install mdloader** — not in Homebrew; clone and build from source:
+   ```bash
+   git clone https://github.com/Massdrop/mdloader.git
+   cd mdloader && make
+   cp mdloader ~/bin/
+   ```
 
 2. **Enter SAM-BA bootloader mode** — press the small reset button on the back of the keyboard. USB IDs will show as `0x03eb:0x6124`.
 
 3. **Flash:**
    ```bash
-   ~/bin/mdloader_mac --first --download .build/massdrop_shift_erebusbat.bin --restart
+   just flash
+   # or directly:
+   ~/bin/mdloader --first --download .build/massdrop_shift_erebusbat.bin --restart
    ```
 
 #### ARM_ATSAM Build System Note
