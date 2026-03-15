@@ -22,15 +22,15 @@ MDLOADER_PATH := "$HOME/bin/mdloader"
 
 # Compile QMK Firmware
 [group('Compile & Flash')]
-compile:
+@compile:
     PATH="{{ PATH_WITH_QMK }}" make massdrop/shift:erebusbat
 
 # Flash QMK Firmware using custom mdloader tool
 [group('Compile & Flash')]
-flash:
+@flash: compile
     {{ MDLOADER_PATH }} --first --download .build/massdrop_shift_erebusbat.bin --restart
 
 # Clean built files, start fresh
 [group('Compile & Flash')]
-clean:
+@clean:
     PATH="{{ PATH_WITH_QMK }}" make clean
