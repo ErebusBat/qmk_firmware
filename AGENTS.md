@@ -174,6 +174,21 @@ Configured in each keymap's `config.h`:
 ### MAC_FN layer patterns
 The Fn layer maps vim-style arrows to HJKL and wraps bottom-row keys in `C()` (Control) for Ctrl+modifier combos on the left hand side.
 
+## Git: macOS Case-Insensitive Filesystem Issues
+
+On macOS with a case-insensitive filesystem, git can get confused when the repo has both `README.md` and `readme.md`. This happens frequently with the System76 boards which have both variants in HEAD.
+
+To stop these spurious changes from appearing:
+
+```bash
+git update-index --assume-unchanged keyboards/system76/launch_1/README.md keyboards/system76/launch_2/README.md keyboards/system76/launch_heavy_1/README.md keyboards/system76/launch_lite_1/README.md
+```
+
+To undo this later if needed:
+```bash
+git update-index --no-assume-unchanged keyboards/system76/launch_1/README.md keyboards/system76/launch_2/README.md keyboards/system76/launch_heavy_1/README.md keyboards/system76/launch_lite_1/README.md
+```
+
 ## Code Style
 
 - Use `// clang-format off` / `// clang-format on` around keymap matrix definitions to preserve alignment
