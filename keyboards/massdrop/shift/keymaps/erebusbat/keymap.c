@@ -11,6 +11,12 @@ enum shift_keycodes {
     MD_BOOT,               //Restart into bootloader after hold timeout
 };
 
+enum LAYERS {
+    L_BASE = 0,
+    L_FN   = 1,
+    L_CFN  = 2,
+};
+
 #define TG_NKRO MAGIC_TOGGLE_NKRO //Toggle 6KRO / NKRO mode
 
 keymap_config_t keymap_config;
@@ -20,7 +26,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /*
 
-     # 0
+     # L_BASE
      # effective_min_key_width=9 token_min_key_width=11 passed_min_key_width=9
       +---------+  +---------+---------+---------+---------+ +---------+---------+---------+---------+  +---------+---------+---------+---------+ +---------+    +---------+---------+---------+---------+
       |  Esc/◆  |  |   F1    |   F2    |   F3    |   F4    | |   F5    |   F6    |   F7    |   F8    |  |   F9    |   F10   |   F11   |   F12   | |   DEL   |    |  HOME   |   END   |  PGUP   |  PGDN   |
@@ -41,11 +47,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                                                                                                                      |   UP    |           |   P0    |  PDOT   |
                                                                                                                                                      +---------+           +---------+---------+
       +------------+-----------+------------+-------------------------------------------------------------+--------------+--------------+  +---------+---------+---------+
-      |    MO2     |    LALT   |    LGUI    |                             SPC                             |     RGUI     |     MO1      |  |  LEFT   |  DOWN   |  RGHT   |
+      | MO(L_CFN)  |    LALT   |    LGUI    |                             SPC                             |     RGUI     |   MO(L_FN)   |  |  LEFT   |  DOWN   |  RGHT   |
       +------------+-----------+------------+-------------------------------------------------------------+--------------+--------------+  +---------+---------+---------+
 */
 
-    [0] = LAYOUT(
+    [L_BASE] = LAYOUT(
 
      // EB_ESC_HYPR        F1           F2           F3           F4               F5           F6           F7           F8              F9           F10          F11          F12             DEL                 HOME         END          PGUP         PGDN
         EB_ESC_HYPR,    KC_F1,       KC_F2,       KC_F3,       KC_F4,           KC_F5,       KC_F6,       KC_F7,       KC_F8,          KC_F9,       KC_F10,      KC_F11,      KC_F12,         KC_DEL,             KC_HOME,     KC_END,      KC_PGUP,     KC_PGDN,
@@ -68,8 +74,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      //                                                                                                                                                                                                                                                     PENT
                                                                                                                                                                                                                                                          KC_PENT,
 
-     // MO2                LALT             LGUI            SPC                                                                              RGUI             MO1
-        MO(2),          KC_LALT,         KC_LGUI,        KC_SPC,                                                                          KC_RGUI,            MO(1),
+     // MO(L_CFN)          LALT             LGUI            SPC                                                                              RGUI             MO(L_FN)
+        MO(L_CFN),      KC_LALT,         KC_LGUI,        KC_SPC,                                                                          KC_RGUI,            MO(L_FN),
 
      //                                                                                                                                                                                                                           P0           PDOT
                                                                                                                                                                                                                                KC_P0,       KC_PDOT,
@@ -82,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*
 
-     # 1
+     # L_FN
      # effective_min_key_width=8 token_min_key_width=8
       +--------+ +--------+--------+--------+--------+  +--------+--------+--------+--------+ +--------+--------+--------+--------+ +--------+    +--------+--------+--------+--------+
       |        | |        |        |        |        |  |        |        |        |        | |        |        |        |        | |  INS   |    |  PLAY  |  STOP  |  VOL+  |  MUTE  |
@@ -107,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       +----------+----------++----------+-------------------------------------------------------+-------------+-------------++--------+--------+--------+
 */
 
-    [1] = LAYOUT(
+    [L_FN] = LAYOUT(
 
      // EB_ESC_HYPR      F1        F2        F3        F4          F5        F6        F7        F8           F9        F10       F11       F12         DEL            HOME      END       PGUP      PGDN
         _______,     _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,     _______,  _______,  _______,  _______,    KC_INS,        KC_MPLY,  KC_MSTP,  KC_VOLU,  KC_MUTE,
@@ -130,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      //                                                                                                                                                                                             PENT
                                                                                                                                                                                                  _______,
 
-     // MO2             LALT        LGUI         SPC                                                           RGUI        MO1
+     // MO(L_CFN)       LALT        LGUI         SPC                                                           RGUI        MO(L_FN)
         _______,     _______,    _______,     _______,                                                      KC_APP,        _______,
 
      //                                                                                                                                                                         P0        PDOT
@@ -143,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*
 
-     # 2
+     # L_CFN
      # effective_min_key_width=12 token_min_key_width=12 passed_min_key_width=12
       +------------+  +------------+------------+------------+------------+   +------------+------------+------------+------------+  +------------+------------+------------+------------+  +------------+      +------------+------------+------------+------------+
       |            |  |            |            |    F13     |    F14     |   |    F15     |    F16     |    F17     |    F19     |  |    F20     |    F21     |    F22     |            |  | 🦇KC_DICT  |      |            |            |            |            |
@@ -168,7 +174,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       +---------------+---------------++---------------+--------------------------------------------------------------------------------+-------------------+-------------------+ +------------+------------+------------+
 */
 
-    [2] = LAYOUT(
+    [L_CFN] = LAYOUT(
 
      // EB_ESC_HYPR       F1          F2          F3          F4             F5          F6          F7          F8             F9          F10         F11         F12            DEL               HOME        END         PGUP        PGDN
         _______,       _______,    _______,    KC_F13,     KC_F14,        KC_F15,     KC_F16,     KC_F17,     KC_F19,        KC_F20,     KC_F21,     KC_F22,     _______,       EB_KC_DICT,       _______,    _______,    _______,    _______,
@@ -191,7 +197,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      //                                                                                                                                                                                                                                  PENT
                                                                                                                                                                                                                                       _______,
 
-     // MO2               LALT           LGUI           SPC                                                                        RGUI           MO1
+     // MO(L_CFN)         LALT           LGUI           SPC                                                                        RGUI           MO(L_FN)
         C(KC_LSFT),    _______,       _______,       _______,                                                                   _______,          _______,
 
      //                                                                                                                                                                                                          P0          PDOT
