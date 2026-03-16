@@ -3,12 +3,14 @@
 #include "erebusbat.h"
 
 enum shift_keycodes {
-    U_T_AGCR = SAFE_RANGE, //USB Toggle Automatic GCR control
-    DBG_TOG,               //DEBUG Toggle On / Off
-    DBG_MTRX,              //DEBUG Toggle Matrix Prints
-    DBG_KBD,               //DEBUG Toggle Keyboard Prints
-    DBG_MOU,               //DEBUG Toggle Mouse Prints
-    MD_BOOT,               //Restart into bootloader after hold timeout
+    U_T_AGCR = SAFE_RANGE,  // USB Toggle Automatic GCR control
+    DBG_TOG,                // DEBUG Toggle On / Off
+    DBG_MTRX,               // DEBUG Toggle Matrix Prints
+    DBG_KBD,                // DEBUG Toggle Keyboard Prints
+    DBG_MOU,                // DEBUG Toggle Mouse Prints
+    MD_BOOT,                // Restart into bootloader after hold timeout
+    EB_VOLU,                // macOS volume up workaround (consumer + legacy fallback)
+    EB_VOLD,                // macOS volume down workaround (consumer + legacy fallback)
 };
 
 enum LAYERS {
@@ -17,7 +19,7 @@ enum LAYERS {
     L_CFN  = 2,
 };
 
-#define TG_NKRO MAGIC_TOGGLE_NKRO //Toggle 6KRO / NKRO mode
+#define TG_NKRO MAGIC_TOGGLE_NKRO  // Toggle 6KRO / NKRO mode
 
 keymap_config_t keymap_config;
 
@@ -29,7 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      # L_BASE
      # effective_min_key_width=9 token_min_key_width=11 passed_min_key_width=9
       +---------+  +---------+---------+---------+---------+ +---------+---------+---------+---------+  +---------+---------+---------+---------+ +---------+    +---------+---------+---------+---------+
-      |  Esc/◆  |  |   F1    |   F2    |   F3    |   F4    | |   F5    |   F6    |   F7    |   F8    |  |   F9    |   F10   |   F11   |   F12   | |   DEL   |    |  HOME   |   END   |  PGUP   |  PGDN   |
+      |  Esc/◆  |  |   F1    |   F2    |   F3    |   F4    | |   F5    |   F6    |   F7    |   F8    |  |   F9    |   F10   |   F11   |   F12   | |  🦇🗣️   |    |  HOME   |   END   |  PGUP   |  PGDN   |
       +---------+  +---------+---------+---------+---------+ +---------+---------+---------+---------+  +---------+---------+---------+---------+ +---------+    +---------+---------+---------+---------+
       +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+-------------------+    +---------+---------+---------+---------+
       |    ~    |    1    |    2    |    3    |    4    |    5    |    6    |    7    |    8    |    9    |    0    |    -    |   =+    |       BSPC        |    |  NLCK   |  PSLS   |  PAST   |  PSCR   |
@@ -53,8 +55,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [L_BASE] = LAYOUT(
 
-     // EB_ESC_HYPR        F1           F2           F3           F4               F5           F6           F7           F8              F9           F10          F11          F12             DEL                 HOME         END          PGUP         PGDN
-        EB_ESC_HYPR,    KC_F1,       KC_F2,       KC_F3,       KC_F4,           KC_F5,       KC_F6,       KC_F7,       KC_F8,          KC_F9,       KC_F10,      KC_F11,      KC_F12,         KC_DEL,             KC_HOME,     KC_END,      KC_PGUP,     KC_PGDN,
+     // EB_ESC_HYPR        F1           F2           F3           F4               F5           F6           F7           F8              F9           F10          F11          F12          EB_KC_DICT             HOME         END          PGUP         PGDN
+        EB_ESC_HYPR,    KC_F1,       KC_F2,       KC_F3,       KC_F4,           KC_F5,       KC_F6,       KC_F7,       KC_F8,          KC_F9,       KC_F10,      KC_F11,      KC_F12,         EB_KC_DICT,         KC_HOME,     KC_END,      KC_PGUP,     KC_PGDN,
 
      // ~               1            2            3            4            5            6            7            8            9            0         -            =+              BSPC                             NLCK         PSLS         PAST         PSCR
         KC_GRV,      KC_1,        KC_2,        KC_3,        KC_4,        KC_5,        KC_6,        KC_7,        KC_8,        KC_9,        KC_0,        KC_MINS,     KC_EQL,      KC_BSPC,                         KC_NLCK,     KC_PSLS,     KC_PAST,     KC_PSCR,
@@ -91,10 +93,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      # L_FN
      # effective_min_key_width=8 token_min_key_width=8
       +--------+ +--------+--------+--------+--------+  +--------+--------+--------+--------+ +--------+--------+--------+--------+ +--------+    +--------+--------+--------+--------+
-      |        | |        |        |        |        |  |        |        |        |        | |        |        |        |        | |  INS   |    |  PLAY  |  STOP  |  VOL+  |  MUTE  |
+      |        | |        |        |        |        |  |        |        |        |        | |        |        |        |        | |  DEL   |    |  PLAY  |  STOP  |  🔊⬆︎   |   🔇   |
       +--------+ +--------+--------+--------+--------+  +--------+--------+--------+--------+ +--------+--------+--------+--------+ +--------+    +--------+--------+--------+--------+
       +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+    +--------+--------+--------+--------+
-      |        |        |        |        |        |        |        |        |        |        |        |        |        |                 |    |  PREV  |  NEXT  |  VOL-  |  SLCK  |
+      |        |        |        |        |        |        |        |        |        |        |        |        |        |                 |    |  PREV  |  NEXT  |  🔊⬇︎   |  SLCK  |
       +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+    +--------+--------+--------+--------+
       +-------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------------+   +--------+--------+--------+--------+
       |             | 💡SPD  | 💡VAI  | 💡SPI  | 💡HUI  | 💡SAI  |        |        |U_T_AGCR|        |        |        |        |             |   |        |        |        |        |
@@ -115,11 +117,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [L_FN] = LAYOUT(
 
-     // EB_ESC_HYPR      F1        F2        F3        F4          F5        F6        F7        F8           F9        F10       F11       F12         DEL            HOME      END       PGUP      PGDN
-        _______,     _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,     _______,  _______,  _______,  _______,    KC_INS,        KC_MPLY,  KC_MSTP,  KC_VOLU,  KC_MUTE,
+     // EB_ESC_HYPR      F1        F2        F3        F4          F5        F6        F7        F8           F9        F10       F11       F12      EB_KC_DICT        HOME      END       PGUP      PGDN
+        _______,     _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,     _______,  _______,  _______,  _______,    KC_DEL,        KC_MPLY,  KC_MSTP,  EB_VOLU,  KC__MUTE,
 
      // ~            1         2         3         4         5         6         7         8         9         0      -         =+           BSPC                     NLCK      PSLS      PAST      PSCR
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,                 KC_MPRV,  KC_MNXT,  KC_VOLD,  KC_SLCK,
+        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,                 KC_MPRV,  KC_MNXT,  EB_VOLD,  KC_SLCK,
 
      //    TAB            Q         W         E         R         T         Y         U         I         O         P         LBRC      RBRC      BSLS                P7        P8        P9        PMNS
         _______,       RGB_SPD,  RGB_VAI,  RGB_SPI,  RGB_HUI,  RGB_SAI,  _______,  _______,  U_T_AGCR, _______,  _______,  _______,  _______,  _______,            _______,  _______,  _______,  _______,
@@ -152,7 +154,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      # L_CFN
      # effective_min_key_width=12 token_min_key_width=12 passed_min_key_width=12
       +------------+  +------------+------------+------------+------------+   +------------+------------+------------+------------+  +------------+------------+------------+------------+  +------------+      +------------+------------+------------+------------+
-      |            |  |            |            |    F13     |    F14     |   |    F15     |    F16     |    F17     |    F19     |  |    F20     |    F21     |    F22     |            |  | 🦇KC_DICT  |      |            |            |            |            |
+      |            |  |            |            |    F13     |    F14     |   |    F15     |    F16     |    F17     |    F19     |  |    F20     |    F21     |    F22     |            |  |  🦇AI_NXT  |      |            |            |            |            |
       +------------+  +------------+------------+------------+------------+   +------------+------------+------------+------------+  +------------+------------+------------+------------+  +------------+      +------------+------------+------------+------------+
       +------------+------------+------------+------------+------------+------------+------------+------------+------------+------------+------------+------------+------------+-------------------------+      +------------+------------+------------+------------+
       |            |            |            |            |            |            |            |            |            |            |            |            |            |                         |      |            |            |            |            |
@@ -176,8 +178,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [L_CFN] = LAYOUT(
 
-     // EB_ESC_HYPR       F1          F2          F3          F4             F5          F6          F7          F8             F9          F10         F11         F12            DEL               HOME        END         PGUP        PGDN
-        _______,       _______,    _______,    KC_F13,     KC_F14,        KC_F15,     KC_F16,     KC_F17,     KC_F19,        KC_F20,     KC_F21,     KC_F22,     _______,       EB_KC_DICT,       _______,    _______,    _______,    _______,
+     // EB_ESC_HYPR       F1          F2          F3          F4             F5          F6          F7          F8             F9          F10         F11         F12         EB_KC_DICT           HOME        END         PGUP        PGDN
+        _______,       _______,    _______,    KC_F13,     KC_F14,        KC_F15,     KC_F16,     KC_F17,     KC_F19,        KC_F20,     KC_F21,     KC_F22,     _______,       EB_AI_NXT,        _______,    _______,    _______,    _______,
 
      // ~              1           2           3           4           5           6           7           8           9           0        -           =+             BSPC                          NLCK        PSLS        PAST        PSCR
         _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,    _______,                      _______,    _______,    _______,    _______,
@@ -223,11 +225,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-void matrix_init_user(void) {
-};
+void matrix_init_user(void) {};
 
-void matrix_scan_user(void) {
-};
+void matrix_scan_user(void) {};
 
 #define MODS_SHIFT (get_mods() & MOD_BIT(KC_LSHIFT) || get_mods() & MOD_BIT(KC_RSHIFT))
 #define MODS_CTRL (get_mods() & MOD_BIT(KC_LCTL) || get_mods() & MOD_BIT(KC_RCTRL))
@@ -271,7 +271,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
+        case EB_VOLU:
+            if (record->event.pressed) {
+                // Drop Shift v1 quirk on macOS: consumer volume usages can appear in
+                // EventViewer but still fail to change system volume. Sending both
+                // paths makes volume control reliable on this board.
+                host_consumer_send(AUDIO_VOL_UP);
+                wait_ms(8);
+                host_consumer_send(0);
+                tap_code(KC__VOLUP);
+            }
+            return false;
+        case EB_VOLD:
+            if (record->event.pressed) {
+                host_consumer_send(AUDIO_VOL_DOWN);
+                wait_ms(8);
+                host_consumer_send(0);
+                tap_code(KC__VOLDOWN);
+            }
+            return false;
         default:
-            return true; //Process all other keycodes normally
+            return true;  // Process all other keycodes normally
     }
 }
