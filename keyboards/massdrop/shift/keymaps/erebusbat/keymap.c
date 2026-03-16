@@ -62,11 +62,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      // EB_CAPS            A        S        D        F        G        H        J        K        L     ;:       '"          ENT                      P4       P5       P6       PPLS
         EB_CAPS,        KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT, KC_ENT,                  KC_P4,   KC_P5,   KC_P6,   KC_PPLS,
 
-     //    LSFT                Z        X        C        V        B        N        M     ,<       .>       /?          RSFT                          P1       P2       P3       PENT
-        KC_LSFT,            KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,                      KC_P1,   KC_P2,   KC_P3,   KC_PENT,
+     //    LSFT                Z        X        C        V        B        N        M     ,<       .>       /?          RSFT                          P1       P2       P3       UP
+        KC_LSFT,            KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,                      KC_P1,   KC_P2,   KC_P3,   KC_UP,
 
-     //                                                                                                                                    UP
-                                                                                                                                        KC_UP,
+     //                                                                                                                                   PENT
+                                                                                                                                        KC_PENT,
 
      //    LCTL       LALT        LGUI       SPC                                                     RGUI       MO1                                             P0       PDOT
         MO(2),     KC_LALT,    KC_LGUI,   KC_SPC,                                                 KC_RGUI,      MO(1),                                       KC_P0,   KC_PDOT,
