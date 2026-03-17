@@ -50,7 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       |       LSFT        |   Z    |   X    |   C    |   V    |   B    |   N    |   M    |   ,<   |   .>   |   /?   |     RSFT      |   UP   |  END   |
       +-------------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+---------------+--------+--------+
       +----------+----------++----------+-------------------------------------------------------+--------+--------+--------+--------+--------+--------+
-      |MO(MAC_FN)|  LOPTN   ||  LCMMD   |                          SPC                          | RCMMD  | FN_MAC |  RCTL  |  LEFT  |  DOWN  |  RGHT  |
+      |  FN_MAC  |  LOPTN   ||  LCMMD   |                          SPC                          | RCMMD  | FN_MAC |  RCTL  |  LEFT  |  DOWN  |  RGHT  |
       +----------+----------++----------+-------------------------------------------------------+--------+--------+--------+--------+--------+--------+
 */
 
@@ -71,8 +71,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      //    LSFT                         Z            X            C            V            B            N            M         ,<           .>           /?              RSFT                   UP           END
         KC_LSFT,                     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     KC_RSFT,               KC_UP,       KC_END,
 
-     // MO(MAC_FN)         LOPTN            LCMMD           SPC                                                                              RCMMD     FN_MAC          RCTL         LEFT         DOWN         RGHT
-        MO(MAC_FN),     KC_LOPTN,        KC_LCMMD,       KC_SPC,                                                                          KC_RCMMD,    FN_MAC,      KC_RCTL,     KC_LEFT,     KC_DOWN,     KC_RGHT),
+     // FN_MAC             LOPTN            LCMMD           SPC                                                                              RCMMD     FN_MAC          RCTL         LEFT         DOWN         RGHT
+        FN_MAC,         KC_LOPTN,        KC_LCMMD,       KC_SPC,                                                                          KC_RCMMD,    FN_MAC,      KC_RCTL,     KC_LEFT,     KC_DOWN,     KC_RGHT),
 
 /*
 
@@ -115,7 +115,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      //    LSFT                     Z          X          C          V          B          N          M       ,<         .>         /?            RSFT               UP         END
         C(KC_LSFT),              C(KC_Z),   C(KC_X),   C(KC_C),   C(KC_V),   BAT_LVL,   NK_TOGG,   _______,   _______,   _______,   _______,   _______,           KC_VOLU,   KC_MUTE,
 
-     // MO(MAC_FN)       LOPTN         LCMMD        SPC                                                                  RCMMD   FN_MAC        RCTL       LEFT       DOWN       RGHT
+     // FN_MAC           LOPTN         LCMMD        SPC                                                                  RCMMD   FN_MAC        RCTL       LEFT       DOWN       RGHT
         _______,      C(KC_LALT),   C(KC_LGUI),  C(KC_SPC),                                                           _______,   _______,   _______,   KC_MPRV,   KC_VOLD,   KC_MNXT),
 
 /*
@@ -159,7 +159,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      //    LSFT                         Z            X            C            V            B            N            M         ,<           .>           /?              RSFT                   UP           END
         KC_LSFT,                     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     KC_RSFT,               KC_UP,       KC_END,
 
-     // MO(MAC_FN)         LOPTN            LCMMD           SPC                                                                              RCMMD     FN_MAC          RCTL         LEFT         DOWN         RGHT
+     // FN_MAC             LOPTN            LCMMD           SPC                                                                              RCMMD     FN_MAC          RCTL         LEFT         DOWN         RGHT
         KC_LCTL,        KC_LGUI,         KC_LALT,        KC_SPC,                                                                          KC_RALT,     FN_WIN,      KC_RCTL,     KC_LEFT,     KC_DOWN,     KC_RGHT),
 
 /*
@@ -203,7 +203,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      //    LSFT                Z        X        C        V        B        N        M     ,<       .>       /?          RSFT            UP       END
         _______,            _______, _______, _______, _______, BAT_LVL, NK_TOGG, _______, _______, _______, _______, _______,        _______, _______,
 
-     // MO(MAC_FN)    LOPTN       LCMMD      SPC                                                     RCMMD FN_MAC      RCTL     LEFT     DOWN     RGHT
+     // FN_MAC        LOPTN       LCMMD      SPC                                                     RCMMD FN_MAC      RCTL     LEFT     DOWN     RGHT
         _______,   _______,    _______,   _______,                                                _______, _______, _______, _______, _______, _______),
 };
 
