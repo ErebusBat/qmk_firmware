@@ -86,10 +86,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       |         |         |         |         |         |         |         |         |         |         |  💡TOG  |  💡VAD  |  💡VAI  |   🦇TUI_NL   |  |🦇AI_PRV |
       +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------+  +---------+
       +--------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+  +---------+
-      |     SNAP     |         |         |         |         |         |  HOME   |  PGDN   |  PGUP   |   END   |         |         |         |🦇TUI_NL |  |🦇AI_NXT |
+      |     SNAP     |         |         |         |         |         |  HOME   |  PGDN   |  PGUP   |   END   |         |         |         |         |  |🦇AI_NXT |
       +--------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+  +---------+
          +--------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------+    +---------+
-         |              |         |         |         |         |         |  LEFT   |  DOWN   |   UP    |  RGHT   |         |         |              |    |  MUTE   |
+         |              |         |         |         |         |         |  LEFT   |  DOWN   |   UP    |  RGHT   |         |         |   🦇TUI_NL   |    |  MUTE   |
          +--------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------+    +---------+
          +-------------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------+---------+
          |                   |         |         |         |RCS(KC_V)|         |         |         |         |         |         |              |         |
@@ -108,10 +108,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   RGB_TOG,   RGB_VAD,   RGB_VAI,   EB_TUI_NL,         EB_AI_PRV,
 
      //    TAB              Q          W          E          R          T          Y          U          I          O          P          LBRC       RBRC       BSLS         PGDN
-        KC_SNAP,         KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_HOME,   KC_PGDN,   KC_PGUP,   KC_END,    KC_TRNS,   KC_TRNS,   KC_TRNS,   EB_TUI_NL,   EB_AI_NXT,
+        KC_SNAP,         KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_HOME,   KC_PGDN,   KC_PGUP,   KC_END,    KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,     EB_AI_NXT,
 
      //    EB_CAPS            A          S          D          F          G          H          J          K          L       ;:         '"            ENT                   END
-           KC_TRNS,        KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RGHT,   KC_TRNS,   KC_TRNS,   KC_TRNS,              KC_MUTE,
+           KC_TRNS,        KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RGHT,   KC_TRNS,   KC_TRNS,   EB_TUI_NL,            KC_MUTE,
 
      //       LSFT                  Z          X          C          V          B          N          M       ,<         .>         /?            RSFT            UP
            KC_TRNS,              KC_TRNS,   KC_TRNS,   KC_TRNS,   RCS(KC_V), KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,        KC_TRNS,
@@ -153,16 +153,16 @@ ________________________________________________________________________________
       |        |🦇QTR_C |🦇QTR_D |🦇HLF_A |🦇HLF_B |🦇FULLS |🦇6TH_D |🦇6TH_E |🦇6TH_F |        |        |        |        |             | |  VOL+  |
       +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------------+ +--------+
       +-------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+ +--------+
-      |  🦇23RD_C   |🦇3RD_A |        |        |        |        |        |        |        |        |        |🦇3RD_A |        |🦇3RD_C | |  VOL-  |
+      |  🦇23RD_C   |🦇3RD_A |        |        |        |        |        |        |        |        |        |🦇3RD_A |🦇3RD_B |🦇3RD_C | |  VOL-  |
       +-------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+ +--------+
         +-------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------------+   +--------+
-        |             |        |        |        |        |        |  LEFT  |  DOWN  |   UP   |  RGHT  |        |        |             |   |  MUTE  |
+        |             |        |        |        |        |        |  LEFT  |  DOWN  |   UP   |  RGHT  |        |        |   🦇FULLS   |   |  MUTE  |
         +-------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------------+   +--------+
         +-----------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------------+--------+
         |                 |        |        |        |        |        |        |        |        |        |        |             |        |
         +-----------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------------+--------+
         +-------------+--------+--------+--------+-----------------+-----------------+--------+--------+-------------+   +--------+--------+--------+
-        |             |        |        |        |                 |                 |        |        |             |   |        |        |        |
+        |             |        |        |        |                 |                 |        |        |             |   |🦇HLF_A |        |🦇HLF_B |
         +-------------+--------+--------+--------+-----------------+-----------------+--------+--------+-------------+   +--------+--------+--------+
 */
 
@@ -175,16 +175,16 @@ ________________________________________________________________________________
         KC_TRNS,   EB_QTR_C,  EB_QTR_D,  EB_HLF_A,  EB_HLF_B,  EB_FULLS,  EB_6TH_D,  EB_6TH_E,  EB_6TH_F,  KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,           KC_VOLU,
 
      //    TAB              Q          W          E          R          T          Y          U          I          O          P          LBRC       RBRC       BSLS         PGDN
-        EB_23RD_C,       EB_3RD_A,  KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   EB_3RD_A,  KC_TRNS,   EB_3RD_C,    KC_VOLD,
+        EB_23RD_C,       EB_3RD_A,  KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   EB_3RD_A,  EB_3RD_B,  EB_3RD_C,    KC_VOLD,
 
      //    EB_CAPS            A          S          D          F          G          H          J          K          L       ;:         '"            ENT                   END
-           KC_TRNS,        KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RGHT,   KC_TRNS,   KC_TRNS,   KC_TRNS,              KC_MUTE,
+           KC_TRNS,        KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RGHT,   KC_TRNS,   KC_TRNS,   EB_FULLS,             KC_MUTE,
 
      //       LSFT                  Z          X          C          V          B          N          M       ,<         .>         /?            RSFT            UP
            KC_TRNS,              KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,        KC_TRNS,
 
      //       LCTL            LALT    MO(L_WM)      LGUI    LT(L_FN1, KC_SPC)        SPC                   RCTL       LALT    MO(L_FN1)                LEFT       DOWN       RGHT
-           KC_TRNS,        KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,              KC_TRNS,              KC_TRNS,   KC_TRNS,   KC_TRNS,              KC_TRNS,   KC_TRNS,   KC_TRNS),
+           KC_TRNS,        KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,              KC_TRNS,              KC_TRNS,   KC_TRNS,   KC_TRNS,              EB_HLF_A,  KC_TRNS,   EB_HLF_B),
 
     /* Layer 3
 ____________________________________________________________________________________________________________________________________________
