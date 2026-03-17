@@ -77,15 +77,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*
 
      # MAC_FN
-     # effective_min_key_width=8 token_min_key_width=8
+     # effective_min_key_width=8 token_min_key_width=9
       +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+
       |        |  BRID  |  BRIU  | MCTRL  | LNPAD  |UG_VALD |UG_VALU |  PREV  |  PLAY  |  NEXT  |  MUTE  |  VOL-  |  VOL+  |        |  DEL   |UG_NEXT |
       +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+
       +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+--------+
-      |        |BT_HST1 |BT_HST2 |BT_HST3 | P2P4G  |        |        |        |        |        |        |        |        |       DEL       |        |
+      |        |BT_HST1 |BT_HST2 |BT_HST3 | P2P4G  |        |        |        |        |        |        |        |        |       DEL       |🦇AI_PRV|
       +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+--------+
       +-------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+------------+--------+
-      |   UG_TOGG   |UG_NEXT |UG_VALU |UG_HUEU |UG_SATU |UG_SPDU |        |        |        |        |        |        |        |            |        |
+      |   UG_TOGG   |UG_NEXT |UG_VALU |UG_HUEU |UG_SATU |UG_SPDU |        |        |        |        |        |        |        |            |🦇AI_NXT|
       +-------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+------------+--------+
       +---------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------------------+--------+
       |               |UG_PREV |UG_VALD |UG_HUED |UG_SATD |UG_SPDD |  LEFT  |  DOWN  |   UP   |  RGHT  |        |        |     🦇TUI_NL      |        |
@@ -100,23 +100,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [MAC_FN] = LAYOUT_ansi_84(
 
-     // EB_ESC_HYPR   F1        F2        F3        F4        F5        F6        F7        F8        F9        F10       F11       F12       SNAP   EB_AI_NXT EB_DICT
-        _______,  KC_BRID,  KC_BRIU,  KC_MCTRL, KC_LNPAD, UG_VALD,  UG_VALU,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,  _______,  KC_DEL,   UG_NEXT,
+     // EB_ESC_HYPR   F1         F2         F3         F4         F5         F6         F7         F8         F9         F10        F11        F12        SNAP    EB_AI_NXT  EB_DICT
+        _______,   KC_BRID,   KC_BRIU,   KC_MCTRL,  KC_LNPAD,  UG_VALD,   UG_VALU,   KC_MPRV,   KC_MPLY,   KC_MNXT,   KC_MUTE,   KC_VOLD,   KC_VOLU,   _______,   KC_DEL,    UG_NEXT,
 
-     // ~            1         2         3         4         5         6         7         8         9         0      -         =+           BSPC                PGUP
-        _______,  BT_HST1,  BT_HST2,  BT_HST3,  P2P4G,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_DEL,             _______,
+     // ~             1          2          3          4          5          6          7          8          9          0       -          =+            BSPC                  PGUP
+        _______,   BT_HST1,   BT_HST2,   BT_HST3,   P2P4G,     _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   KC_DEL,               EB_AI_PRV,
 
-     //    TAB            Q         W         E         R         T         Y         U         I         O         P         LBRC      RBRC      BSLS           PGDN
-        UG_TOGG,       UG_NEXT,  UG_VALU,  UG_HUEU,  UG_SATU,  UG_SPDU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,       _______,
+     //    TAB              Q          W          E          R          T          Y          U          I          O          P          LBRC       RBRC       BSLS            PGDN
+        UG_TOGG,         UG_NEXT,   UG_VALU,   UG_HUEU,   UG_SATU,   UG_SPDU,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,        EB_AI_NXT,
 
-     // EB_CAPS              A         S         D         F         G         H         J         K         L      ;:        '"           ENT                   HOME
-        _______,          UG_PREV,  UG_VALD,  UG_HUED,  UG_SATD,  UG_SPDD,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  _______,  _______,  EB_TUI_NL,            _______,
+     // EB_CAPS               A          S          D          F          G          H          J          K          L       ;:         '"            ENT                      HOME
+        _______,           UG_PREV,   UG_VALD,   UG_HUED,   UG_SATD,   UG_SPDD,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RGHT,   _______,   _______,   EB_TUI_NL,               _______,
 
-     //    LSFT                   Z         X         C         V         B         N         M      ,<        .>        /?           RSFT             UP        END
-        C(KC_LSFT),            C(KC_Z),  C(KC_X),  C(KC_C),  C(KC_V),  BAT_LVL,  NK_TOGG,  _______,  _______,  _______,  _______,  _______,         KC_VOLU,  KC_MUTE,
+     //    LSFT                     Z          X          C          V          B          N          M       ,<         .>         /?            RSFT               UP         END
+        C(KC_LSFT),              C(KC_Z),   C(KC_X),   C(KC_C),   C(KC_V),   BAT_LVL,   NK_TOGG,   _______,   _______,   _______,   _______,   _______,           KC_VOLU,   KC_MUTE,
 
-     // MO(MAC_FN)      LOPTN       LCMMD        SPC                                                           RCMMD  FN_MAC       RCTL      LEFT      DOWN      RGHT
-        _______,     C(KC_LALT), C(KC_LGUI),  C(KC_SPC),                                                    _______,  _______,  _______,  KC_MPRV,  KC_VOLD,  KC_MNXT),
+     // MO(MAC_FN)       LOPTN         LCMMD        SPC                                                                  RCMMD   FN_MAC        RCTL       LEFT       DOWN       RGHT
+        _______,      C(KC_LALT),   C(KC_LGUI),  C(KC_SPC),                                                           _______,   _______,   _______,   KC_MPRV,   KC_VOLD,   KC_MNXT),
 
 /*
 
