@@ -10,12 +10,16 @@
 #define EB_ESC_HYPR MT(MOD_HYPR, KC_ESC) // Tap: Esc, Hold: Hyper
 #define EB_KC_DICT HYPR(KC_BSLS)         // Hyper + \     .
 #define EB_LLM_DICT HYPR(KC_RBRC)        // Hyper + ]
-#define EB_TUI_NL S(A(KC_ENT))           // TUI NewLine: Shift + Option + Enter
 #define EB_AI_NXT C(S(KC_RGHT))          // AI Next: Ctrl + Shift + Right
 #define EB_AI_PRV \
     C(S(KC_LEFT)) // AI Prev: Ctrl + Shift + Left
                   // Note: key overrides apply across all layers unless made layer-specific
                   // Keymaps live in keymap.c (override behavior is defined there)
+
+//// TUI_NL
+// With the changes in ErebusBat/chezmoi#e5fac2a then Shift+Enter works, so use that
+// #define EB_TUI_NL S(A(KC_ENT))           // TUI NewLine: Shift + Option + Enter
+#define EB_TUI_NL S(KC_ENT)              // TUI NewLine: Shift + Enter
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Tap Dance
