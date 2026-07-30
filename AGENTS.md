@@ -76,30 +76,40 @@ This prepends the QMK toolchain paths for the current session only.
 
 ## Build Commands
 
-This repo uses the `qmk` CLI. General pattern:
+**Prefer the `just` recipes** — they are the canonical interface. Each recipe sources
+`activate.sh` automatically and wraps the underlying `qmk` CLI, so you do not need to activate the
+toolchain or remember `-kb`/`-km` values yourself. Run `just --list` to see all recipes.
+
 ```bash
-qmk compile -kb <keyboard> -km <keymap>
-qmk flash -kb <keyboard> -km <keymap>
+just build      # alias for `just compile`
+just flash      # depends on compile, so it builds first, then flashes
+just check      # open Karabiner-EventViewer to see what keycodes the OS receives (debugging)
+just clean      # remove built files and start fresh
 ```
 
-### Per-keyboard build commands
+Each branch's local `justfile` presets `KB` (e.g. the `k2_he_2025q3` branch sets `KB := "k2he"`),
+so on the branch for a given keyboard these recipes need no arguments. When `KB` is not preset
+(e.g. invoking from the shared `common` dir), select the keyboard explicitly:
 
-**Keychron C3 Pro** (branch: `playground`):
 ```bash
-qmk compile -kb keychron/c3_pro/ansi/red -km erebusbat
-qmk flash -kb keychron/c3_pro/ansi/red -km erebusbat
+just KB=(sys76|c3pro|k2he|shift) <recipe>   # e.g. just KB=k2he flash
 ```
 
-**Keychron K2 HE** (branch: `k2_he_2025q3`):
+### Underlying commands (what the recipes wrap)
+
+The recipes ultimately run the `qmk` CLI. `KEYMAP` is always `erebusbat`; `KB` maps to `-kb`:
+
+| `KB` | branch | `-kb` value |
+| --- | --- | --- |
+| `c3pro` | `playground` | `keychron/c3_pro/ansi/red` |
+| `k2he` | `k2_he_2025q3` | `keychron/k2_he/ansi` |
+| `sys76` | `erebusbat-keyboard` | `system76/launch_1` |
+| `shift` | — | `massdrop/shift` |
+
 ```bash
+# e.g. what `just KB=k2he flash` runs, after sourcing activate.sh:
 qmk compile -kb keychron/k2_he/ansi -km erebusbat
-qmk flash -kb keychron/k2_he/ansi -km erebusbat
-```
-
-**System76 Launch 1** (branch: `erebusbat-keyboard`):
-```bash
-qmk compile -kb system76/launch_1 -km erebusbat
-qmk flash -kb system76/launch_1 -km erebusbat
+qmk flash   -kb keychron/k2_he/ansi -km erebusbat
 ```
 
 ### Flashing Workflow
@@ -115,7 +125,7 @@ qmk flash -kb system76/launch_1 -km erebusbat
    ```bash
    export CLAUDE_CODE_PANE=1
    ```
-4. **Use that pane for** `source activate.sh`, compile, and `qmk flash`.
+4. **Use that pane to run** `just flash` (it sources `activate.sh` and compiles first).
 
 **Recommended for long-running tasks**: use the same tmux pane workflow for lengthy compiles or debugging sessions.
 
