@@ -17,7 +17,9 @@
 #pragma once
 
 // Mod-tap configuration
-#define TAPPING_TERM 200  // Default is 200ms, you can try 175-250
-#define PERMISSIVE_HOLD   // Immediately select hold action when another key is pressed
-#define HOLD_ON_OTHER_KEY_PRESS  // Alternative to PERMISSIVE_HOLD with different behavior
-// #define QUICK_TAP_TERM 120  // Allows quick double-taps to always register as taps
+// See ESC_HERDR_FIX.md in this folder for the reasoning behind these settings.
+#define TAPPING_TERM 200    // Default is 200ms, you can try 175-250
+#define PERMISSIVE_HOLD     // Resolve to hold when another key is TAPPED (pressed+released) during the term
+#define QUICK_TAP_TERM 120  // A quick re-tap always registers as a tap (protects fast Esc taps)
+// HOLD_ON_OTHER_KEY_PRESS intentionally NOT defined: it stole Esc on fast "Esc-then-key" rolls
+// (turning the mod-tap into Hyper/Ctrl), which broke Esc in herdr. See ESC_HERDR_FIX.md.
