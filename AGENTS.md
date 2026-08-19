@@ -138,10 +138,13 @@ If the check fails, fall back to tmux below. Otherwise:
    herdr pane run <pane-id> "just flash"
    ```
    (`just flash` sources `activate.sh` and compiles first.)
-3. **Monitor progress / read output** as needed:
+3. **Monitor progress / read output**:
    ```bash
-   herdr pane wait-output <pane-id> --match "<output marker>" --timeout 300000
-   herdr pane read <pane-id> --source recent-unwrapped --lines 120
+   # compile finished, dfu-util stage starting:
+   herdr pane wait-output <pane-id> --regex "(?i)flashing for bootloader" --timeout 300000
+   # flash outcome:
+   herdr pane wait-output <pane-id> --regex "(?i)(downloaded successfully|error|cannot open|no dfu|failed)" --timeout 120000
+   herdr pane read <pane-id> --source recent-unwrapped --lines 25
    ```
    Use `--match` for a literal substring or `--regex` for a Rust regex; omit `--timeout` to wait
    indefinitely.
@@ -173,7 +176,13 @@ lengthy compiles or debugging sessions.
 
 ### DFU Mode
 
-To flash, the keyboard must be in DFU mode. Hold **Esc** while plugging in the USB cable.
+To flash, the keyboard must be in DFU mode: hold **Esc** while plugging in the USB cable.
+
+DFU mode is only needed at the **flash step** — compilation gives ~1–2 minutes of lead time, so
+tell the user to Esc+replug as soon as `just flash` starts (or check first with `dfu-util -l`,
+available after `source activate.sh`). If dfu-util runs with no DFU device attached it fails
+fast; put the keyboard in DFU mode and re-run `just flash` (the cached compile makes the retry
+quick).
 
 ### Per-keyboard documentation
 
