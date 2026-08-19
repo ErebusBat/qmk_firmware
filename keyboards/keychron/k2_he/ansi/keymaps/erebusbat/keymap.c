@@ -224,6 +224,12 @@ const key_override_t *key_overrides[]  = {
     NULL, // Terminator required by QMK to mark end of overrides list.
 };
 
+// Keep an unchorded Caps-position press as Escape even when it exceeds TAPPING_TERM.
+bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
+    (void)record;
+    return keycode == EB_CAPS;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_keychron_common(keycode, record)) {
         return false;
