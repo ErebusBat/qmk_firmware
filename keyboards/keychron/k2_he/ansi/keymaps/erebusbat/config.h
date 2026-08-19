@@ -20,6 +20,7 @@
 // See ESC_HERDR_FIX.md in this folder for the reasoning behind these settings.
 #define TAPPING_TERM 200    // Default is 200ms, you can try 175-250
 #define PERMISSIVE_HOLD     // Resolve to hold when another key is TAPPED (pressed+released) during the term
-#define QUICK_TAP_TERM 120  // A quick re-tap always registers as a tap (protects fast Esc taps)
+#define QUICK_TAP_TERM 120  // Tap-then-hold within 120ms repeats the tap keycode
+#define RETRO_TAPPING_PER_KEY // Let selected solo mod-taps tap after TAPPING_TERM
 // HOLD_ON_OTHER_KEY_PRESS intentionally NOT defined: it stole Esc on fast "Esc-then-key" rolls
 // (turning the mod-tap into Hyper/Ctrl), which broke Esc in herdr. See ESC_HERDR_FIX.md.

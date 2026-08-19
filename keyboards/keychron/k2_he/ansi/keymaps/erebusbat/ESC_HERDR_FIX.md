@@ -50,12 +50,22 @@ roll, let quick taps always be taps) also relieves the herdr symptom.
   rolls into Hyper/Ctrl chords.
 - **Kept** `PERMISSIVE_HOLD` — deliberate holds (hold modifier, fully tap another key) still
   resolve to Hyper/Ctrl, so intentional chords keep working.
-- **Enabled** `QUICK_TAP_TERM 120` (was commented out) — a quick re-tap of Esc always registers
-  as Esc.
+- **Enabled** `QUICK_TAP_TERM 120` (was commented out) — tap-then-hold within 120 ms repeats Esc;
+  this does not affect the first tap's 200 ms hold decision.
 - `TAPPING_TERM` left at `200` (lower to ~175 if hold still feels sticky).
 
 These are global tap-hold settings, so the single change fixes **both** `EB_ESC_HYPR` and
 `EB_CAPS`.
+
+## Follow-up: slow Caps-position taps (2026-08-19)
+
+A sparse failure remained on `EB_CAPS`: an unchorded press released after `TAPPING_TERM` became a
+lone Left Control press/release, so no Esc reached the host. This can look intermittent when a
+normal Caps-position tap lands near 200 ms.
+
+`RETRO_TAPPING_PER_KEY` is now enabled only for `EB_CAPS`. Releasing that key without pressing
+another key sends Esc even after 200 ms. Holding it while tapping another key still resolves to
+Left Control through `PERMISSIVE_HOLD`. `EB_ESC_HYPR` is intentionally unchanged.
 
 ## What was NOT changed (and why)
 
