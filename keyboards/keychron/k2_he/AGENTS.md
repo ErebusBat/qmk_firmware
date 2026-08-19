@@ -59,6 +59,10 @@ If the keyboard enters the flashing-4 error state, flash the official Keychron v
 
 Hold **Esc** while plugging in the USB cable.
 
+Note: on entering DFU via Esc+plug, dfu-util may report
+`DFU state(10) = dfuERROR, status(10) = Device's firmware is corrupt. It cannot return to run-time (non-DFU) operations`.
+This is normal for this entry path — dfu-util clears the status and the flash proceeds normally.
+
 ### Hardware Reset Pad
 
 If the keyboard cannot enter DFU mode via Esc+plug (e.g. after corrupt firmware), there is a **small gold contact pad underneath the spacebar, to the left**. It does not look like a traditional button. Press it down (e.g. with a plastic fork) while plugging in the USB cable to force entry into the STM32 system bootloader. In this deeply broken state the keyboard lights will not work, so confirm DFU mode with:
