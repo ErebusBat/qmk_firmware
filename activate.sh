@@ -24,4 +24,13 @@ fi
 
 export PATH="$_QMK_TOOLCHAIN_DIR:$HOME/.local/bin:$PATH"
 unset _QMK_TOOLCHAIN_DIR
+
+# `command git` bypasses git aliases and shell wrappers (see AGENTS.md) while
+# still resolving the real git binary through PATH.
+
+if [ -d ".git" ] && [ ! -d "lib/chibios-contrib/os/common/startup/ARMCMx/compilers/GCC/mk" ]; then
+    echo "QMK submodules missing; initializing..."
+    command git submodule update --init --recursive
+fi
+
 echo "QMK build environment activated."
