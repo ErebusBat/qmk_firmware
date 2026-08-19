@@ -9,12 +9,14 @@ This is ErebusBat's fork of the QMK firmware repository with custom keymaps for 
 - **sys76** — `git@github.com:system76/qmk_firmware.git` (System76 Launch boards)
 - **origin** — `git@github.com:ErebusBat/qmk_firmware.git` (this fork, originally forked from sys76)
 
-## Git: Always use Homebrew git
+## Git: Always use `command git`
 
 ```bash
-/opt/homebrew/bin/git
+command git <subcommand>
 ```
-The system git has shell integration conflicts. Always use the full path above for all git operations when on macOS.
+Shell aliases and wrappers around `git` (e.g. shell-integration hooks) can interfere with scripted
+git use. Always invoke git as `command git` — it bypasses aliases and shell functions while still
+resolving the real git binary through `PATH`.
 
 ## Branch Strategy
 
@@ -24,7 +26,6 @@ Each keyboard family lives on its own branch tracking its respective upstream:
 |---|---|---|
 | `playground` | keychron/playground | Keychron C3 Pro |
 | `k2_he_2025q3` | keychron/2025q3 | Keychron K2 HE (v1.2.x compatible) |
-| `hall_effect_playground` | keychron/hall_effect_playground | Keychron K2 HE (**DEPRECATED** — v1.1.0, incompatible with v1.2.x firmware) |
 | `erebusbat-keyboard` | sys76/master | System76 Launch 1 (custom keymap) |
 | `master` | sys76/master | System76 Launch 1 (default keymaps only) |
 
@@ -40,19 +41,18 @@ The following files are shared across all branches and must be kept in sync:
 - `AGENTS.md` — this file
 - `activate.sh` — QMK build environment activation script
 
-After updating a shared file on any branch, sync it to the other branches (`playground`, `k2_he_2025q3`, `hall_effect_playground`, `master`, `erebusbat-keyboard`):
+After updating a shared file on any branch, sync it to the other branches (`playground`, `k2_he_2025q3`, `master`, `erebusbat-keyboard`, `drop_ctrl`, `drop_shift_10key`):
 
 ```bash
 # From the target branch, pull the file from the source branch:
-/opt/homebrew/bin/git checkout <source-branch> -- AGENTS.md activate.sh
-/opt/homebrew/bin/git add -f AGENTS.md activate.sh
-/opt/homebrew/bin/git commit -m "Sync shared files from <source-branch>"
+command git checkout <source-branch> -- AGENTS.md activate.sh
+command git commit -m "Sync shared files from <source-branch>" -- AGENTS.md activate.sh
 ```
 
 After multi-branch syncs, push all updated branches together:
 
 ```bash
-git push origin k2_he_2025q3 playground erebusbat-keyboard
+command git push origin k2_he_2025q3 playground erebusbat-keyboard master drop_ctrl drop_shift_10key
 ```
 
 ## Build Environment Setup (macOS)
@@ -114,7 +114,42 @@ qmk flash   -kb keychron/k2_he/ansi -km erebusbat
 
 ### Flashing Workflow
 
-**Required for flashing**: use a dedicated tmux pane created from the current OpenCode pane.
+**Required for flashing**: run `just flash` from a dedicated terminal pane split off from the
+agent's pane — never from the agent's own pane. How that pane is created depends on the terminal
+multiplexer hosting the session.
+
+#### Herdr (preferred when the agent runs inside Herdr)
+
+First verify the agent is running in a Herdr-managed pane:
+
+```bash
+test "${HERDR_ENV:-}" = 1
+```
+
+If the check fails, fall back to tmux below. Otherwise:
+
+1. **Split a sibling pane** (preserves the working directory, keeps focus in the agent's pane):
+   ```bash
+   herdr pane split --current --direction right --cwd "$PWD" --no-focus
+   ```
+   Take the new pane id from `.result.pane.pane_id` in the JSON response.
+2. **Run the flash in that pane**:
+   ```bash
+   herdr pane run <pane-id> "just flash"
+   ```
+   (`just flash` sources `activate.sh` and compiles first.)
+3. **Monitor progress / read output** as needed:
+   ```bash
+   herdr pane wait-output <pane-id> --match "<output marker>" --timeout 300000
+   herdr pane read <pane-id> --source recent-unwrapped --lines 120
+   ```
+   Use `--match` for a literal substring or `--regex` for a Rust regex; omit `--timeout` to wait
+   indefinitely.
+
+Reuse the same flash pane for repeated build/flash cycles in a session instead of splitting a new
+pane each time.
+
+#### tmux (fallback when not inside Herdr)
 
 1. **Find the current pane id via Bash**:
    ```bash
@@ -127,7 +162,8 @@ qmk flash   -kb keychron/k2_he/ansi -km erebusbat
    ```
 4. **Use that pane to run** `just flash` (it sources `activate.sh` and compiles first).
 
-**Recommended for long-running tasks**: use the same tmux pane workflow for lengthy compiles or debugging sessions.
+**Recommended for long-running tasks**: use the same dedicated-pane workflow (Herdr or tmux) for
+lengthy compiles or debugging sessions.
 
 **Benefits**:
 - Persistent output history
