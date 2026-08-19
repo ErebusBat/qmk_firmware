@@ -105,5 +105,5 @@ Use the repo `justfile` (recipes wrap `qmk` with `KEYBOARD=keychron/k2_he/ansi`,
 
 ```sh
 just build    # alias for `just compile`
-just flash    # depends on compile, so it builds first; flash from a dedicated tmux pane (AGENTS.md)
+just flash    # depends on compile, so it builds first; flash from a dedicated pane (AGENTS.md: herdr, or tmux fallback)
 ```
