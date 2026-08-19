@@ -104,7 +104,7 @@ The recipes ultimately run the `qmk` CLI. `KEYMAP` is always `erebusbat`; `KB` m
 | `c3pro` | `playground` | `keychron/c3_pro/ansi/red` |
 | `k2he` | `k2_he_2025q3` | `keychron/k2_he/ansi` |
 | `sys76` | `erebusbat-keyboard` | `system76/launch_1` |
-| `shift` | — | `massdrop/shift` |
+| `shift` | `drop_shift_10key` | `massdrop/shift` — that branch's justfile uses a custom `make` + `mdloader` recipe, **not** the `qmk` CLI |
 
 ```bash
 # e.g. what `just KB=k2he flash` runs, after sourcing activate.sh:
@@ -147,7 +147,8 @@ If the check fails, fall back to tmux below. Otherwise:
    herdr pane read <pane-id> --source recent-unwrapped --lines 25
    ```
    Use `--match` for a literal substring or `--regex` for a Rust regex; omit `--timeout` to wait
-   indefinitely.
+   indefinitely. The markers above match the STM32 DFU (`dfu-util`) output of the Keychron boards;
+   on branches that flash differently (table below), substitute that flash tool's own markers.
 
 Reuse the same flash pane for repeated build/flash cycles in a session instead of splitting a new
 pane each time.
@@ -174,15 +175,28 @@ lengthy compiles or debugging sessions.
 - Environment (activate.sh) persists across commands
 - Easy to reference output later
 
-### DFU Mode
+### DFU Mode (STM32 DFU — Keychron boards)
 
-To flash, the keyboard must be in DFU mode: hold **Esc** while plugging in the USB cable.
+To flash a Keychron board, it must be in DFU mode: hold **Esc** while plugging in the USB cable.
 
 DFU mode is only needed at the **flash step** — compilation gives ~1–2 minutes of lead time, so
 tell the user to Esc+replug as soon as `just flash` starts (or check first with `dfu-util -l`,
 available after `source activate.sh`). If dfu-util runs with no DFU device attached it fails
 fast; put the keyboard in DFU mode and re-run `just flash` (the cached compile makes the retry
 quick).
+
+### Flash methods differ per keyboard
+
+Only the dedicated-pane workflow above is universal. The flash tool, bootloader entry, and
+wait-output markers are keyboard-specific:
+
+| Branch | Keyboard | Flash method |
+| --- | --- | --- |
+| `k2_he_2025q3` | Keychron K2 HE | `just flash` → `qmk flash` → STM32 DFU (`dfu-util`), Esc+plug — this section |
+| `playground` | Keychron C3 Pro | Keychron DFU flow as above, but no branch justfile — run `just KB=c3pro flash` from the shared `common/` dir, or `qmk flash` directly |
+| `erebusbat-keyboard` | System76 Launch 1 (AVR) | `just flash` → `qmk flash` → `atmel-dfu` (`dfu-programmer`); uses the board's reset, not Keychron's Esc+plug |
+| `drop_shift_10key` | Massdrop Shift (ARM_ATSAM) | `just flash` → branch's custom `make` + `mdloader` recipe; dfu-util markers do not apply |
+| `drop_ctrl` | Massdrop CTRL (ARM_ATSAM, `md-boot`) | No branch justfile — compile with `make`, flash manually with `mdloader` |
 
 ### Per-keyboard documentation
 
