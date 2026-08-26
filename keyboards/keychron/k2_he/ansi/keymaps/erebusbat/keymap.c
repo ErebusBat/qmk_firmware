@@ -230,6 +230,16 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     return keycode == EB_CAPS;
 }
 
+// A fast Caps-position tap often overlaps the next keypress by a few ms. Global
+// PERMISSIVE_HOLD resolves those as Ctrl chords and swallows Esc entirely
+// (reproduced in tests/tap_hold_configurations/erebusbat_caps). Opt EB_CAPS out:
+// its tap then fires on release while the rolled key is deferred and sent after
+// Esc. Deliberate holds still resolve to Ctrl via the TAPPING_TERM timeout.
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    (void)record;
+    return keycode != EB_CAPS;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_keychron_common(keycode, record)) {
         return false;

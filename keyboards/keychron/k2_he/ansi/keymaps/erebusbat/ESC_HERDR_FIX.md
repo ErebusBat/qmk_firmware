@@ -67,6 +67,41 @@ normal Caps-position tap lands near 200 ms.
 another key sends Esc even after 200 ms. Holding it while tapping another key still resolves to
 Left Control through `PERMISSIVE_HOLD`. `EB_ESC_HYPR` is intentionally unchanged.
 
+## Follow-up: quick Caps taps overlapping the next key (2026-08-25)
+
+Fast typing exposed a remaining **firmware-layer** steal, reproduced deterministically in
+`tests/tap_hold_configurations/erebusbat_caps/` (QMK host test framework — no hardware needed).
+A quick Caps-position tap can completely contain the next letter tap: Caps down, letter down,
+letter up, Caps up, all within 60 ms. Global `PERMISSIVE_HOLD` resolves that gesture to
+`Ctrl+letter` as soon as the letter is released, so **no Esc is ever sent**.
+
+The first attempted fix added `get_permissive_hold()` but left `PERMISSIVE_HOLD` defined.
+That global macro bypasses the per-key hook entirely. The corrected config defines
+`PERMISSIVE_HOLD_PER_KEY`, so `get_permissive_hold()` can disable permissive hold for `EB_CAPS`
+while retaining it for `EB_ESC_HYPR`.
+
+Resulting semantics:
+
+| Gesture | Output |
+| --- | --- |
+| Quick solo tap, including a 1 ms scan-visible tap | Esc |
+| Quick tap, caps released while next key still held | Esc, then the key |
+| Quick tap fully containing the next letter tap | **Esc + letter** (fixed) |
+| Deliberate hold past `TAPPING_TERM` | Ctrl; buffered letters become Ctrl chords |
+
+### Running the regression tests
+
+`make test:NAME` cannot reach nested test dirs in QMK 0.21.6 — invoke the test makefile directly
+(after `source activate.sh`; host clang needs the warning flags):
+
+```sh
+make -r -R -f builddefs/build_test.mk \
+  TEST=erebusbat_caps TEST_OUTPUT=tap_hold_configurations_erebusbat_caps \
+  TEST_PATH=./tests/tap_hold_configurations/erebusbat_caps \
+  FULL_TESTS="erebusbat_caps" SILENT=true ALLOW_WARNINGS=yes CXXFLAGS="-Wno-c++11-narrowing"
+.build/test/tap_hold_configurations_erebusbat_caps.elf
+```
+
 ## What was NOT changed (and why)
 
 - **Keymap / keycodes** (`keymap.c`, `erebusbat.h`): `EB_ESC_HYPR` and `EB_CAPS` remain mod-taps,
