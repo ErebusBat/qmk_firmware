@@ -47,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       |   Esc/Ctrl    |   A    |   S    |   D    |   F    |   G    |   H    |   J    |   K    |   L    |   ;:   |   '"   |        ENT        |  HOME  |
       +---------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------------------+--------+
       +-------------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+---------------+--------+--------+
-      |       LSFT        |   Z    |   X    |   C    |   V    |   B    |   N    |   M    |   ,<   |   .>   |   /?   |     RSFT      |   UP   |  END   |
+      |      Shift/(      |   Z    |   X    |   C    |   V    |   B    |   N    |   M    |   ,<   |   .>   |   /?   |    Shift/)    |   UP   |  END   |
       +-------------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+---------------+--------+--------+
       +----------+----------++----------+-------------------------------------------------------+--------+--------+--------+--------+--------+--------+
       |  FN_MAC  |  LOPTN   ||  LCMMD   |                          SPC                          | RCMMD  | FN_MAC |  RCTL  |  LEFT  |  DOWN  |  RGHT  |
@@ -68,8 +68,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      // EB_CAPS                   A            S            D            F            G            H            J            K            L         ;:           '"              ENT                          HOME
         EB_CAPS,               KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,        KC_K,        KC_L,        KC_SCLN,     KC_QUOT,     KC_ENT,                      KC_HOME,
 
-     //    LSFT                         Z            X            C            V            B            N            M         ,<           .>           /?              RSFT                   UP           END
-        KC_LSFT,                     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     KC_RSFT,               KC_UP,       KC_END,
+     //  Shift/(                        Z            X            C            V            B            N            M         ,<           .>           /?            Shift/)                  UP           END
+        SC_LSPO,                     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     SC_RSPC,               KC_UP,       KC_END,
 
      // FN_MAC             LOPTN            LCMMD           SPC                                                                              RCMMD     FN_MAC          RCTL         LEFT         DOWN         RGHT
         FN_MAC,         KC_LOPTN,        KC_LCMMD,       KC_SPC,                                                                          KC_RCMMD,    FN_MAC,      KC_RCTL,     KC_LEFT,     KC_DOWN,     KC_RGHT),
@@ -135,7 +135,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       |    CAPS     |   A   |   S   |   D   |   F   |   G   |   H   |   J   |   K   |   L   |  ;:   |  '"   |       ENT       | HOME  |
       +-------------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-----------------+-------+
       +-----------------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------------+-------+-------+
-      |      LSFT       |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |  ,<   |  .>   |  /?   |    RSFT     |  UP   |  END  |
+      |     Shift/(     |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |  ,<   |  .>   |  /?   |   Shift/)   |  UP   |  END  |
       +-----------------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------------+-------+-------+
       +---------+---------+---------+-------------------------------------------------+-------+-------+-------+-------+-------+-------+
       |  LCTL   |  LGUI   |  LALT   |                       SPC                       | RALT  |FN_WIN | RCTL  | LEFT  | DOWN  | RGHT  |
@@ -156,8 +156,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      // EB_CAPS                   A            S            D            F            G            H            J            K            L         ;:           '"              ENT                          HOME
         KC_CAPS,               KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,        KC_K,        KC_L,        KC_SCLN,     KC_QUOT,     KC_ENT,                      KC_HOME,
 
-     //    LSFT                         Z            X            C            V            B            N            M         ,<           .>           /?              RSFT                   UP           END
-        KC_LSFT,                     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     KC_RSFT,               KC_UP,       KC_END,
+     //  Shift/(                        Z            X            C            V            B            N            M         ,<           .>           /?            Shift/)                  UP           END
+        SC_LSPO,                     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     SC_RSPC,               KC_UP,       KC_END,
 
      // FN_MAC             LOPTN            LCMMD           SPC                                                                              RCMMD     FN_MAC          RCTL         LEFT         DOWN         RGHT
         KC_LCTL,        KC_LGUI,         KC_LALT,        KC_SPC,                                                                          KC_RALT,     FN_WIN,      KC_RCTL,     KC_LEFT,     KC_DOWN,     KC_RGHT),
