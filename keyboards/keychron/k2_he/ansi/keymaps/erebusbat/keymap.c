@@ -21,12 +21,12 @@
 enum layers {
     MAC_BASE,
     MAC_FN,
-    WIN_BASE,
+    DICT_L,
     WIN_FN,
 };
 
 #define FN_MAC MO(MAC_FN)
-#define FN_WIN MO(WIN_BASE)
+#define FN_WIN MO(DICT_L)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -120,7 +120,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*
 
-     # WIN_BASE
+     # DICT_L
      # effective_min_key_width=7 token_min_key_width=11
       +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-----------+
       | Esc/◆ |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  |  F11  |  F12  | PSCR  |  DEL  |  EB_DICT  |
@@ -142,7 +142,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       +---------+---------+---------+-------------------------------------------------+-------+-------+-------+-------+-------+-----------+
 */
 
-    [WIN_BASE] = LAYOUT_ansi_84(
+    [DICT_L] = LAYOUT_ansi_84(
 
      // EB_ESC_HYPR     F1           F2           F3           F4           F5           F6           F7           F8           F9           F10          F11          F12          PSCR         DEL        EB_DICT
         EB_ESC_HYPR, KC_F1,       KC_F2,       KC_F3,       KC_F4,       KC_F5,       KC_F6,       KC_F7,       KC_F8,       KC_F9,       KC_F10,      KC_F11,      KC_F12,      KC_PSCR,     KC_DEL,      EB_DICT,
