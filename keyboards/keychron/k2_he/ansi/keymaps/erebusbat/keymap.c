@@ -56,22 +56,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [MAC_BASE] = LAYOUT_ansi_84(
 
-     // EB_ESC_HYPR     F1           F2           F3           F4           F5           F6           F7           F8           F9           F10          F11          F12          SNAP      EB_AI_NXT    EB_DICT
+     // ESC          F1           F2           F3           F4           F5           F6           F7           F8           F9           F10          F11          F12          SCREENSHOT   DEL          LIGHT
         EB_ESC_HYPR, KC_F1,       KC_F2,       KC_F3,       KC_F4,       KC_F5,       KC_F6,       KC_F7,       KC_F8,       KC_F9,       KC_F10,      KC_F11,      KC_F12,      KC_SNAP,     EB_AI_NXT,   EB_DICT,
 
-     // ~               1            2            3            4            5            6            7            8            9            0         -            =+              BSPC                      PGUP
+     // GRAVE        1            2            3            4            5            6            7            8            9            0            MINUS        EQUAL        BSPC                      PGUP
         KC_GRV,      KC_1,        KC_2,        KC_3,        KC_4,        KC_5,        KC_6,        KC_7,        KC_8,        KC_9,        KC_0,        KC_MINS,     KC_EQL,      KC_BSPC,                  KC_PGUP,
 
-     //    TAB                 Q            W            E            R            T            Y            U            I            O            P            LBRC         RBRC         BSLS               PGDN
+     // TAB                 Q            W            E            R            T            Y            U            I            O            P            LBRC         RBRC         BSLS               PGDN
         KC_TAB,             KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,        KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        KC_LBRC,     KC_RBRC,     KC_BSLS,           KC_PGDN,
 
-     // EB_CAPS                   A            S            D            F            G            H            J            K            L         ;:           '"              ENT                          HOME
+     // CAPS                   A            S            D            F            G            H            J            K            L            SCLN         QUOTE        ENTER                        HOME
         EB_CAPS,               KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,        KC_K,        KC_L,        KC_SCLN,     KC_QUOT,     KC_ENT,                      KC_HOME,
 
-     //  Shift/(                        Z            X            C            V            B            N            M         ,<           .>           /?            Shift/)                  UP           END
+     // LSHIFT                       Z            X            C            V            B            N            M            COMMA        DOT          SLASH        RSHIFT                 UP           END
         SC_LSPO,                     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     SC_RSPC,               KC_UP,       KC_END,
 
-     // FN_MAC             LOPTN            LCMMD           SPC                                                                              RCMMD     FN_WIN          RCTL         LEFT         DOWN         RGHT
+     // LCTRL           LOPT             LCMD            SPACE                                                                            RCMD         FN           RCTRL        LEFT         DOWN         RIGHT
         FN_MAC,         KC_LOPTN,        KC_LCMMD,       KC_SPC,                                                                          KC_RCMMD,    FN_WIN,      KC_RCTL,     KC_LEFT,     KC_DOWN,     KC_RGHT),
 
 /*
@@ -100,22 +100,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [MAC_FN] = LAYOUT_ansi_84(
 
-     // EB_ESC_HYPR   F1         F2         F3         F4         F5         F6         F7         F8         F9         F10        F11        F12        SNAP    EB_AI_NXT  EB_DICT
+     // ESC        F1         F2         F3         F4         F5         F6         F7         F8         F9         F10        F11        F12        SCREENSHOT DEL        LIGHT
         _______,   KC_BRID,   KC_BRIU,   KC_MCTRL,  KC_LNPAD,  UG_VALD,   UG_VALU,   KC_MPRV,   KC_MPLY,   KC_MNXT,   KC_MUTE,   KC_VOLD,   KC_VOLU,   _______,   KC_DEL,    UG_NEXT,
 
-     // ~             1          2          3          4          5          6          7          8          9          0       -          =+            BSPC                  PGUP
+     // GRAVE      1          2          3          4          5          6          7          8          9          0          MINUS      EQUAL      BSPC                  PGUP
         _______,   BT_HST1,   BT_HST2,   BT_HST3,   P2P4G,     _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   KC_DEL,               EB_AI_PRV,
 
-     //    TAB              Q          W          E          R          T          Y          U          I          O          P          LBRC       RBRC       BSLS            PGDN
+     // TAB              Q          W          E          R          T          Y          U          I          O          P          LBRC       RBRC       BSLS            PGDN
         UG_TOGG,         UG_NEXT,   UG_VALU,   UG_HUEU,   UG_SATU,   UG_SPDU,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,        EB_AI_NXT,
 
-     // EB_CAPS               A          S          D          F          G          H          J          K          L       ;:         '"            ENT                      HOME
+     // CAPS               A          S          D          F          G          H          J          K          L          SCLN       QUOTE      ENTER                    HOME
         _______,           UG_PREV,   UG_VALD,   UG_HUED,   UG_SATD,   UG_SPDD,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RGHT,   _______,   _______,   EB_TUI_NL,               _______,
 
-     //    LSFT                     Z          X          C          V          B          N          M       ,<         .>         /?            RSFT               UP         END
+     // LSHIFT                   Z          X          C          V          B          N          M          COMMA      DOT        SLASH      RSHIFT             UP         END
         C(KC_LSFT),              C(KC_Z),   C(KC_X),   C(KC_C),   C(KC_V),   BAT_LVL,   NK_TOGG,   _______,   _______,   _______,   _______,   _______,           KC_VOLU,   KC_MUTE,
 
-     // FN_MAC           LOPTN         LCMMD        SPC                                                                  RCMMD   FN_MAC        RCTL       LEFT       DOWN       RGHT
+     // LCTRL         LOPT          LCMD         SPACE                                                                RCMD       FN         RCTRL      LEFT       DOWN       RIGHT
         _______,      C(KC_LALT),   C(KC_LGUI),  C(KC_SPC),                                                           _______,   _______,   _______,   KC_MPRV,   KC_VOLD,   KC_MNXT),
 
 /*
@@ -144,22 +144,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [DICT_L] = LAYOUT_ansi_84(
 
-     // EB_ESC_HYPR     F1           F2           F3           F4           F5           F6           F7           F8           F9           F10          F11          F12          PSCR         DEL        EB_DICT
+     // ESC          F1           F2           F3           F4           F5           F6           F7           F8           F9           F10          F11          F12          SCREENSHOT   DEL          LIGHT
         EB_ESC_HYPR, KC_F1,       KC_F2,       KC_F3,       KC_F4,       KC_F5,       KC_F6,       KC_F7,       KC_F8,       KC_F9,       KC_F10,      KC_F11,      KC_F12,      KC_PSCR,     KC_DEL,      EB_DICT,
 
-     // ~               1            2            3            4            5            6            7            8            9            0         -            =+              BSPC                      PGUP
+     // GRAVE        1            2            3            4            5            6            7            8            9            0            MINUS        EQUAL        BSPC                      PGUP
         KC_GRV,      KC_1,        KC_2,        KC_3,        KC_4,        KC_5,        KC_6,        KC_7,        KC_8,        KC_9,        KC_0,        KC_MINS,     KC_EQL,      KC_BSPC,                  KC_PGUP,
 
-     //    TAB                 Q            W            E            R            T            Y            U            I            O            P            LBRC         RBRC         BSLS               MYTTS_PAUSE
+     // TAB                 Q            W            E            R            T            Y            U            I            O            P            LBRC         RBRC         BSLS               PGDN
         KC_TAB,             KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,        KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        KC_LBRC,     KC_RBRC,     KC_BSLS,           MYTTS_PAUSE,
 
-     // EB_CAPS                   A            S            D            F            G            H            J            K            L         ;:           '"              ENT                          MYTTS_READ
+     // CAPS                   A            S            D            F            G            H            J            K            L            SCLN         QUOTE        ENTER                        HOME
         KC_CAPS,               KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,        KC_K,        KC_L,        KC_SCLN,     KC_QUOT,     KC_ENT,                      MYTTS_READ,
 
-     //  Shift/(                        Z            X            C            V            B            N            M         ,<           .>           /?            Shift/)                  UP           MYTTS_STOP
+     // LSHIFT                       Z            X            C            V            B            N            M            COMMA        DOT          SLASH        RSHIFT                 UP           END
         SC_LSPO,                     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     SC_RSPC,               KC_UP,       MYTTS_STOP,
 
-     // FN_MAC             LOPTN            LCMMD           SPC                                                                              RCMMD     FN_MAC          RCTL         LEFT         DOWN         RGHT
+     // LCTRL           LOPT             LCMD            SPACE                                                                            RCMD         FN           RCTRL        LEFT         DOWN         RIGHT
         KC_LCTL,        KC_LGUI,         KC_LALT,        KC_SPC,                                                                          KC_RALT,     FN_WIN,      KC_RCTL,     KC_LEFT,     KC_DOWN,     KC_RGHT),
 
 /*
@@ -188,22 +188,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [WIN_FN] = LAYOUT_ansi_84(
 
-     // EB_ESC_HYPR   F1       F2       F3       F4       F5       F6       F7       F8       F9       F10      F11      F12      SNAP  EB_AI_NXTEB_DICT
+     // ESC      F1       F2       F3       F4       F5       F6       F7       F8       F9       F10      F11      F12      SCREENSHOT DEL    LIGHT
         _______, KC_BRID, KC_BRIU, KC_TASK, KC_FILE, UG_VALD, UG_VALU, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, _______, _______, UG_TOGG,
 
-     // ~           1        2        3        4        5        6        7        8        9        0     -        =+          BSPC              PGUP
+     // GRAVE    1        2        3        4        5        6        7        8        9        0        MINUS    EQUAL    BSPC              PGUP
         _______, BT_HST1, BT_HST2, BT_HST3, P2P4G,   _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
 
-     //    TAB           Q        W        E        R        T        Y        U        I        O        P        LBRC     RBRC     BSLS         PGDN
+     // TAB           Q        W        E        R        T        Y        U        I        O        P        LBRC     RBRC     BSLS         PGDN
         UG_TOGG,      UG_NEXT, UG_VALU, UG_HUEU, UG_SATU, UG_SPDU, _______, _______, _______, _______, _______, _______, _______, _______,     _______,
 
-     // EB_CAPS            A        S        D        F        G        H        J        K        L     ;:       '"          ENT                 HOME
+     // CAPS            A        S        D        F        G        H        J        K        L        SCLN     QUOTE    ENTER               HOME
         _______,        UG_PREV, UG_VALD, UG_HUED, UG_SATD, UG_SPDD, _______, _______, _______, _______, _______, _______, _______,            _______,
 
-     //    LSFT                Z        X        C        V        B        N        M     ,<       .>       /?          RSFT            UP       END
+     // LSHIFT              Z        X        C        V        B        N        M        COMMA    DOT      SLASH    RSHIFT          UP       END
         _______,            _______, _______, _______, _______, BAT_LVL, NK_TOGG, _______, _______, _______, _______, _______,        _______, _______,
 
-     // FN_MAC        LOPTN       LCMMD      SPC                                                     RCMMD FN_MAC      RCTL     LEFT     DOWN     RGHT
+     // LCTRL      LOPT        LCMD       SPACE                                                   RCMD     FN       RCTRL    LEFT     DOWN     RIGHT
         _______,   _______,    _______,   _______,                                                _______, _______, _______, _______, _______, _______),
 };
 
