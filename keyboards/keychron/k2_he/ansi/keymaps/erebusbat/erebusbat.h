@@ -6,6 +6,10 @@
 
 #pragma once
 
+enum custom_keycodes {
+    EB_COPY_READ = SAFE_RANGE,
+};
+
 #define EB_CAPS MT(MOD_LCTL, KC_ESC)     // Tap: Esc, Hold: Left Ctrl
 #define EB_ESC_HYPR MT(MOD_HYPR, KC_ESC) // Tap: Esc, Hold: Hyper
 #define EB_COPY G(KC_C)                 // Cmd + C (Copy)
