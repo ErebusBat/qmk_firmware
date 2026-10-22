@@ -21,6 +21,11 @@
 // #define EB_TUI_NL S(A(KC_ENT))           // TUI NewLine: Shift + Option + Enter
 #define EB_TUI_NL S(KC_ENT)              // TUI NewLine: Shift + Enter
 
+// MyTTS controls: Ctrl + Option + Command
+#define MYTTS_READ LCAG(KC_R)
+#define MYTTS_PAUSE LCAG(KC_P)
+#define MYTTS_STOP LCAG(KC_S)
+
 ////////////////////////////////////////////////////////////////////////////////
 /// Tap Dance
 ////////////////////////////////////////////////////////////////////////////////
