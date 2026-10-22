@@ -123,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      # DICT_L
      # effective_min_key_width=7 token_min_key_width=11
       +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-----------+
-      | Esc/◆ |  F1   |  F2   |  F3   |  F4   |  F5   |  F6   |  F7   |  F8   |  F9   |  F10  |  F11  |  F12  | PSCR  |  DEL  |  EB_DICT  |
+      | Esc/◆ | BRID  | BRIU  | MCTRL | LNPAD |UG_VALD|UG_VALU| PREV  | PLAY  | NEXT  | MUTE  | VOL-  | VOL+  | PSCR  |  DEL  |  EB_DICT  |
       +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-----------+
       +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+---------------+-----------+
       |   ~   |   1   |   2   |   3   |   4   |   5   |   6   |   7   |   8   |   9   |   0   |   -   |  =+   |     BSPC      |    PGUP   |
@@ -145,7 +145,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [DICT_L] = LAYOUT_ansi_84(
 
      // ESC          F1           F2           F3           F4           F5           F6           F7           F8           F9           F10          F11          F12          SCREENSHOT   DEL          LIGHT
-        EB_ESC_HYPR, KC_F1,       KC_F2,       KC_F3,       KC_F4,       KC_F5,       KC_F6,       KC_F7,       KC_F8,       KC_F9,       KC_F10,      KC_F11,      KC_F12,      KC_PSCR,     KC_DEL,      EB_DICT,
+        EB_ESC_HYPR, KC_BRID,     KC_BRIU,     KC_MCTRL,    KC_LNPAD,    UG_VALD,     UG_VALU,     KC_MPRV,     KC_MPLY,     KC_MNXT,     KC_MUTE,     KC_VOLD,     KC_VOLU,     KC_PSCR,     KC_DEL,      EB_DICT,
 
      // GRAVE        1            2            3            4            5            6            7            8            9            0            MINUS        EQUAL        BSPC                      PGUP
         KC_GRV,      KC_1,        KC_2,        KC_3,        KC_4,        KC_5,        KC_6,        KC_7,        KC_8,        KC_9,        KC_0,        KC_MINS,     KC_EQL,      KC_BSPC,                  KC_PGUP,
