@@ -157,7 +157,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_CAPS,               KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,        KC_K,        KC_L,        KC_SCLN,     KC_QUOT,     KC_ENT,                      MYTTS_READ,
 
      // LSHIFT                       Z            X            C            V            B            N            M            COMMA        DOT          SLASH        RSHIFT                 UP           END
-        SC_LSPO,                     KC_Z,        KC_X,        KC_C,        KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     SC_RSPC,               KC_UP,       MYTTS_STOP,
+        SC_LSPO,                     KC_Z,        KC_X,        EB_COPY,     KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     SC_RSPC,               KC_UP,       MYTTS_STOP,
 
      // LCTRL           LOPT             LCMD            SPACE                                                                            RCMD         FN           RCTRL        LEFT         DOWN         RIGHT
         KC_LCTL,        KC_LGUI,         KC_LALT,        KC_SPC,                                                                          KC_RALT,     FN_WIN,      KC_RCTL,     KC_LEFT,     KC_DOWN,     KC_RGHT),

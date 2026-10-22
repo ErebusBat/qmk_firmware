@@ -8,6 +8,7 @@
 
 #define EB_CAPS MT(MOD_LCTL, KC_ESC)     // Tap: Esc, Hold: Left Ctrl
 #define EB_ESC_HYPR MT(MOD_HYPR, KC_ESC) // Tap: Esc, Hold: Hyper
+#define EB_COPY G(KC_C)                 // Cmd + C (Copy)
 #define EB_KC_DICT HYPR(KC_BSLS)         // Hyper + \     .
 #define EB_LLM_DICT HYPR(KC_RBRC)        // Hyper + ]
 #define EB_AI_NXT C(S(KC_RGHT))          // AI Next: Ctrl + Shift + Right
