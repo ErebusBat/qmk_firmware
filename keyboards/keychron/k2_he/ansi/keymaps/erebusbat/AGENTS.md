@@ -11,7 +11,7 @@ Custom QMK keymap for Keychron K2 HE (Hall Effect) ANSI keyboard with 4 layers d
 
 ## Keymap Comments
 - Comments immediately above each `LAYOUT_ansi_84` array row identify the physical keys in that row. Use the same physical key labels across all layers and align them with the corresponding array entries.
-- The ASCII diagram above each layer shows its mapped actions. Update that diagram when bindings change; keep the row comments tied to the physical keys. For example, the Page Down position stays `PGDN` in the row comment and shows `MYTTS_PAUSE` in the `DICT_L` diagram.
+- The ASCII diagram above each layer shows its mapped actions. Update that diagram when bindings change; keep the row comments tied to the physical keys. For example, the Page Down position stays `PGDN` in the row comment and shows `TTS_PAUSE` in the `DICT_L` diagram.
 
 ## Custom Keycodes
 See definitions in `erebusbat.h` in this directory:
