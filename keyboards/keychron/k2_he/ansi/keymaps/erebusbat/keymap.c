@@ -129,13 +129,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       |   ~   |   1   |   2   |   3   |   4   |   5   |   6   |   7   |   8   |   9   |   0   |   -   |  =+   |     BSPC      |    PGUP   |
       +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+---------------+-----------+
       +-----------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-----------+-----------+
-      |    TAB    |   Q   |   W   |   E   |   R   |   T   |   Y   |   U   |   I   |   O   |   P   | LBRC  | RBRC  |   BSLS    |MYTTS_PAUSE|
+      |    TAB    |   Q   |   W   |   E   |   R   |   T   |   Y   |   U   |   I   |   O   |   P   | LBRC  | RBRC  |   BSLS    | TTS_PAUSE |
       +-----------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-----------+-----------+
       +-------------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-----------------+-----------+
-      |    CAPS     |   A   |   S   |   D   |   F   |   G   |   H   |   J   |   K   |   L   |  ;:   |  '"   |  EB_COPY_READ   | MYTTS_READ|
+      |    CAPS     |   A   |   S   |   D   |   F   |   G   |   H   |   J   |   K   |   L   |  ;:   |  '"   |  EB_COPY_READ   | TTS_READ  |
       +-------------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-----------------+-----------+
       +-----------------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------------+-------+-----------+
-      |     Shift/(     |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |  ,<   |  .>   |  /?   |   Shift/)   |  UP   | MYTTS_STOP|
+      |     Shift/(     |   Z   |   X   |   C   |   V   |   B   |   N   |   M   |  ,<   |  .>   |  /?   |   Shift/)   |  UP   | TTS_STOP  |
       +-----------------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------------+-------+-----------+
       +---------+---------+---------+-------------------------------------------------+-------+-------+-------+-------+-------+-----------+
       |  LCTL   |  LGUI   |  LALT   |                       SPC                       | RALT  |FN_WIN | RCTL  | LEFT  | DOWN  |    RGHT   |
@@ -151,13 +151,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_GRV,      KC_1,        KC_2,        KC_3,        KC_4,        KC_5,        KC_6,        KC_7,        KC_8,        KC_9,        KC_0,        KC_MINS,     KC_EQL,      KC_BSPC,                  KC_PGUP,
 
      // TAB                 Q            W            E            R            T            Y            U            I            O            P            LBRC         RBRC         BSLS               PGDN
-        KC_TAB,             KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,        KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        KC_LBRC,     KC_RBRC,     KC_BSLS,           MYTTS_PAUSE,
+        KC_TAB,             KC_Q,        KC_W,        KC_E,        KC_R,        KC_T,        KC_Y,        KC_U,        KC_I,        KC_O,        KC_P,        KC_LBRC,     KC_RBRC,     KC_BSLS,           TTS_PAUSE,
 
      // CAPS                   A            S            D            F            G            H            J            K            L            SCLN         QUOTE        ENTER                        HOME
-        KC_CAPS,               KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,        KC_K,        KC_L,        KC_SCLN,     KC_QUOT,     EB_COPY_READ,                MYTTS_READ,
+        KC_CAPS,               KC_A,        KC_S,        KC_D,        KC_F,        KC_G,        KC_H,        KC_J,        KC_K,        KC_L,        KC_SCLN,     KC_QUOT,     EB_COPY_READ,                TTS_READ,
 
      // LSHIFT                       Z            X            C            V            B            N            M            COMMA        DOT          SLASH        RSHIFT                 UP           END
-        SC_LSPO,                     KC_Z,        KC_X,        EB_COPY,     KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     SC_RSPC,               KC_UP,       MYTTS_STOP,
+        SC_LSPO,                     KC_Z,        KC_X,        EB_COPY,     KC_V,        KC_B,        KC_N,        KC_M,        KC_COMM,     KC_DOT,      KC_SLSH,     SC_RSPC,               KC_UP,       TTS_STOP,
 
      // LCTRL           LOPT             LCMD            SPACE                                                                            RCMD         FN           RCTRL        LEFT         DOWN         RIGHT
         KC_LCTL,        KC_LGUI,         KC_LALT,        KC_SPC,                                                                          KC_RALT,     FN_WIN,      KC_RCTL,     KC_LEFT,     KC_DOWN,     KC_RGHT),
@@ -249,7 +249,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             tap_code16(EB_COPY);
             // Allow the application to update the clipboard before reading it.
             wait_ms(250);
-            tap_code16(MYTTS_READ);
+            tap_code16(TTS_READ);
         }
         return false;
     }
