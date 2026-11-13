@@ -258,8 +258,8 @@ Chord defines shared by every board live in `../common/eb_keys.h` (repo `ErebusB
 - `EB_SCRN` — `Cmd+Shift+4` (macOS screenshot region); `KC_SNAP` aliases it on non-Keychron boards
 - `EB_TUI_NL` — `Shift+Enter` (newline in terminal TUIs)
 - `EB_KC_DICT` — `Hyper+\`: VoiceInk recording
-- `EB_DICT_PASTE_ENH` — `Ctrl+Shift+Right`: VoiceInk "Paste Last Enhanced Transcription"
-- `EB_DICT_FMT_AI` — `Ctrl+Shift+Left`: VoiceInk custom prompt formatter (Shift + `EB_DICT_PASTE_ENH` on boards with the key override)
+- `EB_DICT_LAST` — `Ctrl+Shift+Right`: paste the last dictation output (VoiceInk "Paste Last Enhanced Transcription")
+- `EB_DICT_FMT_AI` — `Ctrl+Shift+Left`: VoiceInk custom prompt formatter (Shift + `EB_DICT_LAST` on boards with the key override)
 - `TTS_READ/PAUSE/STOP` — MyTTS controls (`LCAG`)
 
 ### Windowing macros (Raycast integration)
