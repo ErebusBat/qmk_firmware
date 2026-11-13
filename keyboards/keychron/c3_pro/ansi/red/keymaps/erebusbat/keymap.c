@@ -31,7 +31,7 @@ enum layers {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MAC_BASE] = LAYOUT_tkl_ansi(
         // ESC,                 KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,     KC_F10,     KC_F11,     KC_F11,   KC_PSCR,    KC_SCRL,   KC_PAUS,
-        EB_ESC_HYPR,            KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,     KC_F10,     KC_F11,     KC_F12,   EB_SCRN,    EB_AI_NXT, EB_DICT,
+        EB_ESC_HYPR,            KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,     KC_F10,     KC_F11,     KC_F12,   EB_SCRN,    EB_DICT_PASTE_ENH, EB_DICT,
 
         // GRV,       KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,      KC_MINS,    KC_EQL,     KC_BSPC,  KC_INS,     KC_HOME,   KC_PGUP,
         KC_GRV,       KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,      KC_MINS,    KC_EQL,     KC_BSPC,  KC_INS,     KC_HOME,   KC_PGUP,
@@ -73,10 +73,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_ESC,                 KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,     EB_3RD_A,   EB_3RD_B,   EB_3RD_C, EB_23RD_A, EB_23RD_B,  EB_23RD_C,
 
         // GRV,       KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,      KC_MINS,    KC_EQL,     KC_BSPC,  KC_INS,     KC_HOME,  KC_PGUP,
-        KC_GRV,       KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     EB_23RD_A, EB_23RD_B,  EB_23RD_C,  KC_BSPC,  EB_6th_A,   EB_6th_B, EB_6th_C,
+        KC_GRV,       KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     EB_23RD_A, EB_23RD_B,  EB_23RD_C,  KC_BSPC,  EB_6TH_A,   EB_6TH_B, EB_6TH_C,
 
         // TAB,       KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,      KC_LBRC,    KC_RBRC,    KC_BSLS,  KC_DEL,     KC_END,   KC_PGDN,
-        KC_TAB,       KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     EB_QTR_A, EB_QTR_B, KC_O,     KC_P,      KC_LBRC,    KC_RBRC,    KC_BSLS,  EB_6th_D,   EB_6th_E, EB_6th_F,
+        KC_TAB,       KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     EB_QTR_A, EB_QTR_B, KC_O,     KC_P,      KC_LBRC,    KC_RBRC,    KC_BSLS,  EB_6TH_D,   EB_6TH_E, EB_6TH_F,
 
         // CAPS,      KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,   KC_QUOT,                KC_ENT,
         KC_CAPS,      KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_H,     EB_QTR_C, EB_QTR_D, KC_L,     KC_SCLN,   KC_QUOT,                EB_FULLS,
@@ -111,14 +111,14 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_DICT] = ACTION_TAP_DANCE_DOUBLE(EB_KC_DICT, KC_ENT),
 };
 
-// Key override: Shift + EB_AI_NXT sends EB_AI_PRV (global across layers).
+// Key override: Shift + EB_DICT_PASTE_ENH sends EB_DICT_FMT_AI (global across layers).
 // Requires KEY_OVERRIDE_ENABLE = yes in rules.mk.
-const key_override_t ai_prev_on_shift = ko_make_basic(MOD_MASK_SHIFT, EB_AI_NXT, EB_AI_PRV);
+const key_override_t dict_fmt_on_shift = ko_make_basic(MOD_MASK_SHIFT, EB_DICT_PASTE_ENH, EB_DICT_FMT_AI);
 // Key override: Shift + EB_DICT sends EB_TUI_NL (global across layers).
 // Requires KEY_OVERRIDE_ENABLE = yes in rules.mk.
 const key_override_t tui_nl_on_shift = ko_make_basic(MOD_MASK_SHIFT, EB_DICT, EB_TUI_NL);
 const key_override_t** key_overrides = (const key_override_t*[]){
-    &ai_prev_on_shift,
+    &dict_fmt_on_shift,
     &tui_nl_on_shift,
     NULL, // Terminator required by QMK to mark end of overrides list.
 };
