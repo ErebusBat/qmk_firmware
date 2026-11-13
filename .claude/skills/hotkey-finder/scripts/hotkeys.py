@@ -103,6 +103,11 @@ SYMBOLIC_NAMES = {
     81: "(move right a space)", 82: "(move right a space)", 190: "(Quick Note)",
 }
 
+# Hidden Shift-variant entries that System Settings never shows. They keep their own
+# "enabled" flag (often stale True) but only act when the visible base entry is on,
+# e.g. #80 Ctrl+Shift+Left follows #79 Ctrl+Left. Companion id -> base id.
+SYMBOLIC_SHIFT_COMPANIONS = {34: 32, 35: 33, 37: 36, 80: 79, 82: 81}
+
 # Built-in macOS shortcuts worth avoiding even when absent from symbolichotkeys.
 RESERVED = {
     (HYPER, "."): "macOS sysdiagnose",
@@ -404,6 +409,9 @@ def load_macos(inv: Inventory) -> None:
     count = 0
     for hid, v in hk.items():
         params = v.get("value", {}).get("parameters", [])
+        base = SYMBOLIC_SHIFT_COMPANIONS.get(int(hid))
+        if base is not None and not hk.get(str(base), {}).get("enabled"):
+            continue  # hidden Shift variant of a disabled shortcut: inactive
         if v.get("enabled") and len(params) == 3 and params[1] in KVK:
             mods = frozenset(name for bit, name in flags.items() if params[2] & bit)
             name = SYMBOLIC_NAMES.get(int(hid), "")
