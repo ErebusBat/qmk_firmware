@@ -31,14 +31,16 @@ enum custom_keycodes {
 #define TTS_PAUSE LCAG(KC_P)
 #define TTS_STOP LCAG(KC_S)
 // MyTTS playback speed: Ctrl + Shift + Option + Command
-#define TTS_SLOWER HYPR(KC_LBRC)
-#define TTS_FASTER HYPR(KC_RBRC)
-#define TTS_SPEED_075 HYPR(KC_1) // 0.75x
-#define TTS_SPEED_100 HYPR(KC_2) // 1.00x (normal)
-#define TTS_SPEED_125 HYPR(KC_3) // 1.25x
-#define TTS_SPEED_150 HYPR(KC_4) // 1.50x
-#define TTS_SPEED_175 HYPR(KC_5) // 1.75x
-#define TTS_SPEED_200 HYPR(KC_6) // 2.00x
+// Disabled 2026-11-13: MyTTS speed shortcuts don't work reliably, and Hyper+3
+// collides with Raycast's T3 Code hotkey. Unmapped from DICT_L until fixed.
+// #define TTS_SLOWER HYPR(KC_LBRC)
+// #define TTS_FASTER HYPR(KC_RBRC)
+// #define TTS_SPEED_075 HYPR(KC_1) // 0.75x
+// #define TTS_SPEED_100 HYPR(KC_2) // 1.00x (normal)
+// #define TTS_SPEED_125 HYPR(KC_3) // 1.25x
+// #define TTS_SPEED_150 HYPR(KC_4) // 1.50x
+// #define TTS_SPEED_175 HYPR(KC_5) // 1.75x
+// #define TTS_SPEED_200 HYPR(KC_6) // 2.00x
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Tap Dance
