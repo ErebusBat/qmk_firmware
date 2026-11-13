@@ -14,7 +14,7 @@ Custom QMK keymap for Keychron K2 HE (Hall Effect) ANSI keyboard with 4 layers d
 - The ASCII diagram above each layer shows its mapped actions. Update that diagram when bindings change; keep the row comments tied to the physical keys. For example, the Page Down position stays `PGDN` in the row comment and shows `TTS_PAUSE` in the `DICT_L` diagram.
 
 ## Custom Keycodes
-- Chord defines shared by every board (`EB_CAPS`, `EB_ESC_HYPR`, `EB_DICT_PASTE_ENH`, `TTS_*`, window commands, ...) live in `../common/eb_keys.h` (repo `ErebusBat/qmk-common`). `rules.mk` adds `../common` to the include path.
+- Chord defines shared by every board (`EB_CAPS`, `EB_ESC_HYPR`, `EB_DICT_LAST`, `TTS_*`, window commands, ...) live in `../common/eb_keys.h` (repo `ErebusBat/qmk-common`). `rules.mk` adds `../common` to the include path.
 - `erebusbat.h` in this directory includes it and holds only K2 HE-specific keycodes: the `EB_COPY_READ` custom keycode and the `TD_DICT` tap dance.
 
 ## Mod-Tap Configuration

@@ -35,7 +35,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      # MAC_BASE
      # effective_min_key_width=8 token_min_key_width=11
       +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+
-      | Esc/◆  |   F1   |   F2   |   F3   |   F4   |   F5   |   F6   |   F7   |   F8   |   F9   |  F10   |  F11   |  F12   |  SNAP  |🦇PST_AI| 🦇DICT |
+      | Esc/◆  |   F1   |   F2   |   F3   |   F4   |   F5   |   F6   |   F7   |   F8   |   F9   |  F10   |  F11   |  F12   |  SNAP  |🦇D_LAST| 🦇DICT |
       +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+
       +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+--------+
       |   ~    |   1    |   2    |   3    |   4    |   5    |   6    |   7    |   8    |   9    |   0    |   -    |   =+   |      BSPC       |  PGUP  |
@@ -56,8 +56,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [MAC_BASE] = LAYOUT_ansi_84(
 
-     // ESC          F1           F2           F3           F4           F5           F6           F7           F8           F9           F10          F11          F12          SCREENSHOT   DEL                LIGHT
-        EB_ESC_HYPR, KC_F1,       KC_F2,       KC_F3,       KC_F4,       KC_F5,       KC_F6,       KC_F7,       KC_F8,       KC_F9,       KC_F10,      KC_F11,      KC_F12,      KC_SNAP,     EB_DICT_PASTE_ENH, EB_DICT,
+     // ESC          F1           F2           F3           F4           F5           F6           F7           F8           F9           F10          F11          F12          SCREENSHOT   DEL           LIGHT
+        EB_ESC_HYPR, KC_F1,       KC_F2,       KC_F3,       KC_F4,       KC_F5,       KC_F6,       KC_F7,       KC_F8,       KC_F9,       KC_F10,      KC_F11,      KC_F12,      KC_SNAP,     EB_DICT_LAST, EB_DICT,
 
      // GRAVE        1            2            3            4            5            6            7            8            9            0            MINUS        EQUAL        BSPC                      PGUP
         KC_GRV,      KC_1,        KC_2,        KC_3,        KC_4,        KC_5,        KC_6,        KC_7,        KC_8,        KC_9,        KC_0,        KC_MINS,     KC_EQL,      KC_BSPC,                  KC_PGUP,
@@ -85,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       |        |BT_HST1 |BT_HST2 |BT_HST3 | P2P4G  |        |        |        |        |        |        |        |        |       DEL       |🦇FMT_AI|
       +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-----------------+--------+
       +-------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+------------+--------+
-      |   UG_TOGG   |UG_NEXT |UG_VALU |UG_HUEU |UG_SATU |UG_SPDU |        |        |        |        |        |        |        |            |🦇PST_AI|
+      |   UG_TOGG   |UG_NEXT |UG_VALU |UG_HUEU |UG_SATU |UG_SPDU |        |        |        |        |        |        |        |            |🦇D_LAST|
       +-------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+------------+--------+
       +---------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------------------+--------+
       |               |UG_PREV |UG_VALD |UG_HUED |UG_SATD |UG_SPDD |  LEFT  |  DOWN  |   UP   |  RGHT  |        |        |     🦇TUI_NL      |        |
@@ -107,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,   BT_HST1,   BT_HST2,   BT_HST3,   P2P4G,     _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   KC_DEL,               EB_DICT_FMT_AI,
 
      // TAB              Q          W          E          R          T          Y          U          I          O          P          LBRC       RBRC       BSLS            PGDN
-        UG_TOGG,         UG_NEXT,   UG_VALU,   UG_HUEU,   UG_SATU,   UG_SPDU,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,        EB_DICT_PASTE_ENH,
+        UG_TOGG,         UG_NEXT,   UG_VALU,   UG_HUEU,   UG_SATU,   UG_SPDU,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,        EB_DICT_LAST,
 
      // CAPS               A          S          D          F          G          H          J          K          L          SCLN       QUOTE      ENTER                    HOME
         _______,           UG_PREV,   UG_VALD,   UG_HUED,   UG_SATD,   UG_SPDD,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RGHT,   _______,   _______,   EB_TUI_NL,               _______,
@@ -214,9 +214,9 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_DICT] = ACTION_TAP_DANCE_DOUBLE(EB_KC_DICT, KC_ENT),
 };
 
-// Key override: Shift + EB_DICT_PASTE_ENH sends EB_DICT_FMT_AI (global across layers).
+// Key override: Shift + EB_DICT_LAST sends EB_DICT_FMT_AI (global across layers).
 // Requires KEY_OVERRIDE_ENABLE = yes in rules.mk.
-const key_override_t  dict_fmt_on_shift = ko_make_basic(MOD_MASK_SHIFT, EB_DICT_PASTE_ENH, EB_DICT_FMT_AI);
+const key_override_t  dict_fmt_on_shift = ko_make_basic(MOD_MASK_SHIFT, EB_DICT_LAST, EB_DICT_FMT_AI);
 const key_override_t  tui_nl_on_shift   = ko_make_basic(MOD_MASK_SHIFT, EB_DICT, EB_TUI_NL);
 const key_override_t *key_overrides[]   = {
     &dict_fmt_on_shift,
