@@ -126,7 +126,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       |    Esc/◆    |    BRID     |    BRIU     |    MCTRL    |    LNPAD    |   UG_VALD   |   UG_VALU   |    PREV     |    PLAY     |    NEXT     |    MUTE     |    VOL-     |    VOL+     |    PSCR     |     DEL     |   🦇DICT    |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+---------------------------+-------------+
-      |      ~      |      1      |      2      |      3      |      4      |      5      |      6      |      7      |      8      |      9      |TTS_SPEED_100| TTS_SLOWER  | TTS_FASTER  |           BSPC            |    PGUP     |
+      |      ~      |      1      |      2      |      3      |      4      |      5      |      6      |      7      |      8      |      9      |      0      |     -_      |     =+      |           BSPC            |    PGUP     |
       +-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+---------------------------+-------------+
       +--------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+--------------------+-------------+
       |        TAB         |      Q      |      W      |      E      |      R      |      T      |      Y      |      U      |      I      |      O      |      P      |    LBRC     |    RBRC     |        BSLS        |  TTS_PAUSE  |
@@ -148,7 +148,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         EB_ESC_HYPR,   KC_BRID,       KC_BRIU,       KC_MCTRL,      KC_LNPAD,      UG_VALD,       UG_VALU,       KC_MPRV,       KC_MPLY,       KC_MNXT,       KC_MUTE,       KC_VOLD,       KC_VOLU,       KC_PSCR,       KC_DEL,        EB_DICT,
 
      // GRAVE          1              2              3              4              5              6              7              8              9              0              MINUS          EQUAL          BSPC                          PGUP
-        KC_GRV,        KC_1,          KC_2,          KC_3,          KC_4,          KC_5,          KC_6,          KC_7,          KC_8,          KC_9,          TTS_SPEED_100, TTS_SLOWER,    TTS_FASTER,    KC_BSPC,                      KC_PGUP,
+        KC_GRV,        KC_1,          KC_2,          KC_3,          KC_4,          KC_5,          KC_6,          KC_7,          KC_8,          KC_9,          KC_0,          KC_MINS,       KC_EQL,        KC_BSPC,                      KC_PGUP,
 
      // TAB                    Q              W              E              R              T              Y              U              I              O              P              LBRC           RBRC           BSLS                  PGDN
         KC_TAB,                KC_Q,          KC_W,          KC_E,          KC_R,          KC_T,          KC_Y,          KC_U,          KC_I,          KC_O,          KC_P,          KC_LBRC,       KC_RBRC,       KC_BSLS,              TTS_PAUSE,
