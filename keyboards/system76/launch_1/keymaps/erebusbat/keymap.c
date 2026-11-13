@@ -86,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       |         |         |         |         |         |         |         |         |         |         |  💡TOG  |  💡VAD  |  💡VAI  |   🦇TUI_NL   |  |🦇FMT_AI |
       +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------+  +---------+
       +--------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+  +---------+
-      |     SNAP     |         |         |         |         |         |  HOME   |  PGDN   |  PGUP   |   END   |         |         |         |         |  |🦇PST_AI |
+      |     SNAP     |         |         |         |         |         |  HOME   |  PGDN   |  PGUP   |   END   |         |         |         |         |  |🦇D_LAST |
       +--------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+  +---------+
          +--------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------+    +---------+
          |              |         |         |         |         |         |  LEFT   |  DOWN   |   UP    |  RGHT   |         |         |   🦇TUI_NL   |    |  MUTE   |
@@ -108,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   RGB_TOG,   RGB_VAD,   RGB_VAI,   EB_TUI_NL,         EB_DICT_FMT_AI,
 
      //    TAB              Q          W          E          R          T          Y          U          I          O          P          LBRC       RBRC       BSLS         PGDN
-        KC_SNAP,         KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_HOME,   KC_PGDN,   KC_PGUP,   KC_END,    KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,     EB_DICT_PASTE_ENH,
+        KC_SNAP,         KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_HOME,   KC_PGDN,   KC_PGUP,   KC_END,    KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,     EB_DICT_LAST,
 
      //    EB_CAPS            A          S          D          F          G          H          J          K          L       ;:         '"            ENT                   END
            KC_TRNS,        KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RGHT,   KC_TRNS,   KC_TRNS,   EB_TUI_NL,            KC_MUTE,
