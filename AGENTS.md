@@ -240,7 +240,8 @@ All custom keymaps live under `keyboards/<vendor>/<board>/.../keymaps/erebusbat/
 
 ### Standard files per keymap
 - `keymap.c` — layer definitions and `process_record_user`
-- `erebusbat.h` — shared custom keycode defines (currently duplicated per keymap)
+- `erebusbat.h` — board-specific keycodes (custom keycode and tap-dance enums); `#include "eb_keys.h"` pulls in the shared defines
+- `rules.mk` — features, plus `EXTRAINCDIRS += $(TOP_DIR)/../common` so `eb_keys.h` resolves
 - `config.h` — mod-tap timing overrides
 
 ### Layer convention (Keychron boards)
@@ -251,10 +252,15 @@ All Keychron keymaps use 4 layers:
 - `WIN_FN` (3) — Windows function layer
 
 ### Custom keycodes (`EB_` prefix)
-Defined in `erebusbat.h` in each keymap directory:
+Chord defines shared by every board live in `../common/eb_keys.h` (repo `ErebusBat/qmk-common`), not in the keyboard branches. Add or rename a chord there, then update every branch's `keymap.c` that uses it in the same pass: a rename breaks the build of any board not yet updated. Board-only keycodes stay in the keymap's own `erebusbat.h`.
 - `EB_CAPS` — `MT(MOD_LCTL, KC_ESC)`: tap for Escape, hold for Left Control
 - `EB_ESC_HYPR` — `MT(MOD_HYPR, KC_ESC)`: tap for Escape, hold for Hyper (Ctrl+Shift+Alt+Gui)
-- `EB_SCRN` — custom keycode that sends `Cmd+Shift+4` (macOS screenshot region)
+- `EB_SCRN` — `Cmd+Shift+4` (macOS screenshot region); `KC_SNAP` aliases it on non-Keychron boards
+- `EB_TUI_NL` — `Shift+Enter` (newline in terminal TUIs)
+- `EB_KC_DICT` — `Hyper+\`: VoiceInk recording
+- `EB_DICT_PASTE_ENH` — `Ctrl+Shift+Right`: VoiceInk "Paste Last Enhanced Transcription"
+- `EB_DICT_FMT_AI` — `Ctrl+Shift+Left`: VoiceInk custom prompt formatter (Shift + `EB_DICT_PASTE_ENH` on boards with the key override)
+- `TTS_READ/PAUSE/STOP` — MyTTS controls (`LCAG`)
 
 ### Windowing macros (Raycast integration)
 The `EB_` windowing defines use `LCAG()` (Left Ctrl+Alt+Gui) modifier combos bound to Raycast window management on macOS:
@@ -263,7 +269,7 @@ The `EB_` windowing defines use `LCAG()` (Left Ctrl+Alt+Gui) modifier combos bou
 - `EB_3RD_A/B/C` — thirds
 - `EB_23RD_A/B/C` — two-thirds
 - `EB_QTR_A/B/C/D` — quarters (2x2 grid)
-- `EB_6th_A-F` — sixths (2x3 grid)
+- `EB_6TH_A-F` — sixths (2x3 grid)
 
 ### Mod-tap settings
 Configured in each keymap's `config.h`:
