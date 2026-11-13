@@ -31,9 +31,27 @@ Each keyboard family lives on its own branch tracking its respective upstream:
 
 **Always check out the correct branch before working on a keyboard.**
 
-## Git Worktrees
+## Folder Layout
 
-If a git worktree exists for the target keyboard branch, use that worktree (or attempt to) instead of switching branches in the current worktree. This avoids conflicts with a dirty working tree and keeps keyboard-specific work isolated.
+Every branch is checked out exactly once, as a worktree of one bare repo:
+
+```
+~/src/erebusbat/qmk/
+├── .qmk/              bare repo (shared refs, submodule stores)
+├── common/            separate repo ErebusBat/qmk-common: shared just recipes, imported as ../common
+├── justfile -> common/workspace.just   (`just sync-all`: pull/push every worktree)
+├── k2_he/             k2_he_2025q3        KB=k2he
+├── c3_pro/            playground          KB=c3pro
+├── sys76/             erebusbat-keyboard  KB=sys76
+├── drop_shift_10key/  drop_shift_10key    KB=shift
+├── drop_ctrl/         drop_ctrl
+└── PlankEZ-Raw-Source/  Planck EZ Oryx export (not git)
+```
+
+- Work on a keyboard in its worktree above, from any session: `cd` there rather than switching branches, and commit there.
+- These worktrees are the complete set. Keyboard work goes straight onto the keyboard's branch, so new branches and worktrees are for upstream merges only, and are deleted (locally and on both remotes) when merged.
+- `just compile`/`flash` run `check-branch`, which refuses a worktree on any branch but the keyboard's own (`ALLOW_ANY_BRANCH=1` overrides) and warns when it is behind its upstream.
+- Edits to `common/` are commits to the `qmk-common` repo; push them to GitHub (Gitea pull-mirrors it hourly).
 
 ## Cross-Branch Shared Files
 
@@ -49,10 +67,23 @@ command git checkout <source-branch> -- AGENTS.md activate.sh
 command git commit -m "Sync shared files from <source-branch>" -- AGENTS.md activate.sh
 ```
 
-After multi-branch syncs, push all updated branches together:
+`master` has no worktree; update it from any worktree without a checkout:
+
+```bash
+blob=$(command git rev-parse <source-branch>:AGENTS.md)
+export GIT_INDEX_FILE=$(mktemp -u)
+command git read-tree master
+command git update-index --cacheinfo 100644,"$blob",AGENTS.md
+commit=$(command git commit-tree "$(command git write-tree)" -p master -m "Sync shared files from <source-branch>")
+command git update-ref refs/heads/master "$commit" "$(command git rev-parse master)"
+rm -f "$GIT_INDEX_FILE"; unset GIT_INDEX_FILE
+```
+
+After multi-branch syncs, push all updated branches together to both remotes (Gitea is kept in sync by hand):
 
 ```bash
 command git push origin k2_he_2025q3 playground erebusbat-keyboard master drop_ctrl drop_shift_10key
+command git push gitea  k2_he_2025q3 playground erebusbat-keyboard master drop_ctrl drop_shift_10key
 ```
 
 ## Build Environment Setup (macOS)
@@ -193,7 +224,7 @@ wait-output markers are keyboard-specific:
 | Branch | Keyboard | Flash method |
 | --- | --- | --- |
 | `k2_he_2025q3` | Keychron K2 HE | `just flash` → `qmk flash` → STM32 DFU (`dfu-util`), Esc+plug — this section |
-| `playground` | Keychron C3 Pro | Keychron DFU flow as above, but no branch justfile — run `just KB=c3pro flash` from the shared `common/` dir, or `qmk flash` directly |
+| `playground` | Keychron C3 Pro | Keychron DFU flow as above, but no branch justfile — in the `c3_pro` worktree, `source activate.sh` then `qmk flash -kb keychron/c3_pro/ansi/red -km erebusbat` |
 | `erebusbat-keyboard` | System76 Launch 1 (AVR) | `just flash` → `qmk flash` → `atmel-dfu` (`dfu-programmer`); uses the board's reset, not Keychron's Esc+plug |
 | `drop_shift_10key` | Massdrop Shift (ARM_ATSAM) | `just flash` → branch's custom `make` + `mdloader` recipe; dfu-util markers do not apply |
 | `drop_ctrl` | Massdrop CTRL (ARM_ATSAM, `md-boot`) | No branch justfile — compile with `make`, flash manually with `mdloader` |
