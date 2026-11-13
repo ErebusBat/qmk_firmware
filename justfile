@@ -22,7 +22,7 @@ MDLOADER_PATH := "$HOME/bin/mdloader"
 
 # Compile QMK Firmware
 [group('Compile & Flash')]
-@compile:
+@compile: check-branch
     PATH="{{ PATH_WITH_QMK }}" make massdrop/shift:erebusbat
 
 # Flash QMK Firmware using custom mdloader tool
