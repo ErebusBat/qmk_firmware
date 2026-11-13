@@ -27,7 +27,7 @@ Every chord has **receivers** (Raycast, MyTTS, macOS act on it) and **senders** 
 3. **Verify.** `check` your pick and 2 alternates. Each must print `FREE`. In `inventory`, `UNBOUND` chords still count as taken: a keyboard sends them to an app this script cannot see (e.g. Hyper+\ goes to dictation).
 4. **Report** the recommended chord, the alternates, the kind, and the snapshot dates from `Sources:`. The Raycast export is a snapshot: assignments made after it are invisible, so tell the user how old it is. Mention any `CONFLICT` you saw on chords near the pick.
 5. **Program it** only when asked:
-   - **K2 HE:** in the `k2_he_2025q3` worktree (`../k2_he`), add a `#define` to `keyboards/keychron/k2_he/ansi/keymaps/erebusbat/erebusbat.h` using QMK wrappers (`HYPR()`, `LCAG()`, `MEH()`), then place it in `keymap.c`. Build and flash per `AGENTS.md`.
+   - **K2 HE:** in the `k2_he_2025q3` worktree (`../k2_he`), add a `#define` to the shared `../common/eb_keys.h` (repo `ErebusBat/qmk-common`, used by every board; commit and push it there) using QMK wrappers (`HYPR()`, `LCAG()`, `MEH()`), then place it in `keymap.c`. Build and flash per `AGENTS.md`.
    - **Planck EZ:** it is edited only in the Oryx configurator (<https://configure.zsa.io/planck-ez/layouts/BqKMO/latest/0>). Give the user the key code and modifier checkboxes. After a Planck change, update the Obsidian reference per `../PlankEZ-Raw-Source/AGENTS.md`.
    - **Receiver:** the user records the hotkey in Raycast (or the target app). This skill cannot write Raycast settings.
 

@@ -36,6 +36,8 @@ RAYCAST_EXPORT_DIR = Path.home() / "Documents/Library/R/Raycast Exports"
 RAYCAST_PASSPHRASE_OP_REF = "op://Private/47xuupmqdzuswcp6umnlkq43y4/password"  # "Raycast Backup/ Export Password"
 K2HE_REF = "k2_he_2025q3"
 K2HE_KEYMAP_DIR = "keyboards/keychron/k2_he/ansi/keymaps/erebusbat"
+# Shared chord defines (ErebusBat/qmk-common), read from the working tree that builds use
+SHARED_KEYS_H = Path(__file__).resolve().parents[5] / "common" / "eb_keys.h"
 ORYX_URL = "https://oryx.zsa.io/graphql"
 PLANCK_LAYOUT = ("BqKMO", "planck-ez", "latest")
 
@@ -294,10 +296,15 @@ def load_k2he(inv: Inventory, ref: str) -> None:
 
     sha = subprocess.run(["git", "rev-parse", "--short", ref], capture_output=True, text=True).stdout.strip()
     header, keymap = show("erebusbat.h"), show("keymap.c")
-    defines = {}
-    for src in (header, keymap):
+    shared = SHARED_KEYS_H.read_text() if SHARED_KEYS_H.exists() else ""
+    if not shared:
+        inv.status.append(f"k2he: WARNING shared header {SHARED_KEYS_H} not found")
+    defines, local_names = {}, set()
+    for src in (shared, header, keymap):
         for m in re.finditer(r"^[ \t]*#define[ \t]+(\w+)[ \t]+((?:[^\n]*\\\n)*[^\n]*)", src, flags=re.M):
             defines[m.group(1)] = strip_c_comments(m.group(2).replace("\\\n", " ")).strip()
+            if src is not shared:
+                local_names.add(m.group(1))
 
     code = strip_c_comments(keymap)
     placed = defaultdict(set)  # define/expression -> layers
@@ -322,7 +329,12 @@ def load_k2he(inv: Inventory, ref: str) -> None:
             continue
         c = qmk_eval(name, defines)
         if interesting(c):
-            where = "used in keymap.c code" if re.search(rf"\b{name}\b", outside) else "defined, not placed on a key"
+            if re.search(rf"\b{name}\b", outside):
+                where = "used in keymap.c code"
+            elif name in local_names:
+                where = "defined, not placed on a key"
+            else:
+                continue  # shared eb_keys.h define this keymap doesn't use
             inv.senders[c].append(f"K2HE {name} ({where})")
             count += 1
     inv.status.append(f"k2he: {count} chord keycodes from {ref}@{sha}")
