@@ -83,10 +83,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       | QK_BOOT |         |         |   F13   |   F14   |   F15   |   F16   |   F17   |   F18   |   F19   |   F20   |   F21   |   F22   |     🦇🗣️     |  |  PLAY   |
       +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------+  +---------+
       +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------+  +---------+
-      |         |         |         |         |         |         |         |         |         |         |  💡TOG  |  💡VAD  |  💡VAI  |   🦇TUI_NL   |  |🦇AI_PRV |
+      |         |         |         |         |         |         |         |         |         |         |  💡TOG  |  💡VAD  |  💡VAI  |   🦇TUI_NL   |  |🦇FMT_AI |
       +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------+  +---------+
       +--------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+  +---------+
-      |     SNAP     |         |         |         |         |         |  HOME   |  PGDN   |  PGUP   |   END   |         |         |         |         |  |🦇AI_NXT |
+      |     SNAP     |         |         |         |         |         |  HOME   |  PGDN   |  PGUP   |   END   |         |         |         |         |  |🦇PST_AI |
       +--------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+  +---------+
          +--------------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------+    +---------+
          |              |         |         |         |         |         |  LEFT   |  DOWN   |   UP    |  RGHT   |         |         |   🦇TUI_NL   |    |  MUTE   |
@@ -105,10 +105,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         QK_BOOT,   KC_TRNS,   KC_TRNS,   KC_F13,    KC_F14,    KC_F15,    KC_F16,    KC_F17,    KC_F18,    KC_F19,    KC_F20,    KC_F21,    KC_F22,    EB_KC_DICT,        KC_MPLY,
 
      // ~             1          2          3          4          5          6          7          8          9          0       -          =+            BSPC               PGUP
-        KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   RGB_TOG,   RGB_VAD,   RGB_VAI,   EB_TUI_NL,         EB_AI_PRV,
+        KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   RGB_TOG,   RGB_VAD,   RGB_VAI,   EB_TUI_NL,         EB_DICT_FMT_AI,
 
      //    TAB              Q          W          E          R          T          Y          U          I          O          P          LBRC       RBRC       BSLS         PGDN
-        KC_SNAP,         KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_HOME,   KC_PGDN,   KC_PGUP,   KC_END,    KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,     EB_AI_NXT,
+        KC_SNAP,         KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_HOME,   KC_PGDN,   KC_PGUP,   KC_END,    KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,     EB_DICT_PASTE_ENH,
 
      //    EB_CAPS            A          S          D          F          G          H          J          K          L       ;:         '"            ENT                   END
            KC_TRNS,        KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RGHT,   KC_TRNS,   KC_TRNS,   EB_TUI_NL,            KC_MUTE,
