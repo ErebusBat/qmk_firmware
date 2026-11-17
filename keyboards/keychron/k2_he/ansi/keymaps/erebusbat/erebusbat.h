@@ -13,6 +13,7 @@
 
 enum custom_keycodes {
     EB_COPY_READ = SAFE_RANGE,
+    EB_CLOG, // Type the timings of the last Caps + key gestures (eb_caps_chord.h)
 };
 
 ////////////////////////////////////////////////////////////////////////////////

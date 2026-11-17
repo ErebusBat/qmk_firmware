@@ -24,12 +24,9 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     return keycode == CTL_T(KC_ESC);
 }
 
-// Same per-key policy intended by the erebusbat keymap: retain permissive hold
-// globally, but never let it turn the caps-position key into Ctrl.
-bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
-    (void)record;
-    return keycode != CTL_T(KC_ESC);
-}
+// The EB_CAPS chord hooks (get_permissive_hold, pre_process_record_user,
+// process_record_user) are in eb_caps_hooks.c, which includes the keymap's own
+// eb_caps_chord.h so these tests exercise the shipped code.
 
 class ErebusbatCaps : public TestFixture {};
 
@@ -147,8 +144,7 @@ TEST_F(ErebusbatCaps, letter_tapped_within_quick_caps_tap_sends_escape) {
 
 
 /* Deliberate hold: caps held well past TAPPING_TERM with the letter tapped
- * mid-hold must still produce a Ctrl chord (permissive hold is disabled for
- * the caps key, so the hold resolves via the TAPPING_TERM timeout instead). */
+ * mid-hold must still produce a Ctrl chord. */
 TEST_F(ErebusbatCaps, deliberate_caps_hold_chords_with_letter) {
     TestDriver driver;
     InSequence s;
@@ -162,23 +158,121 @@ TEST_F(ErebusbatCaps, deliberate_caps_hold_chords_with_letter) {
     idle_for(100);
     VERIFY_AND_CLEAR(driver);
 
-    /* The letter stays buffered because permissive hold is disabled for caps. */
     EXPECT_NO_REPORT(driver);
     regular_key.press();
     idle_for(20);
-    regular_key.release();
-    idle_for(20);
     VERIFY_AND_CLEAR(driver);
 
-    /* TAPPING_TERM resolves the deliberate hold and replays J as Ctrl+J. */
+    /* Caps has been down past EB_CAPS_CHORD_MS, so releasing J sends Ctrl+J. */
     EXPECT_REPORT(driver, (KC_LEFT_CTRL));
     EXPECT_REPORT(driver, (KC_LEFT_CTRL, KC_J));
     EXPECT_REPORT(driver, (KC_LEFT_CTRL));
+    regular_key.release();
+    run_one_scan_loop();
+    VERIFY_AND_CLEAR(driver);
+
+    EXPECT_NO_REPORT(driver);
     idle_for(TAPPING_TERM);
     VERIFY_AND_CLEAR(driver);
 
     EXPECT_EMPTY_REPORT(driver);
     caps_key.release();
+    run_one_scan_loop();
+    VERIFY_AND_CLEAR(driver);
+}
+/* Quick deliberate chord (tmux prefix Ctrl+A typed at speed): the letter is
+ * fully tapped inside the caps hold and everything is released before
+ * TAPPING_TERM. The letter overlaps caps for 60ms, which is too long to be
+ * an Esc-then-letter roll, so it must be a Ctrl chord. */
+TEST_F(ErebusbatCaps, quick_caps_chord_sends_ctrl_letter) {
+    TestDriver driver;
+    InSequence s;
+    auto       caps_key    = KeymapKey(0, 1, 0, CTL_T(KC_ESC));
+    auto       regular_key = KeymapKey(0, 2, 0, KC_A);
+
+    set_keymap({caps_key, regular_key});
+
+    EXPECT_NO_REPORT(driver);
+    caps_key.press();
+    idle_for(60);
+    regular_key.press();
+    idle_for(60);
+    VERIFY_AND_CLEAR(driver);
+
+    /* Ctrl+A is sent as soon as the letter is released, not at TAPPING_TERM. */
+    EXPECT_REPORT(driver, (KC_LEFT_CTRL));
+    EXPECT_REPORT(driver, (KC_LEFT_CTRL, KC_A));
+    EXPECT_REPORT(driver, (KC_LEFT_CTRL));
+    regular_key.release();
+    run_one_scan_loop();
+    VERIFY_AND_CLEAR(driver);
+
+    EXPECT_EMPTY_REPORT(driver);
+    idle_for(30);
+    caps_key.release();
+    run_one_scan_loop();
+    VERIFY_AND_CLEAR(driver);
+}
+
+/* Fast nested chord: the letter is released only 85ms after caps went down
+ * (under EB_CAPS_CHORD_MS) but overlapped caps for 55ms, so it is a chord. */
+TEST_F(ErebusbatCaps, fast_nested_caps_chord_sends_ctrl_letter) {
+    TestDriver driver;
+    InSequence s;
+    auto       caps_key    = KeymapKey(0, 1, 0, CTL_T(KC_ESC));
+    auto       regular_key = KeymapKey(0, 2, 0, KC_A);
+
+    set_keymap({caps_key, regular_key});
+
+    EXPECT_NO_REPORT(driver);
+    caps_key.press();
+    idle_for(30);
+    regular_key.press();
+    idle_for(55);
+    VERIFY_AND_CLEAR(driver);
+
+    EXPECT_REPORT(driver, (KC_LEFT_CTRL));
+    EXPECT_REPORT(driver, (KC_LEFT_CTRL, KC_A));
+    EXPECT_REPORT(driver, (KC_LEFT_CTRL));
+    regular_key.release();
+    run_one_scan_loop();
+    VERIFY_AND_CLEAR(driver);
+
+    EXPECT_EMPTY_REPORT(driver);
+    idle_for(20);
+    caps_key.release();
+    run_one_scan_loop();
+    VERIFY_AND_CLEAR(driver);
+}
+
+/* Sloppy chord release: caps is let go before the letter, inside TAPPING_TERM.
+ * QMK alone settles that as Esc + letter. The keys overlapped for 70ms, so the
+ * overlap rule turns it into Ctrl + letter. */
+TEST_F(ErebusbatCaps, caps_released_first_after_long_overlap_sends_ctrl_letter) {
+    TestDriver driver;
+    InSequence s;
+    auto       caps_key    = KeymapKey(0, 1, 0, CTL_T(KC_ESC));
+    auto       regular_key = KeymapKey(0, 2, 0, KC_A);
+
+    set_keymap({caps_key, regular_key});
+
+    EXPECT_NO_REPORT(driver);
+    caps_key.press();
+    idle_for(40);
+    regular_key.press();
+    idle_for(70);
+    VERIFY_AND_CLEAR(driver);
+
+    EXPECT_REPORT(driver, (KC_LEFT_CTRL));
+    EXPECT_REPORT(driver, (KC_LEFT_CTRL, KC_A));
+    EXPECT_REPORT(driver, (KC_A));
+    caps_key.release();
+    run_one_scan_loop();
+    VERIFY_AND_CLEAR(driver);
+
+    EXPECT_EMPTY_REPORT(driver);
+    idle_for(20);
+    regular_key.release();
     run_one_scan_loop();
     VERIFY_AND_CLEAR(driver);
 }

@@ -102,6 +102,38 @@ make -r -R -f builddefs/build_test.mk \
 .build/test/tap_hold_configurations_erebusbat_caps.elf
 ```
 
+## Follow-up: quick Ctrl chords sent Esc + letter (2026-11-17)
+
+The 2026-08-25 change disabled permissive hold for `EB_CAPS` outright, which left
+`TAPPING_TERM` as the only way to get Ctrl. A Ctrl chord typed at speed, such as the tmux
+prefix Caps+A with everything released inside 200 ms, came out as `Esc`, `a`. Typing it
+slowly always worked, which made it look like a typo.
+
+A first attempt gated permissive hold on time since Caps went down (100 ms). It felt worse in
+use and could never catch a chord where Caps is released a moment before the letter, because
+QMK settles that as a tap with no hook to intervene.
+
+The rules now live in `eb_caps_chord.h` and key off how long the first other key **overlaps**
+Caps (`pre_process_record_user()` sees the physical events before tap-hold does):
+
+| Gesture | Output |
+| --- | --- |
+| Other key released first, overlap under `EB_CAPS_OVERLAP_MS` (50) and Caps down under `EB_CAPS_CHORD_MS` (100) | Esc + key (the 08-25 roll fix) |
+| Other key released first, overlap at least 50 ms, or Caps already down 100 ms | **Ctrl + key**, sent when the key is released |
+| Caps released first, overlap under 50 ms | Esc, then key (a normal roll) |
+| Caps released first, overlap at least 50 ms | **Ctrl + key** (`process_record_user()` turns the settled tap into Ctrl) |
+| Caps held past `TAPPING_TERM` | Ctrl (unchanged) |
+
+Both thresholds are estimates, not measurements. To tune from real keystrokes, press **Fn+'**
+(`EB_CLOG`) in a text field: it types the last 8 Caps + key gestures, oldest first, as
+`g45-o70-t110-fc`: gap from Caps down to the other key down, overlap, total Caps time (ms),
+release order (`n` other key first, `f` Caps first) and outcome (`e` Esc, `c` Ctrl by the
+overlap rule, `h` Ctrl by QMK hold). It records timings only, never which keys.
+
+Mirror threshold changes in `tests/tap_hold_configurations/erebusbat_caps/config.h`. The test
+hooks are in `eb_caps_hooks.c` there (C, not C++: `keyevent_t` has a different layout in the
+C++ test files, so `record->event.pressed` reads wrong from `test_caps_esc.cpp`).
+
 ## What was NOT changed (and why)
 
 - **Keymap / keycodes** (`keymap.c`, `erebusbat.h`): `EB_ESC_HYPR` and `EB_CAPS` remain mod-taps,

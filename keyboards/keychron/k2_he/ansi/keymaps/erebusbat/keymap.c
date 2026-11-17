@@ -17,6 +17,7 @@
 #include QMK_KEYBOARD_H
 #include "keychron_common.h"
 #include "erebusbat.h"
+#include "eb_caps_chord.h"
 
 enum layers {
     MAC_BASE,
@@ -88,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       |   UG_TOGG   |UG_NEXT |UG_VALU |UG_HUEU |UG_SATU |UG_SPDU |        |        |        |        |        |        |        |            |🦇D_LAST|
       +-------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+------------+--------+
       +---------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------------------+--------+
-      |               |UG_PREV |UG_VALD |UG_HUED |UG_SATD |UG_SPDD |  LEFT  |  DOWN  |   UP   |  RGHT  |        |        |     🦇TUI_NL      |        |
+      |               |UG_PREV |UG_VALD |UG_HUED |UG_SATD |UG_SPDD |  LEFT  |  DOWN  |   UP   |  RGHT  |        | 🦇CLOG |     🦇TUI_NL      |        |
       +---------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+-------------------+--------+
       +-------------------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+---------------+--------+--------+
       |    C(KC_LSFT)     |C(KC_Z) |C(KC_X) |C(KC_C) |C(KC_V) |BAT_LVL |NK_TOGG |        |        |        |        |               |  VOL+  |  MUTE  |
@@ -110,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         UG_TOGG,         UG_NEXT,   UG_VALU,   UG_HUEU,   UG_SATU,   UG_SPDU,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,        EB_DICT_LAST,
 
      // CAPS               A          S          D          F          G          H          J          K          L          SCLN       QUOTE      ENTER                    HOME
-        _______,           UG_PREV,   UG_VALD,   UG_HUED,   UG_SATD,   UG_SPDD,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RGHT,   _______,   _______,   EB_TUI_NL,               _______,
+        _______,           UG_PREV,   UG_VALD,   UG_HUED,   UG_SATD,   UG_SPDD,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RGHT,   _______,   EB_CLOG,   EB_TUI_NL,               _______,
 
      // LSHIFT                   Z          X          C          V          B          N          M          COMMA      DOT        SLASH      RSHIFT             UP         END
         C(KC_LSFT),              C(KC_Z),   C(KC_X),   C(KC_C),   C(KC_V),   BAT_LVL,   NK_TOGG,   _______,   _______,   _______,   _______,   _______,           KC_VOLU,   KC_MUTE,
@@ -230,18 +231,57 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
     return keycode == EB_CAPS;
 }
 
-// A fast Caps-position tap often overlaps the next keypress by a few ms. Global
-// PERMISSIVE_HOLD resolves those as Ctrl chords and swallows Esc entirely
-// (reproduced in tests/tap_hold_configurations/erebusbat_caps). Opt EB_CAPS out:
-// its tap then fires on release while the rolled key is deferred and sent after
-// Esc. Deliberate holds still resolve to Ctrl via the TAPPING_TERM timeout.
+// EB_CAPS tap-vs-chord rules live in eb_caps_chord.h (shared with the tests in
+// tests/tap_hold_configurations/erebusbat_caps). Other mod-taps keep plain
+// permissive hold.
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
-    (void)record;
-    return keycode != EB_CAPS;
+    if (keycode != EB_CAPS) {
+        return true;
+    }
+    return eb_caps_permissive_hold(record);
+}
+
+bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
+    eb_caps_pre_process(keycode, record);
+    return true;
+}
+
+// Types the recorded Caps + key gestures, oldest first, as e.g. "g45-o70-t110-fc ":
+// gap, overlap and total in ms, then release order (n/f) and outcome (e/c/h).
+static void eb_caps_log_num(const char *label, uint16_t value) {
+    const char *digits = get_u16_str(value, ' ');
+    while (*digits == ' ') {
+        digits++;
+    }
+    send_string(label);
+    send_string(digits);
+}
+
+static void eb_caps_log_type(void) {
+    uint8_t count = eb_caps_sample_next < EB_CAPS_SAMPLES ? eb_caps_sample_next : EB_CAPS_SAMPLES;
+    for (uint8_t i = 0; i < count; i++) {
+        const eb_caps_sample_t *s = &eb_caps_samples[(uint8_t)(eb_caps_sample_next - count + i) % EB_CAPS_SAMPLES];
+        eb_caps_log_num("g", s->gap);
+        eb_caps_log_num("-o", s->overlap);
+        eb_caps_log_num("-t", s->total);
+        send_string("-");
+        send_char(s->order);
+        send_char(s->outcome ? s->outcome : 'x');
+        send_string(" ");
+    }
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_keychron_common(keycode, record)) {
+        return false;
+    }
+    if (keycode == EB_CAPS) {
+        return eb_caps_process_record(record);
+    }
+    if (keycode == EB_CLOG) {
+        if (record->event.pressed) {
+            eb_caps_log_type();
+        }
         return false;
     }
     if (keycode == EB_COPY_READ) {

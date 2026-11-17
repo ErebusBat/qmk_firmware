@@ -13,5 +13,7 @@
 // Mirrors keyboards/keychron/k2_he/ansi/keymaps/erebusbat/config.h
 #define TAPPING_TERM 200
 #define PERMISSIVE_HOLD_PER_KEY
+#define EB_CAPS_OVERLAP_MS 50
+#define EB_CAPS_CHORD_MS 100
 #define QUICK_TAP_TERM 120
 #define RETRO_TAPPING_PER_KEY
