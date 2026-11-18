@@ -1,6 +1,35 @@
 #include QMK_KEYBOARD_H
 #include "erebusbat.h"
 
+#if EB_K2HE_CAPS_ESC
+#    include "eb_caps_chord.h"
+
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    return keycode != EB_CAPS;
+}
+
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+    return keycode != EB_CAPS || eb_caps_permissive_hold(record);
+}
+
+bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
+    return keycode == EB_CAPS;
+}
+
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
+    return keycode == EB_CAPS ? 120 : QUICK_TAP_TERM;
+}
+
+bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
+    eb_caps_pre_process(keycode, record);
+    return true;
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    return keycode != EB_CAPS || eb_caps_process_record(record);
+}
+#endif
+
 enum layers {
     L_BASE = 0,
     L_FN1  = 1,
