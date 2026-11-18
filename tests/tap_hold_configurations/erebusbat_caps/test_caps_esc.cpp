@@ -25,7 +25,7 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
 }
 
 // The EB_CAPS chord hooks (get_permissive_hold, pre_process_record_user,
-// process_record_user) are in eb_caps_hooks.c, which includes the keymap's own
+// process_record_user) are in eb_caps_hooks.c, which includes the shared
 // eb_caps_chord.h so these tests exercise the shipped code.
 
 class ErebusbatCaps : public TestFixture {};

@@ -9,7 +9,7 @@
 #include "quantum.h"
 
 #define EB_CAPS CTL_T(KC_ESC)
-#include "../../../keyboards/keychron/k2_he/ansi/keymaps/erebusbat/eb_caps_chord.h"
+#include "eb_caps_chord.h"
 
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
     if (keycode != EB_CAPS) {

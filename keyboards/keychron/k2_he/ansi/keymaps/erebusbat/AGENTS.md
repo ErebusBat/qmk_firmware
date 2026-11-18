@@ -16,7 +16,7 @@ Custom QMK keymap for Keychron K2 HE (Hall Effect) ANSI keyboard with 4 layers d
 ## Custom Keycodes
 - Chord defines shared by every board (`EB_CAPS`, `EB_ESC_HYPR`, `EB_DICT_LAST`, `TTS_*`, window commands, ...) live in `../common/eb_keys.h` (repo `ErebusBat/qmk-common`). `rules.mk` adds `../common` to the include path.
 - `erebusbat.h` in this directory includes it and holds only K2 HE-specific keycodes: the `EB_COPY_READ` and `EB_CLOG` custom keycodes and the `TD_DICT` tap dance.
-- `eb_caps_chord.h` holds the `EB_CAPS` tap-vs-chord rules (overlap-based) and the timing recorder that `EB_CLOG` (Fn+') types out. It is also compiled into `tests/tap_hold_configurations/erebusbat_caps`. See `ESC_HERDR_FIX.md`.
+- `../common/eb_caps_chord.h` (relative to the worktree root) holds the `EB_CAPS` tap-vs-chord rules (overlap-based) and the timing recorder that `EB_CLOG` (Fn+') types out. It is also compiled into `tests/tap_hold_configurations/erebusbat_caps`. See `ESC_HERDR_FIX.md`.
 
 ## Mod-Tap Configuration
 See `config.h` in this directory for current timing settings:
@@ -45,7 +45,6 @@ qmk flash -kb keychron/k2_he/ansi -km erebusbat
 ├── keymap.c    # Main keymap definitions
 ├── config.h    # Mod-tap timing configuration
 ├── erebusbat.h # K2 HE-specific keycodes; includes ../common/eb_keys.h
-├── eb_caps_chord.h # EB_CAPS chord rules and timing recorder (shared with tests)
 ├── rules.mk    # Features, plus the ../common include path
 └── AGENTS.md   # This documentation file
 ```
