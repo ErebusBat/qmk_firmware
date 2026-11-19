@@ -133,7 +133,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      # L_FN1
      # effective_min_key_width=9 token_min_key_width=9
       +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------+  +---------+
-      | QK_BOOT |         |         |   F13   |   F14   |   F15   |   F16   |   F17   |   F18   |   F19   |   F20   |   F21   |   F22   |     ENT      |  |  PLAY   |
+      | EB_SCRN |         | QK_BOOT |   F13   |   F14   |   F15   |   F16   |   F17   |   F18   |   F19   |   F20   |   F21   |   F22   |     ENT      |  |  PLAY   |
       +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------+  +---------+
       +---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+---------+--------------+  +---------+
       |         |         |         |         |         |         |         |         |         |         |  💡TOG  |  💡VAD  |  💡VAI  |     DEL      |  |🦇FMT_AI |
@@ -155,7 +155,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_FN1] = LAYOUT(
 
      // EB_ESC_HYPR   F1         F2         F3         F4         F5         F6         F7         F8         F9         F10        F11        F12        DEL                HOME
-        QK_BOOT,   KC_TRNS,   KC_TRNS,   KC_F13,    KC_F14,    KC_F15,    KC_F16,    KC_F17,    KC_F18,    KC_F19,    KC_F20,    KC_F21,    KC_F22,    KC_ENT,            KC_MPLY,
+        EB_SCRN,   KC_TRNS,   QK_BOOT,   KC_F13,    KC_F14,    KC_F15,    KC_F16,    KC_F17,    KC_F18,    KC_F19,    KC_F20,    KC_F21,    KC_F22,    KC_ENT,            KC_MPLY,
 
      // ~             1          2          3          4          5          6          7          8          9          0       -          =+            BSPC               PGUP
         KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   KC_TRNS,   RGB_TOG,   RGB_VAD,   RGB_VAI,   KC_DEL,            EB_DICT_FMT_AI,
